@@ -202,8 +202,9 @@ Levers 1 and 2 alone roughly double revenue with today's roster; the remainder m
 
 ---
 
-## 11. Immediate Next Steps
+## 11. Status
 
-1. ~~Add the rate table and KPI report to the repository~~ ✅ done (`data/`)
-2. Send the §8 finance data request.
-3. Begin Phase 1 baseline build — reconcile the model skeleton to the Jan–May KPI actuals and answer the realization question.
+1. ~~Add the rate table and KPI report to the repository~~ ✅ (`data/`)
+2. ~~Phase 1 baseline~~ ✅ — `model/CVR_Model_Phase1_Baseline.xlsx`, reconciled to the 6/30/26 GL statements (`PHASE1_BASELINE.md`)
+3. ~~Phase 2 forecast engine~~ ✅ — `model/CVR_Model_Phase2_Forecast.xlsx`, driver-based Jul-26–Dec-27 with scenarios, cash/note roll-forward, and backlog/pipeline coverage (`PHASE2_FORECAST.md`)
+4. Open: salary detail (person-level labor build), pipeline probabilities owned by Estimating, Phase 3 dashboard polish, Phase 4 monthly actuals rhythm starting with the July close.
