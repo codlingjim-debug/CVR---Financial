@@ -4,7 +4,8 @@
     --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
     --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7;
     --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
-    --ring: rgba(11,11,11,0.10); --brand-green: #86b332;
+    --accent-a35: rgba(42,120,214,0.35); --accent-a16: rgba(42,120,214,0.16);
+    --neg: #e34948; --ring: rgba(11,11,11,0.10); --brand-green: #86b332;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
@@ -12,7 +13,8 @@
       --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
       --muted: #898781; --grid: #2c2c2a; --axis: #383835;
       --accent: #3987e5; --accent-wash: rgba(57,135,229,0.12);
-      --ring: rgba(255,255,255,0.10);
+      --accent-a35: rgba(57,135,229,0.40); --accent-a16: rgba(57,135,229,0.18);
+      --neg: #e66767; --ring: rgba(255,255,255,0.10);
       color-scheme: dark;
     }
   }
@@ -20,14 +22,16 @@
     --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
     --muted: #898781; --grid: #2c2c2a; --axis: #383835;
     --accent: #3987e5; --accent-wash: rgba(57,135,229,0.12);
-    --ring: rgba(255,255,255,0.10);
+    --accent-a35: rgba(57,135,229,0.40); --accent-a16: rgba(57,135,229,0.18);
+    --neg: #e66767; --ring: rgba(255,255,255,0.10);
     color-scheme: dark;
   }
   :root[data-theme="light"] {
     --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
     --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7;
     --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
-    --ring: rgba(11,11,11,0.10);
+    --accent-a35: rgba(42,120,214,0.35); --accent-a16: rgba(42,120,214,0.16);
+    --neg: #e34948; --ring: rgba(11,11,11,0.10);
     color-scheme: light;
   }
   body {
@@ -59,8 +63,8 @@
     padding: 20px 22px 16px; position: relative;
   }
   .card h2 { font-size: 16.5px; margin: 0 0 2px; }
-  .card .sub { font-size: 13px; color: var(--ink-2); margin: 0 0 14px; }
-  .legend { display: flex; gap: 18px; font-size: 12.5px; color: var(--ink-2); margin: 4px 0 10px; flex-wrap: wrap; }
+  .card .sub { font-size: 13px; color: var(--ink-2); margin: 0 0 12px; }
+  .legend { display: flex; gap: 18px; font-size: 12.5px; color: var(--ink-2); margin: 4px 0 10px; flex-wrap: wrap; align-items: center; }
   .legend .key { display: inline-flex; align-items: center; gap: 7px; }
   .legend svg { display: block; }
   .chart-box { position: relative; }
@@ -69,18 +73,30 @@
     position: absolute; pointer-events: none; background: var(--surface);
     border: 1px solid var(--ring); border-radius: 7px; padding: 8px 12px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.13); font-size: 12.5px;
-    display: none; min-width: 170px; z-index: 3;
+    display: none; min-width: 176px; z-index: 3;
   }
-  .tip .month { color: var(--ink-2); margin-bottom: 4px; font-weight: 600; }
-  .tip .row { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .tip .head { color: var(--ink-2); margin-bottom: 4px; font-weight: 600; }
+  .tip .row { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
   .tip .row .name { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
   .tip .row .val { font-weight: 600; font-variant-numeric: tabular-nums; }
   .foot { font-size: 12px; color: var(--muted); margin-top: 10px; }
-  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
-  th, td { text-align: right; padding: 7px 12px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  .seg { display: inline-flex; border: 1px solid var(--ring); border-radius: 7px; overflow: hidden; }
+  .seg button {
+    font: 600 12.5px/1 system-ui, sans-serif; padding: 8px 14px; border: 0;
+    background: transparent; color: var(--ink-2); cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 2px 0 10px; }
+  .readout { font-size: 12.5px; color: var(--ink-2); }
+  .readout strong { color: var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: right; padding: 6px 12px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
   th:first-child, td:first-child { text-align: left; }
   th { color: var(--ink-2); font-weight: 600; font-size: 12.5px; }
-  caption { text-align: left; font-size: 13px; color: var(--ink-2); padding-bottom: 8px; }
+  details { margin-top: 12px; }
+  summary { font-size: 13px; color: var(--ink-2); cursor: pointer; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .hit:focus { outline: none; }
   .hit:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 </style>
@@ -88,190 +104,511 @@
 <div class="wrap">
   <header>
     <div class="eyebrow">CVR Engineering · Performance Graphics</div>
-    <h1>Revenue — Actual vs Plan vs Prior Year</h1>
-    <p>Cumulative year-to-date through June 2026 · source: GL statements 6/30/26</p>
+    <h1>Revenue &amp; Operations — June 2026</h1>
+    <p>Sources: GL statements 6/30/26 · KPI report 7/11/26 · Phase 2 forecast model (Base scenario)</p>
   </header>
 
   <div class="kpis">
     <div class="tile"><div class="label">YTD revenue</div><div class="value">$551K</div><div class="delta">June: $124.4K — best month YTD</div></div>
     <div class="tile"><div class="label">vs plan</div><div class="value">54.3%</div><div class="delta">$463.6K behind the $1,014.6K plan</div></div>
     <div class="tile"><div class="label">vs prior year</div><div class="value">+38.1%</div><div class="delta">PY through June: $399.1K</div></div>
+    <div class="tile"><div class="label">Billable utilization</div><div class="value">59.0%</div><div class="delta">vs 75% median target</div></div>
   </div>
 
   <div class="card">
     <h2>Cumulative revenue, January – June 2026 ($K)</h2>
     <p class="sub">Every month has run below the flat $169K/month plan — but well ahead of last year, with June the strongest month yet.</p>
-    <div class="legend" id="legend"></div>
-    <div class="chart-box" id="chartbox"></div>
+    <div class="legend" id="legend-rev"></div>
+    <div class="chart-box" id="chart-rev"></div>
     <div class="foot">Prior-year line is a constant-pace approximation drawn to the actual June YTD of $399.1K —
       monthly 2025 detail isn’t in the GL extract yet. Plan is the official 2026 budget (flat $169.1K/month).</div>
+    <details><summary>Data table</summary><table id="table-rev"></table></details>
   </div>
 
   <div class="card">
-    <table id="datatable">
-      <caption>Data — cumulative $K (monthly actual in parentheses)</caption>
-    </table>
+    <h2>Gross margin by month vs budget assumption</h2>
+    <p class="sub">Budget assumes 61.6% gross margin; actuals swing from −40% to +48%. March and May went negative on write-downs and thin billing.</p>
+    <div class="legend" id="legend-gm"></div>
+    <div class="chart-box" id="chart-gm"></div>
+    <details><summary>Data table</summary><table id="table-gm"></table></details>
+  </div>
+
+  <div class="card">
+    <h2>Forecast revenue &amp; work coverage, Jul 2026 – Dec 2027 ($K/month)</h2>
+    <p class="sub">Base-scenario forecast from the Phase 2 model, against the work that would feed it: booked backlog burn, plus the bid pipeline weighted by win probability.</p>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Coverage basis">
+        <button id="tg-backlog" aria-pressed="false">Booked backlog only</button>
+        <button id="tg-pipe" aria-pressed="true">+ weighted pipeline</button>
+      </div>
+      <span class="readout" id="cov-readout"></span>
+    </div>
+    <div class="legend" id="legend-cov"></div>
+    <div class="chart-box" id="chart-cov"></div>
+    <div class="foot">Backlog = remaining PO value on the nine active jobs, spread evenly to each job’s scheduled finish.
+      Pipeline = pending bids × win probability (Lansing BWL audit $1,350K at 50% is the largest), spread over expected
+      durations from award. The unshaded gap under the line is work not yet identified — the BD origination target.</div>
+    <details><summary>Data table</summary><table id="table-cov"></table></details>
+  </div>
+
+  <div class="card">
+    <h2>Billable utilization vs target, by person (2026 YTD)</h2>
+    <p class="sub">Bar = actual billable share of hours; tick = that person’s target. Team total is 59.0% against a 75% median target.</p>
+    <div class="legend" id="legend-ut"></div>
+    <div class="chart-box" id="chart-ut"></div>
+    <div class="foot">Hours through 7/11/26. Randy Pynenberg and Auston Hopson have small YTD hour bases (68 and 18 hrs).</div>
+  </div>
+
+  <div class="card">
+    <h2>Sales by customer, YTD June 2026 ($K)</h2>
+    <p class="sub">CenterPoint is 69.7% of revenue; intercompany work for Hydaker-Wheatlake is another 20.2%.</p>
+    <div class="legend" id="legend-cu"></div>
+    <div class="chart-box" id="chart-cu"></div>
   </div>
 </div>
 
 <script>
 (function () {
-  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-  const ACT = [110.5, 207.3, 246.6, 341.1, 426.7, 551.0];
-  const ACT_M = [110.5, 96.8, 39.3, 94.6, 85.5, 124.4];
-  const PLAN = [169.1, 338.2, 507.3, 676.4, 845.5, 1014.6];
-  const PY = [66.5, 133.0, 199.6, 266.1, 332.6, 399.1];
-
-  const W = 960, H = 430, L = 52, R = 150, T = 18, B = 34;
-  const PW = W - L - R, PH = H - T - B, YMAX = 1100;
-  const x = i => L + i * PW / (MONTHS.length - 1);
-  const y = v => T + (1 - v / YMAX) * PH;
-  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const NS = "http://www.w3.org/2000/svg";
   const el = (n, at) => { const e = document.createElementNS(NS, n); for (const k in at) e.setAttribute(k, at[k]); return e; };
+  const txt = (x, y, s, at) => { const t = el("text", Object.assign({ x, y, "font-size": 11.5, fill: "var(--muted)" }, at || {})); t.textContent = s; return t; };
+  const fmtK = (v, d) => "$" + v.toLocaleString(undefined, { minimumFractionDigits: d == null ? 1 : d, maximumFractionDigits: d == null ? 1 : d }) + "K";
 
-  const box = document.getElementById("chartbox");
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
-    "aria-label": "Line chart of cumulative 2026 revenue: actual versus plan versus prior-year pace, January through June" });
-  box.appendChild(svg);
-
-  // grid + y ticks
-  [0, 250, 500, 750, 1000].forEach(v => {
-    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v),
-      stroke: "var(--grid)", "stroke-width": 1 }));
-    const t = el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end", "font-size": 11.5,
-      fill: "var(--muted)", style: "font-variant-numeric:tabular-nums" });
-    t.textContent = v === 0 ? "0" : v.toLocaleString();
-    svg.appendChild(t);
-  });
-  svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
-  MONTHS.forEach((m, i) => {
-    const t = el("text", { x: x(i), y: H - 12, "text-anchor": "middle", "font-size": 12, fill: "var(--muted)" });
-    t.textContent = m + " 26";
-    svg.appendChild(t);
-  });
-
-  const path = pts => pts.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ");
-  // area wash under the emphasized series
-  svg.appendChild(el("path", { d: path(ACT) + ` L ${x(5)} ${y(0)} L ${x(0)} ${y(0)} Z`, fill: "var(--accent-wash)" }));
-
-  const SERIES = [
-    { name: "Plan (2026 budget)", data: PLAN, stroke: "var(--muted)", dash: "", w: 2 },
-    { name: "Prior year (pace)", data: PY, stroke: "var(--muted)", dash: "6 5", w: 2 },
-    { name: "Actual", data: ACT, stroke: "var(--accent)", dash: "", w: 2.5 },
-  ];
-  SERIES.forEach(s => {
-    svg.appendChild(el("path", { d: path(s.data), fill: "none", stroke: s.stroke,
-      "stroke-width": s.w, "stroke-linecap": "round", "stroke-linejoin": "round",
-      ...(s.dash ? { "stroke-dasharray": s.dash } : {}) }));
-    // end marker: 2px surface ring + filled dot
-    svg.appendChild(el("circle", { cx: x(5), cy: y(s.data[5]), r: 6.5, fill: "var(--surface)" }));
-    svg.appendChild(el("circle", { cx: x(5), cy: y(s.data[5]), r: 4.5, fill: s.stroke }));
-  });
-
-  // direct end labels (ink tokens, keyed by position)
-  const endLabel = (v, txt, dy) => {
-    const g = el("text", { x: x(5) + 12, y: y(v) + (dy || 4), "font-size": 12.5, fill: "var(--ink-2)" });
-    const b = el("tspan", { "font-weight": 600, fill: "var(--ink)" });
-    b.textContent = "$" + Math.round(v).toLocaleString() + "K";
-    g.textContent = txt + " ";
-    g.appendChild(b);
-    svg.appendChild(g);
-  };
-  endLabel(PLAN[5], "Plan", 4);
-  endLabel(ACT[5], "Actual", 4);
-  endLabel(PY[5], "Prior yr", 4);
-
-  // legend (line keys mirror the marks)
-  const legend = document.getElementById("legend");
-  [["Actual", "var(--accent)", ""], ["Plan (2026 budget)", "var(--muted)", ""],
-   ["Prior year (constant pace)", "var(--muted)", "6 5"]].forEach(([name, color, dash]) => {
-    const k = document.createElement("span"); k.className = "key";
-    const sv = document.createElementNS(NS, "svg");
-    sv.setAttribute("width", 22); sv.setAttribute("height", 6); sv.setAttribute("viewBox", "0 0 22 6");
-    const ln = el("line", { x1: 1, x2: 21, y1: 3, y2: 3, stroke: color, "stroke-width": 2.5,
-      "stroke-linecap": "round", ...(dash ? { "stroke-dasharray": dash } : {}) });
-    sv.appendChild(ln); k.appendChild(sv);
-    k.appendChild(document.createTextNode(name));
-    legend.appendChild(k);
-  });
-
-  // hover layer: crosshair + one tooltip listing every series
-  const cross = el("line", { y1: T, y2: T + PH, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
-  svg.appendChild(cross);
-  const tip = document.createElement("div"); tip.className = "tip"; box.appendChild(tip);
-  const rows = [["Actual", "var(--accent)", ACT, ""], ["Plan", "var(--muted)", PLAN, ""],
-                ["Prior yr", "var(--muted)", PY, "dash"]];
-
-  function showTip(i) {
-    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i));
-    cross.setAttribute("visibility", "visible");
-    while (tip.firstChild) tip.removeChild(tip.firstChild);
-    const m = document.createElement("div"); m.className = "month";
-    m.textContent = MONTHS[i] + " 2026 — cumulative";
-    tip.appendChild(m);
-    rows.forEach(([name, color, data, dash]) => {
-      const r = document.createElement("div"); r.className = "row";
-      const nm = document.createElement("span"); nm.className = "name";
-      const sv = document.createElementNS(NS, "svg");
-      sv.setAttribute("width", 14); sv.setAttribute("height", 4); sv.setAttribute("viewBox", "0 0 14 4");
-      sv.appendChild(el("line", { x1: 0, x2: 14, y1: 2, y2: 2, stroke: color, "stroke-width": 2.5,
-        ...(dash ? { "stroke-dasharray": "4 3" } : {}) }));
-      nm.appendChild(sv); nm.appendChild(document.createTextNode(name));
-      const val = document.createElement("span"); val.className = "val";
-      val.textContent = "$" + data[i].toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "K";
-      r.appendChild(nm); r.appendChild(val); tip.appendChild(r);
-    });
-    const bb = box.getBoundingClientRect(), sx = bb.width / W;
-    const px = x(i) * sx, flip = px > bb.width * 0.62;
-    tip.style.display = "block";
-    tip.style.left = flip ? (px - tip.offsetWidth - 14) + "px" : (px + 14) + "px";
-    tip.style.top = Math.max(6, y(ACT[i]) * sx - 20) + "px";
+  function makeTip(box) {
+    const tip = document.createElement("div"); tip.className = "tip"; box.appendChild(tip);
+    return {
+      show(head, rows, px, py) {
+        while (tip.firstChild) tip.removeChild(tip.firstChild);
+        const h = document.createElement("div"); h.className = "head"; h.textContent = head; tip.appendChild(h);
+        rows.forEach(([name, color, value, dash]) => {
+          const r = document.createElement("div"); r.className = "row";
+          const nm = document.createElement("span"); nm.className = "name";
+          if (color) {
+            const sv = document.createElementNS(NS, "svg");
+            sv.setAttribute("width", 14); sv.setAttribute("height", 4); sv.setAttribute("viewBox", "0 0 14 4");
+            sv.appendChild(el("line", { x1: 0, x2: 14, y1: 2, y2: 2, stroke: color, "stroke-width": 3,
+              ...(dash ? { "stroke-dasharray": "4 3" } : {}) }));
+            nm.appendChild(sv);
+          }
+          nm.appendChild(document.createTextNode(name));
+          const val = document.createElement("span"); val.className = "val"; val.textContent = value;
+          r.appendChild(nm); r.appendChild(val); tip.appendChild(r);
+        });
+        const bb = box.getBoundingClientRect();
+        tip.style.display = "block";
+        const flip = px > bb.width * 0.62;
+        tip.style.left = Math.max(4, flip ? px - tip.offsetWidth - 14 : px + 14) + "px";
+        tip.style.top = Math.max(4, py - 24) + "px";
+      },
+      hide() { tip.style.display = "none"; }
+    };
   }
-  function hideTip() { cross.setAttribute("visibility", "hidden"); tip.style.display = "none"; }
+  const sx = (box, W) => box.getBoundingClientRect().width / W;
 
-  svg.addEventListener("pointermove", e => {
-    const bb = svg.getBoundingClientRect();
-    const mx = (e.clientX - bb.left) * W / bb.width;
-    if (mx < L - 20 || mx > L + PW + 20) { hideTip(); return; }
-    const i = Math.max(0, Math.min(5, Math.round((mx - L) / (PW / 5))));
-    showTip(i);
-  });
-  svg.addEventListener("pointerleave", hideTip);
-  // keyboard access: one focusable hit band per month
-  MONTHS.forEach((m, i) => {
-    const hit = el("rect", { x: x(i) - PW / 10, y: T, width: PW / 5, height: PH,
-      fill: "transparent", class: "hit", tabindex: 0, role: "button",
-      "aria-label": m + " 2026: actual $" + ACT[i] + "K, plan $" + PLAN[i] + "K, prior year $" + PY[i] + "K" });
-    hit.addEventListener("focus", () => showTip(i));
-    hit.addEventListener("blur", hideTip);
-    svg.appendChild(hit);
-  });
-
-  // table view
-  const table = document.getElementById("datatable");
-  const thead = document.createElement("tr");
-  ["Month", "Actual", "Plan", "Variance", "Prior yr (pace)"].forEach(h => {
-    const th = document.createElement("th"); th.textContent = h; thead.appendChild(th);
-  });
-  table.appendChild(thead);
-  const fmt = v => "$" + v.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "K";
-  MONTHS.forEach((m, i) => {
-    const tr = document.createElement("tr");
-    const cells = [m + " 2026",
-      fmt(ACT[i]) + "  (" + fmt(ACT_M[i]) + ")",
-      fmt(PLAN[i]),
-      (ACT[i] - PLAN[i] >= 0 ? "+" : "−") + fmt(Math.abs(ACT[i] - PLAN[i])).slice(1),
-      fmt(PY[i]) + (i === 5 ? "" : " *")];
-    cells.forEach((c, j) => {
-      const td = document.createElement("td"); td.textContent = c; tr.appendChild(td);
+  /* ============ 1. Cumulative revenue ============ */
+  (function revenue() {
+    const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const ACT = [110.5, 207.3, 246.6, 341.1, 426.7, 551.0];
+    const ACT_M = [110.5, 96.8, 39.3, 94.6, 85.5, 124.4];
+    const PLAN = [169.1, 338.2, 507.3, 676.4, 845.5, 1014.6];
+    const PY = [66.5, 133.0, 199.6, 266.1, 332.6, 399.1];
+    const W = 960, H = 400, L = 52, R = 150, T = 16, B = 32, PW = W - L - R, PH = H - T - B, YMAX = 1100;
+    const x = i => L + i * PW / 5, y = v => T + (1 - v / YMAX) * PH;
+    const box = document.getElementById("chart-rev");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Cumulative 2026 revenue: actual versus plan versus prior-year pace" });
+    box.appendChild(svg);
+    [0, 250, 500, 750, 1000].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 8, y(v) + 4, v.toLocaleString(), { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
     });
-    table.appendChild(tr);
-  });
-  const note = document.createElement("tr");
-  const td = document.createElement("td"); td.colSpan = 5;
-  td.style.color = "var(--muted)"; td.style.fontSize = "12px"; td.style.textAlign = "left";
-  td.textContent = "* prior-year months interpolated at constant pace; June is the actual GL YTD figure.";
-  note.appendChild(td); table.appendChild(note);
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
+    M.forEach((m, i) => svg.appendChild(txt(x(i), H - 10, m + " 26", { "text-anchor": "middle", "font-size": 12 })));
+    const path = pts => pts.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ");
+    svg.appendChild(el("path", { d: path(ACT) + ` L ${x(5)} ${y(0)} L ${x(0)} ${y(0)} Z`, fill: "var(--accent-wash)" }));
+    [["Plan", PLAN, "var(--muted)", "", 2], ["PY", PY, "var(--muted)", "6 5", 2], ["Actual", ACT, "var(--accent)", "", 2.5]]
+      .forEach(([n, d, c, dash, w]) => {
+        svg.appendChild(el("path", { d: path(d), fill: "none", stroke: c, "stroke-width": w,
+          "stroke-linecap": "round", "stroke-linejoin": "round", ...(dash ? { "stroke-dasharray": dash } : {}) }));
+        svg.appendChild(el("circle", { cx: x(5), cy: y(d[5]), r: 6.5, fill: "var(--surface)" }));
+        svg.appendChild(el("circle", { cx: x(5), cy: y(d[5]), r: 4.5, fill: c }));
+      });
+    const endLabel = (v, name) => {
+      const t = el("text", { x: x(5) + 12, y: y(v) + 4, "font-size": 12.5, fill: "var(--ink-2)" });
+      t.textContent = name + " ";
+      const b = el("tspan", { "font-weight": 600, fill: "var(--ink)" });
+      b.textContent = "$" + Math.round(v).toLocaleString() + "K"; t.appendChild(b);
+      svg.appendChild(t);
+    };
+    endLabel(PLAN[5], "Plan"); endLabel(ACT[5], "Actual"); endLabel(PY[5], "Prior yr");
+    const lg = document.getElementById("legend-rev");
+    [["Actual", "var(--accent)", ""], ["Plan (2026 budget)", "var(--muted)", ""], ["Prior year (constant pace)", "var(--muted)", "6 5"]]
+      .forEach(([name, color, dash]) => {
+        const k = document.createElement("span"); k.className = "key";
+        const sv = document.createElementNS(NS, "svg");
+        sv.setAttribute("width", 22); sv.setAttribute("height", 6); sv.setAttribute("viewBox", "0 0 22 6");
+        sv.appendChild(el("line", { x1: 1, x2: 21, y1: 3, y2: 3, stroke: color, "stroke-width": 2.5,
+          "stroke-linecap": "round", ...(dash ? { "stroke-dasharray": dash } : {}) }));
+        k.appendChild(sv); k.appendChild(document.createTextNode(name)); lg.appendChild(k);
+      });
+    const tip = makeTip(box);
+    const cross = el("line", { y1: T, y2: T + PH, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
+    svg.appendChild(cross);
+    const show = i => {
+      cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+      const s = sx(box, W);
+      tip.show(M[i] + " 2026 — cumulative",
+        [["Actual", "var(--accent)", fmtK(ACT[i])], ["Plan", "var(--muted)", fmtK(PLAN[i])], ["Prior yr", "var(--muted)", fmtK(PY[i]), 1]],
+        x(i) * s, y(ACT[i]) * s);
+    };
+    const hide = () => { cross.setAttribute("visibility", "hidden"); tip.hide(); };
+    svg.addEventListener("pointermove", e => {
+      const bb = svg.getBoundingClientRect(), mx = (e.clientX - bb.left) * W / bb.width;
+      if (mx < L - 20 || mx > L + PW + 20) { hide(); return; }
+      show(Math.max(0, Math.min(5, Math.round((mx - L) / (PW / 5)))));
+    });
+    svg.addEventListener("pointerleave", hide);
+    M.forEach((m, i) => {
+      const hit = el("rect", { x: x(i) - PW / 10, y: T, width: PW / 5, height: PH, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": m + " 2026: actual " + fmtK(ACT[i]) + ", plan " + fmtK(PLAN[i]) + ", prior year " + fmtK(PY[i]) });
+      hit.addEventListener("focus", () => show(i)); hit.addEventListener("blur", hide);
+      svg.appendChild(hit);
+    });
+    const tb = document.getElementById("table-rev");
+    const hd = document.createElement("tr");
+    ["Month", "Actual (monthly)", "Plan", "Variance", "Prior yr (pace)"].forEach(h => {
+      const th = document.createElement("th"); th.textContent = h; hd.appendChild(th);
+    });
+    tb.appendChild(hd);
+    M.forEach((m, i) => {
+      const tr = document.createElement("tr");
+      [m + " 2026", fmtK(ACT[i]) + " (" + fmtK(ACT_M[i]) + ")", fmtK(PLAN[i]),
+       "−" + fmtK(PLAN[i] - ACT[i]).slice(1), fmtK(PY[i]) + (i === 5 ? "" : " *")].forEach(c => {
+        const td = document.createElement("td"); td.textContent = c; tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  })();
+
+  /* ============ 2. Gross margin ============ */
+  (function grossMargin() {
+    const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const GM = [47.6, 25.0, -39.9, 35.6, -21.1, 36.8];
+    const GP = [52.6, 24.2, -15.7, 33.7, -18.0, 45.8];
+    const BUD = 61.6;
+    const W = 960, H = 300, L = 52, R = 24, T = 18, B = 30, PW = W - L - R, PH = H - T - B;
+    const YMIN = -50, YMAX = 70;
+    const x = i => L + (i + 0.5) * PW / 6, y = v => T + (YMAX - v) / (YMAX - YMIN) * PH;
+    const box = document.getElementById("chart-gm");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Monthly gross margin percent versus the 61.6 percent budget assumption" });
+    box.appendChild(svg);
+    [-40, -20, 0, 20, 40, 60].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v),
+        stroke: v === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 8, y(v) + 4, v + "%", { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
+    });
+    // budget reference line
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(BUD), y2: y(BUD), stroke: "var(--muted)",
+      "stroke-width": 2, "stroke-dasharray": "6 5" }));
+    svg.appendChild(txt(L + PW, y(BUD) - 6, "Budget 61.6%", { "text-anchor": "end", "font-size": 12, fill: "var(--ink-2)", "font-weight": 600 }));
+    M.forEach((m, i) => svg.appendChild(txt(x(i), H - 8, m + " 26", { "text-anchor": "middle", "font-size": 12 })));
+    const BW = 24, RD = 4;
+    const col = (cx, v) => {
+      const y0 = y(0), y1 = y(v), left = cx - BW / 2;
+      if (v >= 0)
+        return `M ${left} ${y0} L ${left} ${y1 + RD} Q ${left} ${y1} ${left + RD} ${y1} L ${left + BW - RD} ${y1} Q ${left + BW} ${y1} ${left + BW} ${y1 + RD} L ${left + BW} ${y0} Z`;
+      return `M ${left} ${y0} L ${left} ${y1 - RD} Q ${left} ${y1} ${left + RD} ${y1} L ${left + BW - RD} ${y1} Q ${left + BW} ${y1} ${left + BW} ${y1 - RD} L ${left + BW} ${y0} Z`;
+    };
+    const tip = makeTip(box);
+    GM.forEach((v, i) => {
+      const p = el("path", { d: col(x(i), v), fill: v >= 0 ? "var(--accent)" : "var(--neg)" });
+      svg.appendChild(p);
+      svg.appendChild(txt(x(i), y(v) + (v >= 0 ? -7 : 15), v.toFixed(1) + "%",
+        { "text-anchor": "middle", "font-size": 12, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: x(i) - PW / 12, y: T, width: PW / 6, height: PH, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": M[i] + " 2026 gross margin " + v.toFixed(1) + " percent" });
+      const s = () => tip.show(M[i] + " 2026", [
+        ["Gross margin", v >= 0 ? "var(--accent)" : "var(--neg)", v.toFixed(1) + "%"],
+        ["Gross profit", null, fmtK(GP[i])],
+        ["vs budget", null, (v - BUD).toFixed(1) + " pts"]],
+        x(i) * sx(box, W), y(Math.max(v, 0)) * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    const lg = document.getElementById("legend-gm");
+    [["Positive month", "var(--accent)"], ["Negative month", "var(--neg)"], ["Budget assumption (61.6%)", "var(--muted)", 1]]
+      .forEach(([name, color, line]) => {
+        const k = document.createElement("span"); k.className = "key";
+        const sv = document.createElementNS(NS, "svg");
+        sv.setAttribute("width", line ? 22 : 12); sv.setAttribute("height", 12);
+        sv.setAttribute("viewBox", line ? "0 0 22 12" : "0 0 12 12");
+        sv.appendChild(line
+          ? el("line", { x1: 1, x2: 21, y1: 6, y2: 6, stroke: color, "stroke-width": 2, "stroke-dasharray": "5 4" })
+          : el("rect", { x: 0, y: 0, width: 12, height: 12, rx: 3, fill: color }));
+        k.appendChild(sv); k.appendChild(document.createTextNode(name)); lg.appendChild(k);
+      });
+    const tb = document.getElementById("table-gm");
+    const hd = document.createElement("tr");
+    ["Month", "Gross margin", "Gross profit", "vs budget (61.6%)"].forEach(h => {
+      const th = document.createElement("th"); th.textContent = h; hd.appendChild(th);
+    });
+    tb.appendChild(hd);
+    M.forEach((m, i) => {
+      const tr = document.createElement("tr");
+      [m + " 2026", GM[i].toFixed(1) + "%", fmtK(GP[i]), (GM[i] - BUD).toFixed(1) + " pts"].forEach(c => {
+        const td = document.createElement("td"); td.textContent = c; tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  })();
+
+  /* ============ 3. Forecast & coverage with pipeline toggle ============ */
+  (function coverage() {
+    const M = ["Jul 26", "Aug 26", "Sep 26", "Oct 26", "Nov 26", "Dec 26", "Jan 27", "Feb 27", "Mar 27",
+               "Apr 27", "May 27", "Jun 27", "Jul 27", "Aug 27", "Sep 27", "Oct 27", "Nov 27", "Dec 27"];
+    const N = 18;
+    // Base-scenario forecast ($K/mo) — from scripts/build_phase2_workbook.py Base path
+    const FCST = [128.5, 132.3, 136.1, 154.0, 158.3, 162.7, 182.4, 187.3, 192.3, 197.3, 202.4, 219.3,
+                  219.3, 219.3, 219.3, 219.3, 219.3, 219.3];
+    // Backlog: [remaining $K, last burn month index] — spread evenly Jul-26..finish
+    const JOBS = [
+      ["DTE Catalina (support tail)", 32.1, 5], ["DTE New Baltimore", 212.5, 17],
+      ["Consumers Line Sensors", 59.2, 3], ["Cloverland Manistique", 4.9, 2],
+      ["CenterPoint Gateway", 71.8, 1], ["CenterPoint Rockport", 15.0, 1],
+      ["CenterPoint Angel Mounds", 1.8, 3], ["CenterPoint Northwest", 106.2, 13],
+      ["CenterPoint Leonard Rd", 193.3, 15],
+    ];
+    // Pipeline: [name, value $K, win prob, start month index, duration months]
+    const BIDS = [
+      ["Steuben Frontier Make Ready", 100, 0.50, 2, 6],
+      ["Hoosier Jacksonburg", 160, 0.50, 4, 12],
+      ["Hoosier Rosehill", 290, 0.50, 4, 12],
+      ["Lansing BWL Joint Use Audit", 1350, 0.50, 5, 18],
+      ["Consumers Pole Replacements", 276, 0.67, 4, 12],
+    ];
+    const backlog = new Array(N).fill(0);
+    JOBS.forEach(([_, rem, end]) => { const n = end + 1, m = rem / n; for (let i = 0; i <= end && i < N; i++) backlog[i] += m; });
+    const pipe = new Array(N).fill(0);
+    BIDS.forEach(([_, val, p, s, dur]) => { const m = val * p / dur; for (let i = s; i < Math.min(s + dur, N); i++) pipe[i] += m; });
+
+    const W = 960, H = 340, L = 52, R = 150, T = 16, B = 30, PW = W - L - R, PH = H - T - B, YMAX = 250;
+    const x = i => L + i * PW / (N - 1), y = v => T + (1 - v / YMAX) * PH;
+    const box = document.getElementById("chart-cov");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Monthly forecast revenue with booked backlog and weighted pipeline coverage areas" });
+    box.appendChild(svg);
+    [0, 50, 100, 150, 200, 250].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 8, y(v) + 4, String(v), { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
+    });
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
+    M.forEach((m, i) => { if (i % 3 === 0 || i === N - 1) svg.appendChild(txt(x(i), H - 8, m, { "text-anchor": "middle", "font-size": 11.5 })); });
+    const area = (top, bottom) => top.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ") +
+      bottom.slice().reverse().map((v, i) => "L" + x(N - 1 - i) + " " + y(v)).join(" ") + " Z";
+    const zeros = new Array(N).fill(0);
+    const gBack = el("path", { fill: "var(--accent-a35)" });
+    const gPipe = el("path", { fill: "var(--accent-a16)" });
+    svg.appendChild(gPipe); svg.appendChild(gBack);
+    const line = el("path", { fill: "none", stroke: "var(--accent)", "stroke-width": 2.5,
+      "stroke-linecap": "round", "stroke-linejoin": "round" });
+    line.setAttribute("d", FCST.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" "));
+    svg.appendChild(line);
+    svg.appendChild(el("circle", { cx: x(N - 1), cy: y(FCST[N - 1]), r: 6.5, fill: "var(--surface)" }));
+    svg.appendChild(el("circle", { cx: x(N - 1), cy: y(FCST[N - 1]), r: 4.5, fill: "var(--accent)" }));
+    const endT = el("text", { x: x(N - 1) + 12, y: y(FCST[N - 1]) + 4, "font-size": 12.5, fill: "var(--ink-2)" });
+    endT.textContent = "Forecast ";
+    const endB = el("tspan", { "font-weight": 600, fill: "var(--ink)" }); endB.textContent = "$219K/mo";
+    endT.appendChild(endB); svg.appendChild(endT);
+
+    let withPipe = true;
+    const readout = document.getElementById("cov-readout");
+    function paint() {
+      gBack.setAttribute("d", area(backlog, zeros));
+      if (withPipe) {
+        gPipe.setAttribute("d", area(backlog.map((v, i) => v + pipe[i]), backlog));
+        gPipe.setAttribute("visibility", "visible");
+      } else gPipe.setAttribute("visibility", "hidden");
+      const fc = FCST.reduce((a, b) => a + b, 0), bk = backlog.reduce((a, b) => a + b, 0), pp = pipe.reduce((a, b) => a + b, 0);
+      const cov = (withPipe ? bk + pp : bk) / fc;
+      while (readout.firstChild) readout.removeChild(readout.firstChild);
+      const strong = document.createElement("strong");
+      strong.textContent = Math.round(cov * 100) + "% covered";
+      readout.appendChild(strong);
+      readout.appendChild(document.createTextNode(
+        " — backlog $" + Math.round(bk).toLocaleString() + "K" +
+        (withPipe ? " + weighted pipeline $" + Math.round(pp).toLocaleString() + "K" : "") +
+        " vs $" + (Math.round(fc / 100) / 10).toFixed(1) + "M forecast; gap $" +
+        Math.round(fc - (withPipe ? bk + pp : bk)).toLocaleString() + "K to originate"));
+    }
+    paint();
+    const bB = document.getElementById("tg-backlog"), bP = document.getElementById("tg-pipe");
+    function setMode(p) {
+      withPipe = p;
+      bB.setAttribute("aria-pressed", String(!p)); bP.setAttribute("aria-pressed", String(p));
+      paint();
+    }
+    bB.addEventListener("click", () => setMode(false));
+    bP.addEventListener("click", () => setMode(true));
+
+    const lg = document.getElementById("legend-cov");
+    [["Forecast (Base scenario)", "line"], ["Booked backlog", "var(--accent-a35)"], ["Weighted pipeline", "var(--accent-a16)"]]
+      .forEach(([name, kind]) => {
+        const k = document.createElement("span"); k.className = "key";
+        const sv = document.createElementNS(NS, "svg");
+        sv.setAttribute("width", kind === "line" ? 22 : 14); sv.setAttribute("height", 12);
+        sv.setAttribute("viewBox", kind === "line" ? "0 0 22 12" : "0 0 14 12");
+        sv.appendChild(kind === "line"
+          ? el("line", { x1: 1, x2: 21, y1: 6, y2: 6, stroke: "var(--accent)", "stroke-width": 2.5, "stroke-linecap": "round" })
+          : el("rect", { x: 0, y: 0, width: 14, height: 12, rx: 3, fill: kind }));
+        k.appendChild(sv); k.appendChild(document.createTextNode(name)); lg.appendChild(k);
+      });
+
+    const tip = makeTip(box);
+    const cross = el("line", { y1: T, y2: T + PH, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
+    svg.appendChild(cross);
+    const show = i => {
+      cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+      const covd = withPipe ? backlog[i] + pipe[i] : backlog[i];
+      const rows = [["Forecast", "var(--accent)", fmtK(FCST[i])], ["Backlog", "var(--accent-a35)", fmtK(backlog[i])]];
+      if (withPipe) rows.push(["Pipeline (wtd)", "var(--accent-a16)", fmtK(pipe[i])]);
+      rows.push(["Gap", null, fmtK(Math.max(0, FCST[i] - covd))]);
+      tip.show(M[i], rows, x(i) * sx(box, W), y(FCST[i]) * sx(box, W));
+    };
+    const hide = () => { cross.setAttribute("visibility", "hidden"); tip.hide(); };
+    svg.addEventListener("pointermove", e => {
+      const bb = svg.getBoundingClientRect(), mx = (e.clientX - bb.left) * W / bb.width;
+      if (mx < L - 20 || mx > L + PW + 20) { hide(); return; }
+      show(Math.max(0, Math.min(N - 1, Math.round((mx - L) / (PW / (N - 1))))));
+    });
+    svg.addEventListener("pointerleave", hide);
+    M.forEach((m, i) => {
+      const hit = el("rect", { x: x(i) - PW / (2 * (N - 1)), y: T, width: PW / (N - 1), height: PH, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": m + ": forecast " + fmtK(FCST[i]) + ", backlog " + fmtK(backlog[i]) + ", weighted pipeline " + fmtK(pipe[i]) });
+      hit.addEventListener("focus", () => show(i)); hit.addEventListener("blur", hide);
+      svg.appendChild(hit);
+    });
+    const tb = document.getElementById("table-cov");
+    const hd = document.createElement("tr");
+    ["Month", "Forecast", "Backlog", "Pipeline (wtd)", "Gap"].forEach(h => {
+      const th = document.createElement("th"); th.textContent = h; hd.appendChild(th);
+    });
+    tb.appendChild(hd);
+    M.forEach((m, i) => {
+      const tr = document.createElement("tr");
+      [m, fmtK(FCST[i]), fmtK(backlog[i]), fmtK(pipe[i]), fmtK(Math.max(0, FCST[i] - backlog[i] - pipe[i]))].forEach(c => {
+        const td = document.createElement("td"); td.textContent = c; tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  })();
+
+  /* ============ 4. Utilization by person ============ */
+  (function utilization() {
+    const DATA = [
+      ["Auston Hopson", 100.0, 100.0, 18], ["Randy Pynenberg", 89.7, 95.0, 68],
+      ["Craig Peterson", 79.6, 75.4, 1017], ["Bhkti Patel", 74.4, 70.7, 1045],
+      ["Hayley Worthen", 66.9, 61.3, 952], ["Francis Wagner", 62.5, 70.7, 992],
+      ["Taylor Nelson", 61.0, 80.1, 1045], ["Collin Allen", 57.6, 80.1, 985],
+      ["Kevin Metts", 38.4, 75.4, 890], ["Roy Pierce", 32.7, 42.4, 847],
+    ];
+    const W = 960, ROW = 32, L = 150, R = 60, T = 8, PW = W - L - R;
+    const H = T + DATA.length * ROW + 26;
+    const x = v => L + v / 100 * PW;
+    const box = document.getElementById("chart-ut");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Billable utilization by person versus individual targets" });
+    box.appendChild(svg);
+    [0, 25, 50, 75, 100].forEach(v => {
+      svg.appendChild(el("line", { x1: x(v), x2: x(v), y1: T, y2: T + DATA.length * ROW, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(x(v), H - 6, v + "%", { "text-anchor": "middle" }));
+    });
+    const tip = makeTip(box);
+    DATA.forEach(([name, act, tgt, hrs], i) => {
+      const cy = T + i * ROW + ROW / 2;
+      const nm = txt(L - 10, cy + 4, name, { "text-anchor": "end", "font-size": 12.5, fill: "var(--ink-2)" });
+      svg.appendChild(nm);
+      const bar = el("rect", { x: x(0), y: cy - 9, width: Math.max(2, x(act) - x(0) - 0), height: 18, fill: "var(--accent)" });
+      bar.setAttribute("rx", 0);
+      svg.appendChild(bar);
+      // rounded data-end: overlay small rounded cap
+      svg.appendChild(el("rect", { x: Math.max(x(0), x(act) - 8), y: cy - 9, width: 8, height: 18, rx: 4, fill: "var(--accent)" }));
+      // target tick (2px ink)
+      svg.appendChild(el("rect", { x: x(tgt) - 1, y: cy - 12, width: 2.5, height: 24, fill: "var(--ink)" }));
+      let lx = x(act) + 8;
+      if (tgt > act && x(tgt) < lx + 44) lx = x(tgt) + 8;
+      svg.appendChild(txt(lx, cy + 4, act.toFixed(1) + "%", { "font-size": 12, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: 0, y: cy - ROW / 2, width: W, height: ROW, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": name + ": " + act + " percent billable versus " + tgt + " percent target, " + hrs + " hours" });
+      const s = () => tip.show(name, [
+        ["Billable", "var(--accent)", act.toFixed(1) + "%"], ["Target", null, tgt.toFixed(1) + "%"],
+        ["vs target", null, (act - tgt >= 0 ? "+" : "") + (act - tgt).toFixed(1) + " pts"],
+        ["Total hours", null, hrs.toLocaleString()]],
+        x(Math.min(act, 80)) * sx(box, W), cy * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    const lg = document.getElementById("legend-ut");
+    [["Actual billable %", "bar"], ["Individual target", "tick"]].forEach(([name, kind]) => {
+      const k = document.createElement("span"); k.className = "key";
+      const sv = document.createElementNS(NS, "svg");
+      sv.setAttribute("width", 16); sv.setAttribute("height", 14); sv.setAttribute("viewBox", "0 0 16 14");
+      sv.appendChild(kind === "bar" ? el("rect", { x: 0, y: 2, width: 14, height: 10, rx: 3, fill: "var(--accent)" })
+        : el("rect", { x: 7, y: 0, width: 2.5, height: 14, fill: "var(--ink)" }));
+      k.appendChild(sv); k.appendChild(document.createTextNode(name)); lg.appendChild(k);
+    });
+  })();
+
+  /* ============ 5. Sales by customer ============ */
+  (function customers() {
+    const DATA = [
+      ["CenterPoint Energy", 383.956, "external"],
+      ["Hydaker-Wheatlake (intercompany)", 111.455, "ic"],
+      ["Ambor Structures", 19.2, "external"],
+      ["Steuben County REMC", 15.3, "external"],
+      ["Great Lakes Energy", 13.377, "external"],
+      ["Kokosing Industrial", 7.725, "external"],
+    ];
+    const W = 960, ROW = 32, L = 230, R = 84, T = 8, PW = W - L - R;
+    const H = T + DATA.length * ROW + 26, XMAX = 400;
+    const x = v => L + v / XMAX * PW;
+    const box = document.getElementById("chart-cu");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Year-to-date sales by customer" });
+    box.appendChild(svg);
+    [0, 100, 200, 300, 400].forEach(v => {
+      svg.appendChild(el("line", { x1: x(v), x2: x(v), y1: T, y2: T + DATA.length * ROW, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(x(v), H - 6, "$" + v + "K", { "text-anchor": "middle" }));
+    });
+    const total = DATA.reduce((a, d) => a + d[1], 0);
+    const tip = makeTip(box);
+    DATA.forEach(([name, v, typ], i) => {
+      const cy = T + i * ROW + ROW / 2;
+      svg.appendChild(txt(L - 10, cy + 4, name, { "text-anchor": "end", "font-size": 12.5, fill: "var(--ink-2)" }));
+      const fill = typ === "ic" ? "var(--accent-a35)" : "var(--accent)";
+      svg.appendChild(el("rect", { x: x(0), y: cy - 9, width: Math.max(2, x(v) - x(0) - 8), height: 18, fill }));
+      svg.appendChild(el("rect", { x: Math.max(x(0), x(v) - 8), y: cy - 9, width: 8, height: 18, rx: 4, fill }));
+      svg.appendChild(txt(x(v) + 8, cy + 4, fmtK(v, 1), { "font-size": 12, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: 0, y: cy - ROW / 2, width: W, height: ROW, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": name + ": " + fmtK(v) + ", " + (v / total * 100).toFixed(1) + " percent of sales" });
+      const s = () => tip.show(name, [
+        ["Sales", fill, fmtK(v)], ["Share", null, (v / total * 100).toFixed(1) + "%"],
+        ["Type", null, typ === "ic" ? "intercompany" : "external"]],
+        x(Math.min(v, 300)) * sx(box, W), cy * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    const lg = document.getElementById("legend-cu");
+    [["External customer", "var(--accent)"], ["Intercompany (HWC)", "var(--accent-a35)"]].forEach(([name, color]) => {
+      const k = document.createElement("span"); k.className = "key";
+      const sv = document.createElementNS(NS, "svg");
+      sv.setAttribute("width", 14); sv.setAttribute("height", 12); sv.setAttribute("viewBox", "0 0 14 12");
+      sv.appendChild(el("rect", { x: 0, y: 0, width: 14, height: 12, rx: 3, fill: color }));
+      k.appendChild(sv); k.appendChild(document.createTextNode(name)); lg.appendChild(k);
+    });
+  })();
 })();
 </script>
