@@ -2,6 +2,15 @@
 // Generates reports/CVR_Deck_Jun2026.pptx. Data sourced from the Phase 1/2
 // workbooks (GL 6/30/26, KPI report 7/11/26, Phase 2 Base scenario).
 const pptxgen = require("pptxgenjs");
+const path = require("path");
+const MAN = require(path.join(__dirname, "..", "reports", "assets", "manifest.json"));
+
+function chartImg(s, name, x, y, w) {
+  const m = MAN[name];
+  const h = w * m.h / m.w;
+  s.addImage({ path: path.join(__dirname, "..", "reports", "assets", name + ".png"), x, y, w, h });
+  return h;
+}
 
 const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE"; // 13.3 x 7.5
@@ -97,17 +106,7 @@ const stripW = (W - 2 * M - 0.4) / 3;
 s = pres.addSlide();
 eyebrow(s, "Where we stand");
 slideTitle(s, "Cumulative revenue — Actual vs Plan vs Prior Year");
-const MO6 = ["Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26", "Jun 26"];
-s.addChart("line", [
-  { name: "Actual", labels: MO6, values: [110.5, 207.3, 246.6, 341.1, 426.7, 551.0] },
-  { name: "Plan (budget)", labels: MO6, values: [169.1, 338.2, 507.3, 676.4, 845.5, 1014.6] },
-  { name: "Prior year (pace)", labels: MO6, values: [66.5, 133.0, 199.6, 266.1, 332.6, 399.1] },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1,
-  chartColors: [BLUE, MUTED, "B8B6AF"], lineSize: 3, lineSmooth: false,
-  lineDataSymbol: "circle", lineDataSymbolSize: 6,
-  showLegend: true, legendPos: "b", legendColor: INK2, legendFontSize: 11,
-  valAxisTitle: "$K cumulative", showValAxisTitle: true, valAxisTitleColor: INK2, valAxisTitleFontSize: 11,
-}, axisQuiet));
+chartImg(s, "rev", M, 1.9, 8.6);
 let rx = M + 8.9, rw = W - M - rx;
 [["$551K", "actual YTD — 54.3% of the $1,014.6K plan"],
  ["+38.1%", "ahead of prior-year pace ($399K)"],
@@ -122,16 +121,7 @@ foot(s, "Prior-year line is a constant-pace approximation to the actual June YTD
 s = pres.addSlide();
 eyebrow(s, "Where we stand");
 slideTitle(s, "Gross margin by month vs the 61.6% budget assumption");
-s.addChart([
-  { type: "bar", data: [{ name: "Gross margin %", labels: MO6, values: [47.6, 25.0, -39.9, 35.6, -21.1, 36.8] }],
-    options: { chartColors: [BLUE], barGapWidthPct: 120, showValue: true, dataLabelPosition: "outEnd",
-      dataLabelColor: INK, dataLabelFontSize: 10, dataLabelFormatCode: '0.0"%"' } },
-  { type: "line", data: [{ name: "Budget 61.6%", labels: MO6, values: [61.6, 61.6, 61.6, 61.6, 61.6, 61.6] }],
-    options: { chartColors: [MUTED], lineSize: 2, lineDash: "dash", lineDataSymbol: "none" } },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1,
-  showLegend: true, legendPos: "b", legendColor: INK2, legendFontSize: 11,
-  valAxisMinVal: -60, valAxisMaxVal: 80, valAxisLabelFormatCode: '0"%"',
-}, axisQuiet));
+chartImg(s, "gm", M, 2.3, 8.6);
 [["22.2%", "gross margin YTD — vs 61.6% budgeted"],
  ["2 months", "negative gross profit (Mar, May) on write-downs and thin billing"],
  ["36.8%", "June margin, near-breakeven operating month (−$9.8K before interest)"],
@@ -145,23 +135,15 @@ foot(s, "GL income statements, Jan–Jun 2026. Budget gross margin implied by th
 s = pres.addSlide();
 eyebrow(s, "Operating drivers");
 slideTitle(s, "The rate ladder — where the card rate goes");
-s.addChart("bar", [
-  { name: "$/billable hour", labels: ["Direct labor cost", "Realized rate", "Blended card rate"],
-    values: [95.13, 122.32, 154.47] },
-], Object.assign({ x: M, y: 1.6, w: 7.6, h: 3.4, barDir: "bar",
-  chartColors: [BLUE], barGapWidthPct: 80,
-  showValue: true, dataLabelPosition: "outEnd", dataLabelColor: INK, dataLabelFontSize: 12,
-  dataLabelFormatCode: '"$"0.00', showLegend: false,
-  valAxisMinVal: 0, valAxisMaxVal: 170, valAxisLabelFormatCode: '"$"0',
-}, axisQuiet));
-s.addShape("roundRect", { x: M, y: 5.3, w: 7.6, h: 1.25, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
+chartImg(s, "ladder", M, 2.4, 8.0);
+s.addShape("roundRect", { x: M, y: 4.3, w: 8.0, h: 1.25, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
 s.addText([
   { text: "Labor multiplier:  ", options: { color: INK2 } },
   { text: "1.29×", options: { bold: true, fontSize: 22, color: RED } },
   { text: " actual  vs  ", options: { color: INK2 } },
   { text: "2.60×", options: { bold: true, fontSize: 22 } },
   { text: " budgeted revenue per direct-labor dollar (healthy firms run 2.5–3.0×)", options: { color: INK2 } },
-], { x: M + 0.2, y: 5.5, w: 7.2, h: 0.85, fontSize: 13, fontFace: SANS, margin: 0 });
+], { x: M + 0.2, y: 4.5, w: 7.6, h: 0.85, fontSize: 13, fontFace: SANS, margin: 0 });
 rx = M + 8.0; rw = W - M - rx;
 [["79%", "realization — $32/hr of card rate not reaching revenue (~$145K in H1)"],
  ["Lead suspect", "intercompany pricing on HWC work (20% of sales); billing lag and write-offs also in scope"],
@@ -215,20 +197,7 @@ foot(s, "* No hours on the KPI utilization page — time booking to be confirmed
 s = pres.addSlide();
 eyebrow(s, "Operating drivers");
 slideTitle(s, "Billable utilization vs target, by person");
-const uNames = ["Roy Pierce", "Kevin Metts", "Collin Allen", "Taylor Nelson", "Francis Wagner",
-  "Hayley Worthen", "Bhkti Patel", "Craig Peterson", "Randy Pynenberg", "Auston Hopson"];
-const uAct = [32.7, 38.4, 57.6, 61.0, 62.5, 66.9, 74.4, 79.6, 89.7, 100.0];
-const uTgt = [42.4, 75.4, 80.1, 80.1, 70.7, 61.3, 70.7, 75.4, 95.0, 100.0];
-s.addChart("bar", [
-  { name: "Actual billable %", labels: uNames, values: uAct },
-  { name: "Target", labels: uNames, values: uTgt },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1, barDir: "bar",
-  chartColors: [BLUE, GRID], barGapWidthPct: 60, barOverlapPct: -20,
-  showValue: true, dataLabelPosition: "outEnd", dataLabelColor: INK2, dataLabelFontSize: 9,
-  dataLabelFormatCode: '0.0"%"',
-  showLegend: true, legendPos: "b", legendColor: INK2, legendFontSize: 11,
-  valAxisMinVal: 0, valAxisMaxVal: 110, valAxisLabelFormatCode: '0"%"',
-}, axisQuiet));
+chartImg(s, "ut", M, 2.2, 8.6);
 rx = M + 8.9; rw = W - M - rx;
 [["59.0%", "team billable utilization vs 75% median target"],
  ["3 people", "more than 15 points under their individual target (Kevin, Collin, Taylor)"],
@@ -243,16 +212,7 @@ foot(s, "Hours through 7/11/26. Randy Pynenberg (68 hrs) and Auston Hopson (18 h
 s = pres.addSlide();
 eyebrow(s, "Operating drivers");
 slideTitle(s, "Sales by customer — YTD June 2026");
-const cNames = ["Kokosing Industrial", "Great Lakes Energy", "Steuben County REMC", "Ambor Structures",
-  "Hydaker-Wheatlake (intercompany)", "CenterPoint Energy"];
-s.addChart("bar", [
-  { name: "Sales $K", labels: cNames, values: [7.7, 13.4, 15.3, 19.2, 111.5, 384.0] },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1, barDir: "bar",
-  chartColors: [BLUE], barGapWidthPct: 80,
-  showValue: true, dataLabelPosition: "outEnd", dataLabelColor: INK, dataLabelFontSize: 10,
-  dataLabelFormatCode: '"$"0.0"K"', showLegend: false,
-  valAxisLabelFormatCode: '"$"0"K"',
-}, axisQuiet));
+chartImg(s, "cu", M, 2.6, 8.6);
 rx = M + 8.9; rw = W - M - rx;
 [["69.7%", "of revenue is CenterPoint — matching its ~70% share of billable hours", RED],
  ["20.2%", "intercompany work for Hydaker-Wheatlake (rate treatment under review)", INK],
@@ -328,33 +288,74 @@ rx = M + 9.9; rw = W - M - rx;
 });
 foot(s, "KPI current-bids page, 7/11/26. Win probabilities are planning placeholders (2026 win rate or 50%) — Estimating to own final numbers and award dates.");
 
-/* ==================== 11 · FORECAST & COVERAGE ==================== */
+/* ==================== 11 · INTEGRATION WITH HWC ESTIMATING ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — one delivery organization");
+slideTitle(s, "One pursuit engine: Engineering + Estimating");
+s.addText("Today: two linked groups, one funnel forming", { x: M, y: 1.55, w: 6.2, h: 0.35,
+  fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
+s.addText([
+  { text: "A ~10-person estimating organization (Director of Estimating plus senior estimators) sits beside the 13-person engineering roster — same leadership, same customers.", options: { bullet: true, breakLine: true } },
+  { text: "Engineering already invests 405 hours YTD in bids and proposals — 20% of its non-billable time — but informally, after the estimate is framed.", options: { bullet: true, breakLine: true } },
+  { text: "EPC-paired pursuits (Hoosier, Consumers) are already priced with engineering scope inside them — the consolidated model exists in embryo.", options: { bullet: true } },
+], { x: M, y: 2.0, w: 6.2, h: 2.9, fontSize: 13, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 10 });
+const integ = [
+  ["1", "Single pursuit funnel", "One bid list owned jointly; engineering hours planned into every estimate from day one, not volunteered afterward."],
+  ["2", "Design-to-estimate loop", "Standard design packages and unit-hour norms feed estimating's cost baselines, so bids carry engineering reality."],
+  ["3", "Estimate-to-execution handoff", "The winning estimate becomes the project budget the weekly scorecard tracks — one number from bid to closeout."],
+];
+integ.forEach((p, i) => {
+  const y = 1.6 + i * 1.15;
+  s.addShape("ellipse", { x: M + 6.7, y: y + 0.02, w: 0.44, h: 0.44, fill: { color: BLUE } });
+  s.addText(p[0], { x: M + 6.7, y: y + 0.02, w: 0.44, h: 0.44, fontSize: 16, bold: true, color: "FFFFFF",
+    align: "center", valign: "middle", fontFace: SANS, margin: 0 });
+  s.addText(p[1], { x: M + 7.35, y, w: 5.2, h: 0.3, fontSize: 14.5, bold: true, color: INK, fontFace: SANS, margin: 0 });
+  s.addText(p[2], { x: M + 7.35, y: y + 0.32, w: 5.2, h: 0.75, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+s.addShape("roundRect", { x: M, y: 5.25, w: W - 2 * M, h: 1.25, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "Why it matters:  ", options: { bold: true, color: INK } },
+  { text: "cost variance is the biggest margin leak on the scorecard (individual jobs overran to −92% and −206%). Early engineering input into estimates is the structural fix — and it converts estimating support from overhead into billable pursuit capacity.", options: { color: INK2 } },
+], { x: M + 0.2, y: 5.45, w: W - 2 * M - 0.4, h: 0.9, fontSize: 13, fontFace: SANS, margin: 0 });
+
+/* ==================== 12 · CONSOLIDATED EPC OFFERING ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — the consolidated offering");
+slideTitle(s, "Refocus: pursue EPC with new clients as one offering");
+const chev = [
+  ["TODAY", "Support function", "Engineering supports HWC construction and bills hours", BLUE3, INK],
+  ["TRANSITION", "Prime engineer", "Early design control; engineering priced into every EPC bid", BLUE2, INK],
+  ["TARGET", "Engineer of Record", "Turnkey EPC — supply, engineering, construction sold and delivered together", BLUE, "FFFFFF"],
+];
+chev.forEach((c, i) => {
+  const x0 = M + i * 4.08, cw = 3.88, tx = x0 + (i === 0 ? 0.3 : 0.62), tw = cw - (i === 0 ? 0.95 : 1.25);
+  s.addShape("chevron", { x: x0, y: 1.55, w: cw, h: 1.6, fill: { color: c[3] }, line: { color: c[3] } });
+  s.addText(c[0], { x: tx, y: 1.72, w: tw, h: 0.24, fontSize: 9.5, bold: true, charSpacing: 2,
+    color: c[4] === "FFFFFF" ? "E8F0FB" : INK2, fontFace: SANS, margin: 0 });
+  s.addText(c[1], { x: tx, y: 1.97, w: tw, h: 0.32, fontSize: 14.5, bold: true, color: c[4], fontFace: SANS, margin: 0 });
+  s.addText(c[2], { x: tx, y: 2.3, w: tw, h: 0.78, fontSize: 10, color: c[4] === "FFFFFF" ? "E8F0FB" : INK2, fontFace: SANS, margin: 0 });
+});
+s.addText("What changes", { x: M, y: 3.45, w: 6.4, h: 0.35, fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
+s.addText([
+  { text: "Lead with one accountable offer — material supply, engineering, and construction priced and sold together, with single-point delivery risk the utility doesn't have to manage.", options: { bullet: true, breakLine: true } },
+  { text: "Aim it at new clients — the co-op and municipal pattern already responding (Hoosier, Steuben, Lansing BWL) — to grow revenue while cutting the 70% CenterPoint concentration.", options: { bullet: true, breakLine: true } },
+  { text: "Every EPC win feeds both P&Ls: construction margin to HWC, and 4–5% of contract value as engineering scope to CVR — the revenue that funds the capacity build toward $6M.", options: { bullet: true } },
+], { x: M, y: 3.9, w: 6.4, h: 2.6, fontSize: 13, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 10 });
+rx = M + 6.9; rw = W - M - rx;
+[["$12.6M", "of EPC-paired bids already in market with Hoosier and Consumers", BLUE],
+ ["4–5%", "engineering pull-through on every EPC contract won", BLUE],
+ ["67%", "2026 win rate — the consolidated offer is landing", GOOD],
+].forEach((t, i) => {
+  s.addText(t[0], { x: rx, y: 3.55 + i * 1.05, w: rw, h: 0.5, fontSize: 27, bold: true, color: t[2], fontFace: SANS, margin: 0 });
+  s.addText(t[1], { x: rx, y: 4.03 + i * 1.05, w: rw, h: 0.6, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+foot(s, "Integration path per the CVR strategy roadmap: support function → prime engineer → Engineer of Record / turnkey program support.");
+
+/* ==================== 13 · FORECAST & COVERAGE ==================== */
 s = pres.addSlide();
 eyebrow(s, "Forward view — Phase 2 model, Base scenario");
 slideTitle(s, "Forecast revenue & work coverage, Jul 2026 – Dec 2027");
-const M18 = ["Jul 26", "Aug 26", "Sep 26", "Oct 26", "Nov 26", "Dec 26", "Jan 27", "Feb 27", "Mar 27",
-  "Apr 27", "May 27", "Jun 27", "Jul 27", "Aug 27", "Sep 27", "Oct 27", "Nov 27", "Dec 27"];
-const FCST = [128.5, 132.3, 136.1, 154.0, 158.3, 162.7, 182.4, 187.3, 192.3, 197.3, 202.4, 219.3,
-  219.3, 219.3, 219.3, 219.3, 219.3, 219.3];
-const JOBS = [[32.1, 5], [212.5, 17], [59.2, 3], [4.9, 2], [71.8, 1], [15.0, 1], [1.8, 3], [106.2, 13], [193.3, 15]];
-const BIDS = [[100, 0.50, 2, 6], [160, 0.50, 4, 12], [290, 0.50, 4, 12], [1350, 0.50, 5, 18], [276, 0.67, 4, 12]];
-const backlog = new Array(18).fill(0);
-JOBS.forEach(([rem, end]) => { const m = rem / (end + 1); for (let i = 0; i <= end && i < 18; i++) backlog[i] += m; });
-const pipe = new Array(18).fill(0);
-BIDS.forEach(([val, p, st, dur]) => { const m = val * p / dur; for (let i = st; i < Math.min(st + dur, 18); i++) pipe[i] += m; });
-const r1 = v => Math.round(v * 10) / 10;
-s.addChart([
-  { type: "area", data: [
-      { name: "Booked backlog", labels: M18, values: backlog.map(r1) },
-      { name: "Weighted pipeline", labels: M18, values: pipe.map(r1) },
-    ], options: { chartColors: [BLUE2, BLUE3], barGrouping: "stacked" } },
-  { type: "line", data: [{ name: "Forecast (Base)", labels: M18, values: FCST }],
-    options: { chartColors: [BLUE], lineSize: 3, lineDataSymbol: "none" } },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1,
-  showLegend: true, legendPos: "b", legendColor: INK2, legendFontSize: 11,
-  valAxisMinVal: 0, valAxisMaxVal: 250, valAxisLabelFormatCode: '"$"0"K"',
-  catAxisLabelFrequency: 3,
-}, axisQuiet));
+chartImg(s, "cov", M, 2.2, 8.6);
 rx = M + 8.9; rw = W - M - rx;
 [["49%", "of the 18-month forecast covered by backlog + weighted pipeline", BLUE],
  ["21%", "covered by booked backlog alone", INK],
@@ -422,16 +423,7 @@ foot(s, "Phase 2 forecast model — scenarios switchable in CVR_Model_Phase2_For
 s = pres.addSlide();
 eyebrow(s, "Forward view");
 slideTitle(s, "Cash & the USC parent note — the early-warning gauge");
-const NOTE = [3436.6, 3508.0, 3526.7, 3541.8, 3570.6, 3574.6, 3574.3, 3587.9, 3574.2, 3555.7,
-  3532.2, 3503.6, 3486.3, 3443.5, 3400.6, 3357.6, 3314.6, 3271.5, 3228.3];
-const NM19 = ["Jun 26"].concat(M18);
-s.addChart("line", [
-  { name: "Parent-note balance ($K)", labels: NM19, values: NOTE },
-], Object.assign({ x: M, y: 1.5, w: 8.6, h: 5.1,
-  chartColors: [BLUE], lineSize: 3, lineDataSymbol: "none", lineSmooth: false,
-  showLegend: false, valAxisMinVal: 3100, valAxisMaxVal: 3700,
-  valAxisLabelFormatCode: '"$"#,##0"K"', catAxisLabelFrequency: 3,
-}, axisQuiet));
+chartImg(s, "note", M, 2.0, 8.0);
 rx = M + 8.9; rw = W - M - rx;
 [["$3.44M", "note balance at 6/30/26 — CVR's entire funding runs through this account", INK],
  ["$3.59M", "Base-case peak in Jan-27, then a steady decline", INK],
