@@ -1,0 +1,647 @@
+<title>CVR Financial Dashboard — June 2026</title>
+<style>
+  :root {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7;
+    --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
+    --accent-a35: rgba(42,120,214,0.35); --accent-a16: rgba(42,120,214,0.16);
+    --neg: #e34948; --good: #006300; --ring: rgba(11,11,11,0.10); --brand-green: #86b332;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+      --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --accent: #3987e5; --accent-wash: rgba(57,135,229,0.12);
+      --accent-a35: rgba(57,135,229,0.40); --accent-a16: rgba(57,135,229,0.18);
+      --neg: #e66767; --good: #0ca30c; --ring: rgba(255,255,255,0.10);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --accent: #3987e5; --accent-wash: rgba(57,135,229,0.12);
+    --accent-a35: rgba(57,135,229,0.40); --accent-a16: rgba(57,135,229,0.18);
+    --neg: #e66767; --good: #0ca30c; --ring: rgba(255,255,255,0.10);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7;
+    --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
+    --accent-a35: rgba(42,120,214,0.35); --accent-a16: rgba(42,120,214,0.16);
+    --neg: #e34948; --good: #006300; --ring: rgba(11,11,11,0.10);
+    color-scheme: light;
+  }
+  body {
+    background: var(--page); color: var(--ink);
+    font: 14.5px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0; padding: 28px 20px 56px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  .page { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .masthead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px;
+    font-weight: 600; color: var(--ink-2);
+  }
+  .eyebrow::before {
+    content: ""; display: inline-block; width: 14px; height: 3px;
+    background: var(--brand-green); margin-right: 8px; vertical-align: 3px;
+  }
+  h1 { font-size: 23px; margin: 5px 0 2px; letter-spacing: -0.01em; }
+  .masthead p { margin: 0; color: var(--ink-2); font-size: 13px; }
+  .printbtn {
+    font: 600 13px/1 system-ui, sans-serif; color: var(--accent); background: transparent;
+    border: 1.5px solid var(--accent); border-radius: 7px; padding: 9px 16px; cursor: pointer;
+  }
+  .printbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  h2.section {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em;
+    color: var(--ink-2); margin: 4px 0 -6px; font-weight: 700;
+  }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (min-width: 720px) { .kpis { grid-template-columns: repeat(6, 1fr); } }
+  .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 11px 14px; }
+  .tile .label { font-size: 11.5px; color: var(--ink-2); }
+  .tile .value { font-size: 21px; font-weight: 650; margin-top: 1px; }
+  .tile .delta { font-size: 11.5px; color: var(--ink-2); margin-top: 1px; }
+  .card { background: var(--surface); border: 1px solid var(--ring); border-radius: 10px; padding: 16px 18px 12px; position: relative; }
+  .card h3 { font-size: 15px; margin: 0 0 1px; }
+  .card .sub { font-size: 12.5px; color: var(--ink-2); margin: 0 0 10px; }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--ink-2); margin: 2px 0 8px; flex-wrap: wrap; align-items: center; }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend svg { display: block; }
+  .chart-box { position: relative; }
+  .chart-box svg.main { display: block; width: 100%; height: auto; }
+  .tip {
+    position: absolute; pointer-events: none; background: var(--surface);
+    border: 1px solid var(--ring); border-radius: 7px; padding: 8px 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.13); font-size: 12px; display: none; min-width: 168px; z-index: 3;
+  }
+  .tip .head { color: var(--ink-2); margin-bottom: 4px; font-weight: 600; }
+  .tip .row { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+  .tip .row .name { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+  .tip .row .val { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .foot { font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+  .seg { display: inline-flex; border: 1px solid var(--ring); border-radius: 7px; overflow: hidden; }
+  .seg button {
+    font: 600 12px/1 system-ui, sans-serif; padding: 7px 12px; border: 0;
+    background: transparent; color: var(--ink-2); cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 8px; }
+  .readout { font-size: 12px; color: var(--ink-2); }
+  .readout strong { color: var(--ink); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-2); font-weight: 600; font-size: 12px; }
+  td.strong { font-weight: 650; }
+  td.neg { color: var(--neg); font-weight: 600; }
+  td.pos { color: var(--good); font-weight: 600; }
+  .duo { display: grid; gap: 16px; }
+  @media (min-width: 860px) { .duo { grid-template-columns: 1fr 1fr; } }
+  .hit:focus { outline: none; }
+  .hit:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  @page { size: letter; margin: 11mm; }
+  @media print {
+    :root, :root[data-theme="dark"] {
+      --page: #ffffff; --surface: #ffffff; --ink: #0b0b0b; --ink-2: #52514e;
+      --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7;
+      --accent: #2a78d6; --accent-wash: rgba(42,120,214,0.10);
+      --accent-a35: rgba(42,120,214,0.35); --accent-a16: rgba(42,120,214,0.16);
+      --neg: #d03b3b; --good: #006300; --ring: rgba(11,11,11,0.18);
+    }
+    body { padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12.5px; }
+    .wrap { max-width: none; }
+    .page { break-after: page; margin-bottom: 0; gap: 10px; }
+    .page:last-child { break-after: auto; }
+    .no-print { display: none !important; }
+    .card { border-radius: 6px; padding: 10px 14px 8px; break-inside: avoid; }
+    .tile .value { font-size: 18px; }
+    .tip { display: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <!-- ============================ PAGE 1 — BASELINE ============================ -->
+  <div class="page">
+    <div class="masthead">
+      <div>
+        <div class="eyebrow">CVR Engineering · Utility Supply &amp; Construction</div>
+        <h1>Financial Dashboard — June 2026</h1>
+        <p>Baseline through 6/30/26 (GL) · forecast through 12/2027 (Phase 2 model, Base scenario) · prepared July 2026</p>
+      </div>
+      <button class="printbtn no-print" onclick="window.print()">Print / PDF</button>
+    </div>
+
+    <div class="kpis">
+      <div class="tile"><div class="label">YTD revenue</div><div class="value">$551K</div><div class="delta">June $124K — best month</div></div>
+      <div class="tile"><div class="label">vs plan</div><div class="value">54.3%</div><div class="delta">$464K behind budget</div></div>
+      <div class="tile"><div class="label">vs prior year</div><div class="value">+38.1%</div><div class="delta">PY YTD $399K</div></div>
+      <div class="tile"><div class="label">Gross margin YTD</div><div class="value">22.2%</div><div class="delta">budget assumes 61.6%</div></div>
+      <div class="tile"><div class="label">Utilization</div><div class="value">59.0%</div><div class="delta">vs 75% median target</div></div>
+      <div class="tile"><div class="label">Realization</div><div class="value">79%</div><div class="delta">$122 realized vs $154 card</div></div>
+    </div>
+
+    <h2 class="section">Where we stand</h2>
+    <div class="card">
+      <h3>Cumulative revenue — Actual vs Plan vs Prior Year ($K)</h3>
+      <p class="sub">Every month below the flat $169K/month plan; well ahead of last year, June strongest.</p>
+      <div class="legend" id="legend-rev"></div>
+      <div class="chart-box" id="chart-rev"></div>
+      <div class="foot">Prior-year line: constant-pace approximation to the actual June YTD of $399.1K (monthly 2025 detail pending).</div>
+    </div>
+
+    <div class="card">
+      <h3>Gross margin by month vs the 61.6% budget assumption</h3>
+      <p class="sub">March and May went negative on write-downs and thin billing; even the best months run ~25 points under budget.</p>
+      <div class="legend" id="legend-gm"></div>
+      <div class="chart-box" id="chart-gm"></div>
+    </div>
+  </div>
+
+  <!-- ============================ PAGE 2 — OPERATIONS ============================ -->
+  <div class="page">
+    <h2 class="section">Operating drivers</h2>
+    <div class="card">
+      <h3>Billable utilization vs target, by person (2026 YTD)</h3>
+      <p class="sub">Bar = actual billable share; tick = individual target. Team 59.0% vs 75% median target.</p>
+      <div class="legend" id="legend-ut"></div>
+      <div class="chart-box" id="chart-ut"></div>
+      <div class="foot">Hours through 7/11/26. Randy Pynenberg and Auston Hopson have small YTD hour bases (68 / 18 hrs).</div>
+    </div>
+
+    <div class="card">
+      <h3>Sales by customer, YTD June 2026 ($K)</h3>
+      <p class="sub">CenterPoint 69.7% of revenue; intercompany Hydaker-Wheatlake work 20.2%; all other externals ~10%.</p>
+      <div class="legend" id="legend-cu"></div>
+      <div class="chart-box" id="chart-cu"></div>
+    </div>
+
+    <div class="card">
+      <h3>The rate ladder — where the card rate goes ($/billable hour, H1)</h3>
+      <p class="sub">Blended card $154.47 → realized $122.32 (79%) → direct labor cost $95.13. Revenue per direct-labor dollar: 1.29× vs 2.60× budgeted.</p>
+      <div class="chart-box" id="chart-ladder"></div>
+    </div>
+  </div>
+
+  <!-- ============================ PAGE 3 — FORWARD VIEW ============================ -->
+  <div class="page">
+    <h2 class="section">Forward view — Phase 2 forecast (Base scenario)</h2>
+
+    <div class="card">
+      <h3>Forecast revenue &amp; work coverage, Jul 2026 – Dec 2027 ($K/month)</h3>
+      <p class="sub">Driver-based forecast against booked backlog burn and the win-weighted bid pipeline.</p>
+      <div class="controls">
+        <div class="seg no-print" role="group" aria-label="Coverage basis">
+          <button id="tg-backlog" aria-pressed="false">Booked backlog only</button>
+          <button id="tg-pipe" aria-pressed="true">+ weighted pipeline</button>
+        </div>
+        <span class="readout" id="cov-readout"></span>
+      </div>
+      <div class="legend" id="legend-cov"></div>
+      <div class="chart-box" id="chart-cov"></div>
+      <div class="foot">Backlog = remaining PO value on nine active jobs to scheduled finish. Pipeline = pending bids × win
+        probability over expected durations (Lansing BWL $1,350K at 50% is the largest). The unshaded gap is the BD origination target.</div>
+    </div>
+
+    <div class="duo">
+      <div class="card">
+        <h3>FY2026 landing &amp; FY2027 outlook ($K)</h3>
+        <p class="sub">H1 actual + H2 Base forecast vs the official budget; FY27 vs the $6M Year-2 goal.</p>
+        <table>
+          <tr><th>FY2026</th><th>H1 act</th><th>H2 fcst</th><th>FY land</th><th>Budget</th></tr>
+          <tr><td>Revenue</td><td>551.0</td><td>872.0</td><td class="strong">1,423.0</td><td>2,029.1</td></tr>
+          <tr><td>Gross profit</td><td>122.5</td><td>422.4</td><td class="strong">544.9</td><td>1,249.4</td></tr>
+          <tr><td>Operating income</td><td class="neg">−290.5</td><td>−0.5</td><td class="neg">−291.0</td><td>139.4</td></tr>
+          <tr><td>Net income</td><td class="neg">−320.5</td><td>−31.3</td><td class="neg">−351.8</td><td>139.4</td></tr>
+          <tr><th style="padding-top:10px">FY2027</th><th></th><th></th><th>Fcst</th><th>Goal</th></tr>
+          <tr><td>Revenue</td><td></td><td></td><td class="strong">2,496.6</td><td>6,000 <span style="color:var(--muted)">(42%)</span></td></tr>
+          <tr><td>Net income</td><td></td><td></td><td class="pos">+431.6</td><td></td></tr>
+          <tr><td>OILI return</td><td></td><td></td><td class="strong">17.3%</td><td>20%</td></tr>
+        </table>
+        <div class="foot">Monthly net income turns positive in Nov 2026. The 20% OILI return is within reach on performance;
+          the $6M revenue goal is a capacity build (~27 billable FTEs vs 13 in the Base path).</div>
+      </div>
+
+      <div class="card">
+        <h3>Scenario comparison</h3>
+        <p class="sub">Same engine, three driver paths (utilization · realization · hiring).</p>
+        <table>
+          <tr><th>Scenario</th><th>FY26 NI</th><th>FY27 rev</th><th>FY27 NI</th><th>OILI %</th></tr>
+          <tr><td>Upside <span style="color:var(--muted)">(75% · 95% · 16 FTE)</span></td><td class="neg">−205</td><td>3,436</td><td class="pos">+1,054</td><td>30.7%</td></tr>
+          <tr><td class="strong">Base <span style="color:var(--muted)">(70% · 90% · 13 FTE)</span></td><td class="neg">−352</td><td class="strong">2,497</td><td class="pos">+432</td><td class="strong">17.3%</td></tr>
+          <tr><td>Downside <span style="color:var(--muted)">(no change)</span></td><td class="neg">−444</td><td>1,542</td><td class="neg">−205</td><td>−13.3%</td></tr>
+        </table>
+        <div class="chart-box" id="chart-note" style="margin-top:10px;max-width:460px"></div>
+        <div class="foot">USC parent-note balance, Base scenario: peaks $3,588K in Jan-27, ends 2027 at $3,228K (−$209K).
+          If the balance isn’t flattening by Q1-27, the drivers aren’t moving.</div>
+      </div>
+    </div>
+
+    <div class="foot" style="text-align:center">
+      Sources: GL financial statements 6/30/26 · CVR &amp; EPC KPI report 7/11/26 · 2026 rate sheet ·
+      CVR_Model_Phase1_Baseline.xlsx · CVR_Model_Phase2_Forecast.xlsx — CVR---Financial repository
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (n, at) => { const e = document.createElementNS(NS, n); for (const k in at) e.setAttribute(k, at[k]); return e; };
+  const txt = (x, y, s, at) => { const t = el("text", Object.assign({ x, y, "font-size": 11, fill: "var(--muted)" }, at || {})); t.textContent = s; return t; };
+  const fmtK = (v, d) => "$" + v.toLocaleString(undefined, { minimumFractionDigits: d == null ? 1 : d, maximumFractionDigits: d == null ? 1 : d }) + "K";
+  function makeTip(box) {
+    const tip = document.createElement("div"); tip.className = "tip"; box.appendChild(tip);
+    return {
+      show(head, rows, px, py) {
+        while (tip.firstChild) tip.removeChild(tip.firstChild);
+        const h = document.createElement("div"); h.className = "head"; h.textContent = head; tip.appendChild(h);
+        rows.forEach(([name, color, value, dash]) => {
+          const r = document.createElement("div"); r.className = "row";
+          const nm = document.createElement("span"); nm.className = "name";
+          if (color) {
+            const sv = document.createElementNS(NS, "svg");
+            sv.setAttribute("width", 14); sv.setAttribute("height", 4); sv.setAttribute("viewBox", "0 0 14 4");
+            sv.appendChild(el("line", { x1: 0, x2: 14, y1: 2, y2: 2, stroke: color, "stroke-width": 3,
+              ...(dash ? { "stroke-dasharray": "4 3" } : {}) }));
+            nm.appendChild(sv);
+          }
+          nm.appendChild(document.createTextNode(name));
+          const val = document.createElement("span"); val.className = "val"; val.textContent = value;
+          r.appendChild(nm); r.appendChild(val); tip.appendChild(r);
+        });
+        const bb = box.getBoundingClientRect();
+        tip.style.display = "block";
+        const flip = px > bb.width * 0.62;
+        tip.style.left = Math.max(4, flip ? px - tip.offsetWidth - 14 : px + 14) + "px";
+        tip.style.top = Math.max(4, py - 24) + "px";
+      },
+      hide() { tip.style.display = "none"; }
+    };
+  }
+  const sx = (box, W) => box.getBoundingClientRect().width / W;
+  const lineKey = (lg, name, color, dash, isRect) => {
+    const k = document.createElement("span"); k.className = "key";
+    const sv = document.createElementNS(NS, "svg");
+    sv.setAttribute("width", isRect ? 14 : 22); sv.setAttribute("height", isRect ? 12 : 6);
+    sv.setAttribute("viewBox", isRect ? "0 0 14 12" : "0 0 22 6");
+    sv.appendChild(isRect ? el("rect", { x: 0, y: 0, width: 14, height: 12, rx: 3, fill: color })
+      : el("line", { x1: 1, x2: 21, y1: 3, y2: 3, stroke: color, "stroke-width": 2.5,
+          "stroke-linecap": "round", ...(dash ? { "stroke-dasharray": dash } : {}) }));
+    k.appendChild(sv); k.appendChild(document.createTextNode(name));
+    document.getElementById(lg).appendChild(k);
+  };
+
+  /* ---- 1. Cumulative revenue ---- */
+  (function () {
+    const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const ACT = [110.5, 207.3, 246.6, 341.1, 426.7, 551.0];
+    const PLAN = [169.1, 338.2, 507.3, 676.4, 845.5, 1014.6];
+    const PY = [66.5, 133.0, 199.6, 266.1, 332.6, 399.1];
+    const W = 940, H = 330, L = 48, R = 140, T = 14, B = 28, PW = W - L - R, PH = H - T - B, YMAX = 1100;
+    const x = i => L + i * PW / 5, y = v => T + (1 - v / YMAX) * PH;
+    const box = document.getElementById("chart-rev");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Cumulative 2026 revenue: actual versus plan versus prior-year pace" });
+    box.appendChild(svg);
+    [0, 250, 500, 750, 1000].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 7, y(v) + 4, v.toLocaleString(), { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
+    });
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
+    M.forEach((m, i) => svg.appendChild(txt(x(i), H - 8, m + " 26", { "text-anchor": "middle", "font-size": 11.5 })));
+    const path = pts => pts.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ");
+    svg.appendChild(el("path", { d: path(ACT) + ` L ${x(5)} ${y(0)} L ${x(0)} ${y(0)} Z`, fill: "var(--accent-wash)" }));
+    [["Plan", PLAN, "var(--muted)", ""], ["PY", PY, "var(--muted)", "6 5"], ["Actual", ACT, "var(--accent)", ""]]
+      .forEach(([n, d, c, dash]) => {
+        svg.appendChild(el("path", { d: path(d), fill: "none", stroke: c, "stroke-width": n === "Actual" ? 2.5 : 2,
+          "stroke-linecap": "round", "stroke-linejoin": "round", ...(dash ? { "stroke-dasharray": dash } : {}) }));
+        svg.appendChild(el("circle", { cx: x(5), cy: y(d[5]), r: 6, fill: "var(--surface)" }));
+        svg.appendChild(el("circle", { cx: x(5), cy: y(d[5]), r: 4, fill: c }));
+      });
+    const endLabel = (v, name) => {
+      const t = el("text", { x: x(5) + 10, y: y(v) + 4, "font-size": 12, fill: "var(--ink-2)" });
+      t.textContent = name + " ";
+      const b = el("tspan", { "font-weight": 600, fill: "var(--ink)" });
+      b.textContent = "$" + Math.round(v).toLocaleString() + "K"; t.appendChild(b);
+      svg.appendChild(t);
+    };
+    endLabel(PLAN[5], "Plan"); endLabel(ACT[5], "Actual"); endLabel(PY[5], "Prior yr");
+    lineKey("legend-rev", "Actual", "var(--accent)");
+    lineKey("legend-rev", "Plan (2026 budget)", "var(--muted)");
+    lineKey("legend-rev", "Prior year (constant pace)", "var(--muted)", "6 5");
+    const tip = makeTip(box);
+    const cross = el("line", { y1: T, y2: T + PH, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
+    svg.appendChild(cross);
+    const show = i => {
+      cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+      tip.show(M[i] + " 2026 — cumulative",
+        [["Actual", "var(--accent)", fmtK(ACT[i])], ["Plan", "var(--muted)", fmtK(PLAN[i])], ["Prior yr", "var(--muted)", fmtK(PY[i]), 1]],
+        x(i) * sx(box, W), y(ACT[i]) * sx(box, W));
+    };
+    const hide = () => { cross.setAttribute("visibility", "hidden"); tip.hide(); };
+    svg.addEventListener("pointermove", e => {
+      const bb = svg.getBoundingClientRect(), mx = (e.clientX - bb.left) * W / bb.width;
+      if (mx < L - 20 || mx > L + PW + 20) { hide(); return; }
+      show(Math.max(0, Math.min(5, Math.round((mx - L) / (PW / 5)))));
+    });
+    svg.addEventListener("pointerleave", hide);
+  })();
+
+  /* ---- 2. Gross margin ---- */
+  (function () {
+    const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const GM = [47.6, 25.0, -39.9, 35.6, -21.1, 36.8];
+    const GP = [52.6, 24.2, -15.7, 33.7, -18.0, 45.8];
+    const BUD = 61.6;
+    const W = 940, H = 250, L = 48, R = 20, T = 16, B = 26, PW = W - L - R, PH = H - T - B;
+    const YMIN = -50, YMAX = 70;
+    const x = i => L + (i + 0.5) * PW / 6, y = v => T + (YMAX - v) / (YMAX - YMIN) * PH;
+    const box = document.getElementById("chart-gm");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Monthly gross margin percent versus budget assumption" });
+    box.appendChild(svg);
+    [-40, -20, 0, 20, 40, 60].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v),
+        stroke: v === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 7, y(v) + 4, v + "%", { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
+    });
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(BUD), y2: y(BUD), stroke: "var(--muted)",
+      "stroke-width": 2, "stroke-dasharray": "6 5" }));
+    svg.appendChild(txt(L + PW, y(BUD) - 6, "Budget 61.6%", { "text-anchor": "end", "font-size": 11.5, fill: "var(--ink-2)", "font-weight": 600 }));
+    M.forEach((m, i) => svg.appendChild(txt(x(i), H - 6, m + " 26", { "text-anchor": "middle", "font-size": 11.5 })));
+    const BW = 22, RD = 4;
+    const col = (cx, v) => {
+      const y0 = y(0), y1 = y(v), left = cx - BW / 2;
+      if (v >= 0)
+        return `M ${left} ${y0} L ${left} ${y1 + RD} Q ${left} ${y1} ${left + RD} ${y1} L ${left + BW - RD} ${y1} Q ${left + BW} ${y1} ${left + BW} ${y1 + RD} L ${left + BW} ${y0} Z`;
+      return `M ${left} ${y0} L ${left} ${y1 - RD} Q ${left} ${y1} ${left + RD} ${y1} L ${left + BW - RD} ${y1} Q ${left + BW} ${y1} ${left + BW} ${y1 - RD} L ${left + BW} ${y0} Z`;
+    };
+    const tip = makeTip(box);
+    GM.forEach((v, i) => {
+      svg.appendChild(el("path", { d: col(x(i), v), fill: v >= 0 ? "var(--accent)" : "var(--neg)" }));
+      svg.appendChild(txt(x(i), y(v) + (v >= 0 ? -6 : 14), v.toFixed(1) + "%",
+        { "text-anchor": "middle", "font-size": 11.5, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: x(i) - PW / 12, y: T, width: PW / 6, height: PH, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": M[i] + " gross margin " + v.toFixed(1) + " percent" });
+      const s = () => tip.show(M[i] + " 2026", [
+        ["Gross margin", v >= 0 ? "var(--accent)" : "var(--neg)", v.toFixed(1) + "%"],
+        ["Gross profit", null, fmtK(GP[i])], ["vs budget", null, (v - BUD).toFixed(1) + " pts"]],
+        x(i) * sx(box, W), y(Math.max(v, 0)) * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    lineKey("legend-gm", "Positive month", "var(--accent)", "", true);
+    lineKey("legend-gm", "Negative month", "var(--neg)", "", true);
+    lineKey("legend-gm", "Budget assumption", "var(--muted)", "5 4");
+  })();
+
+  /* ---- 3. Utilization ---- */
+  (function () {
+    const DATA = [
+      ["Auston Hopson", 100.0, 100.0, 18], ["Randy Pynenberg", 89.7, 95.0, 68],
+      ["Craig Peterson", 79.6, 75.4, 1017], ["Bhkti Patel", 74.4, 70.7, 1045],
+      ["Hayley Worthen", 66.9, 61.3, 952], ["Francis Wagner", 62.5, 70.7, 992],
+      ["Taylor Nelson", 61.0, 80.1, 1045], ["Collin Allen", 57.6, 80.1, 985],
+      ["Kevin Metts", 38.4, 75.4, 890], ["Roy Pierce", 32.7, 42.4, 847],
+    ];
+    const W = 940, ROW = 27, L = 146, R = 56, T = 6, PW = W - L - R;
+    const H = T + DATA.length * ROW + 22;
+    const x = v => L + v / 100 * PW;
+    const box = document.getElementById("chart-ut");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Billable utilization by person versus individual targets" });
+    box.appendChild(svg);
+    [0, 25, 50, 75, 100].forEach(v => {
+      svg.appendChild(el("line", { x1: x(v), x2: x(v), y1: T, y2: T + DATA.length * ROW, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(x(v), H - 4, v + "%", { "text-anchor": "middle" }));
+    });
+    const tip = makeTip(box);
+    DATA.forEach(([name, act, tgt, hrs], i) => {
+      const cy = T + i * ROW + ROW / 2;
+      svg.appendChild(txt(L - 9, cy + 4, name, { "text-anchor": "end", "font-size": 12, fill: "var(--ink-2)" }));
+      svg.appendChild(el("rect", { x: x(0), y: cy - 8, width: Math.max(2, x(act) - x(0) - 8), height: 16, fill: "var(--accent)" }));
+      svg.appendChild(el("rect", { x: Math.max(x(0), x(act) - 8), y: cy - 8, width: 8, height: 16, rx: 4, fill: "var(--accent)" }));
+      svg.appendChild(el("rect", { x: x(tgt) - 1, y: cy - 11, width: 2.5, height: 22, fill: "var(--ink)" }));
+      let lx = x(act) + 7;
+      if (tgt > act && x(tgt) < lx + 40) lx = x(tgt) + 7;
+      svg.appendChild(txt(lx, cy + 4, act.toFixed(1) + "%", { "font-size": 11.5, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: 0, y: cy - ROW / 2, width: W, height: ROW, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": name + ": " + act + " percent versus " + tgt + " percent target" });
+      const s = () => tip.show(name, [
+        ["Billable", "var(--accent)", act.toFixed(1) + "%"], ["Target", null, tgt.toFixed(1) + "%"],
+        ["vs target", null, (act - tgt >= 0 ? "+" : "") + (act - tgt).toFixed(1) + " pts"],
+        ["Total hours", null, hrs.toLocaleString()]],
+        x(Math.min(act, 78)) * sx(box, W), cy * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    lineKey("legend-ut", "Actual billable %", "var(--accent)", "", true);
+    const k = document.createElement("span"); k.className = "key";
+    const sv = document.createElementNS(NS, "svg");
+    sv.setAttribute("width", 12); sv.setAttribute("height", 14); sv.setAttribute("viewBox", "0 0 12 14");
+    sv.appendChild(el("rect", { x: 5, y: 0, width: 2.5, height: 14, fill: "var(--ink)" }));
+    k.appendChild(sv); k.appendChild(document.createTextNode("Individual target"));
+    document.getElementById("legend-ut").appendChild(k);
+  })();
+
+  /* ---- 4. Customers ---- */
+  (function () {
+    const DATA = [
+      ["CenterPoint Energy", 383.956, "external"],
+      ["Hydaker-Wheatlake (intercompany)", 111.455, "ic"],
+      ["Ambor Structures", 19.2, "external"],
+      ["Steuben County REMC", 15.3, "external"],
+      ["Great Lakes Energy", 13.377, "external"],
+      ["Kokosing Industrial", 7.725, "external"],
+    ];
+    const W = 940, ROW = 27, L = 224, R = 78, T = 6, PW = W - L - R;
+    const H = T + DATA.length * ROW + 22, XMAX = 400;
+    const x = v => L + v / XMAX * PW;
+    const box = document.getElementById("chart-cu");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img", "aria-label": "Sales by customer" });
+    box.appendChild(svg);
+    [0, 100, 200, 300, 400].forEach(v => {
+      svg.appendChild(el("line", { x1: x(v), x2: x(v), y1: T, y2: T + DATA.length * ROW, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(x(v), H - 4, "$" + v + "K", { "text-anchor": "middle" }));
+    });
+    const total = DATA.reduce((a, d) => a + d[1], 0);
+    const tip = makeTip(box);
+    DATA.forEach(([name, v, typ], i) => {
+      const cy = T + i * ROW + ROW / 2;
+      svg.appendChild(txt(L - 9, cy + 4, name, { "text-anchor": "end", "font-size": 12, fill: "var(--ink-2)" }));
+      const fill = typ === "ic" ? "var(--accent-a35)" : "var(--accent)";
+      svg.appendChild(el("rect", { x: x(0), y: cy - 8, width: Math.max(2, x(v) - x(0) - 8), height: 16, fill }));
+      svg.appendChild(el("rect", { x: Math.max(x(0), x(v) - 8), y: cy - 8, width: 8, height: 16, rx: 4, fill }));
+      svg.appendChild(txt(x(v) + 7, cy + 4, fmtK(v, 1), { "font-size": 11.5, fill: "var(--ink)", "font-weight": 600 }));
+      const hit = el("rect", { x: 0, y: cy - ROW / 2, width: W, height: ROW, fill: "transparent",
+        class: "hit", tabindex: 0, "aria-label": name + " " + fmtK(v) });
+      const s = () => tip.show(name, [["Sales", fill, fmtK(v)], ["Share", null, (v / total * 100).toFixed(1) + "%"],
+        ["Type", null, typ === "ic" ? "intercompany" : "external"]],
+        x(Math.min(v, 290)) * sx(box, W), cy * sx(box, W));
+      hit.addEventListener("pointermove", s); hit.addEventListener("focus", s);
+      hit.addEventListener("pointerleave", tip.hide); hit.addEventListener("blur", tip.hide);
+      svg.appendChild(hit);
+    });
+    lineKey("legend-cu", "External customer", "var(--accent)", "", true);
+    lineKey("legend-cu", "Intercompany (HWC)", "var(--accent-a35)", "", true);
+  })();
+
+  /* ---- 5. Rate ladder ---- */
+  (function () {
+    const STEPS = [["Blended card rate", 154.47], ["Realized rate (79%)", 122.32], ["Direct labor cost", 95.13]];
+    const W = 940, ROW = 30, L = 200, R = 70, T = 6, PW = W - L - R, XMAX = 160;
+    const H = T + STEPS.length * ROW + 22;
+    const x = v => L + v / XMAX * PW;
+    const box = document.getElementById("chart-ladder");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Rate ladder from card rate to realized rate to direct labor cost per billable hour" });
+    box.appendChild(svg);
+    [0, 40, 80, 120, 160].forEach(v => {
+      svg.appendChild(el("line", { x1: x(v), x2: x(v), y1: T, y2: T + STEPS.length * ROW, stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(x(v), H - 4, "$" + v, { "text-anchor": "middle" }));
+    });
+    const fills = ["var(--accent)", "var(--accent-a35)", "var(--accent-a16)"];
+    STEPS.forEach(([name, v], i) => {
+      const cy = T + i * ROW + ROW / 2;
+      svg.appendChild(txt(L - 9, cy + 4, name, { "text-anchor": "end", "font-size": 12, fill: "var(--ink-2)" }));
+      svg.appendChild(el("rect", { x: x(0), y: cy - 9, width: Math.max(2, x(v) - x(0) - 8), height: 18, fill: fills[i] }));
+      svg.appendChild(el("rect", { x: Math.max(x(0), x(v) - 8), y: cy - 9, width: 8, height: 18, rx: 4, fill: fills[i] }));
+      svg.appendChild(txt(x(v) + 7, cy + 4, "$" + v.toFixed(2), { "font-size": 11.5, fill: "var(--ink)", "font-weight": 600 }));
+    });
+  })();
+
+  /* ---- 6. Coverage with toggle ---- */
+  (function () {
+    const M = ["Jul 26", "Aug 26", "Sep 26", "Oct 26", "Nov 26", "Dec 26", "Jan 27", "Feb 27", "Mar 27",
+               "Apr 27", "May 27", "Jun 27", "Jul 27", "Aug 27", "Sep 27", "Oct 27", "Nov 27", "Dec 27"];
+    const N = 18;
+    const FCST = [128.5, 132.3, 136.1, 154.0, 158.3, 162.7, 182.4, 187.3, 192.3, 197.3, 202.4, 219.3,
+                  219.3, 219.3, 219.3, 219.3, 219.3, 219.3];
+    const JOBS = [[32.1, 5], [212.5, 17], [59.2, 3], [4.9, 2], [71.8, 1], [15.0, 1], [1.8, 3], [106.2, 13], [193.3, 15]];
+    const BIDS = [[100, 0.50, 2, 6], [160, 0.50, 4, 12], [290, 0.50, 4, 12], [1350, 0.50, 5, 18], [276, 0.67, 4, 12]];
+    const backlog = new Array(N).fill(0);
+    JOBS.forEach(([rem, end]) => { const m = rem / (end + 1); for (let i = 0; i <= end && i < N; i++) backlog[i] += m; });
+    const pipe = new Array(N).fill(0);
+    BIDS.forEach(([val, p, s, dur]) => { const m = val * p / dur; for (let i = s; i < Math.min(s + dur, N); i++) pipe[i] += m; });
+    const W = 940, H = 300, L = 48, R = 140, T = 14, B = 26, PW = W - L - R, PH = H - T - B, YMAX = 250;
+    const x = i => L + i * PW / (N - 1), y = v => T + (1 - v / YMAX) * PH;
+    const box = document.getElementById("chart-cov");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "Monthly forecast revenue with backlog and weighted pipeline coverage" });
+    box.appendChild(svg);
+    [0, 50, 100, 150, 200, 250].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 7, y(v) + 4, String(v), { "text-anchor": "end", style: "font-variant-numeric:tabular-nums" }));
+    });
+    svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
+    M.forEach((m, i) => { if (i % 3 === 0 || i === N - 1) svg.appendChild(txt(x(i), H - 6, m, { "text-anchor": "middle" })); });
+    const area = (top, bottom) => top.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ") +
+      bottom.slice().reverse().map((v, i) => "L" + x(N - 1 - i) + " " + y(v)).join(" ") + " Z";
+    const zeros = new Array(N).fill(0);
+    const gPipe = el("path", { fill: "var(--accent-a16)" });
+    const gBack = el("path", { fill: "var(--accent-a35)" });
+    svg.appendChild(gPipe); svg.appendChild(gBack);
+    const line = el("path", { fill: "none", stroke: "var(--accent)", "stroke-width": 2.5,
+      "stroke-linecap": "round", "stroke-linejoin": "round",
+      d: FCST.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ") });
+    svg.appendChild(line);
+    svg.appendChild(el("circle", { cx: x(N - 1), cy: y(FCST[N - 1]), r: 6, fill: "var(--surface)" }));
+    svg.appendChild(el("circle", { cx: x(N - 1), cy: y(FCST[N - 1]), r: 4, fill: "var(--accent)" }));
+    const endT = el("text", { x: x(N - 1) + 10, y: y(FCST[N - 1]) + 4, "font-size": 12, fill: "var(--ink-2)" });
+    endT.textContent = "Forecast ";
+    const endB = el("tspan", { "font-weight": 600, fill: "var(--ink)" }); endB.textContent = "$219K/mo";
+    endT.appendChild(endB); svg.appendChild(endT);
+    let withPipe = true;
+    const readout = document.getElementById("cov-readout");
+    function paint() {
+      gBack.setAttribute("d", area(backlog, zeros));
+      if (withPipe) { gPipe.setAttribute("d", area(backlog.map((v, i) => v + pipe[i]), backlog)); gPipe.setAttribute("visibility", "visible"); }
+      else gPipe.setAttribute("visibility", "hidden");
+      const fc = FCST.reduce((a, b) => a + b, 0), bk = backlog.reduce((a, b) => a + b, 0), pp = pipe.reduce((a, b) => a + b, 0);
+      const cov = (withPipe ? bk + pp : bk) / fc;
+      while (readout.firstChild) readout.removeChild(readout.firstChild);
+      const strong = document.createElement("strong");
+      strong.textContent = Math.round(cov * 100) + "% covered";
+      readout.appendChild(strong);
+      readout.appendChild(document.createTextNode(
+        " — backlog $" + Math.round(bk).toLocaleString() + "K" +
+        (withPipe ? " + weighted pipeline $" + Math.round(pp).toLocaleString() + "K" : "") +
+        "; gap $" + Math.round(fc - (withPipe ? bk + pp : bk)).toLocaleString() + "K to originate"));
+    }
+    paint();
+    document.getElementById("tg-backlog").addEventListener("click", function () {
+      withPipe = false; this.setAttribute("aria-pressed", "true");
+      document.getElementById("tg-pipe").setAttribute("aria-pressed", "false"); paint();
+    });
+    document.getElementById("tg-pipe").addEventListener("click", function () {
+      withPipe = true; this.setAttribute("aria-pressed", "true");
+      document.getElementById("tg-backlog").setAttribute("aria-pressed", "false"); paint();
+    });
+    lineKey("legend-cov", "Forecast (Base scenario)", "var(--accent)");
+    lineKey("legend-cov", "Booked backlog", "var(--accent-a35)", "", true);
+    lineKey("legend-cov", "Weighted pipeline", "var(--accent-a16)", "", true);
+    const tip = makeTip(box);
+    const cross = el("line", { y1: T, y2: T + PH, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
+    svg.appendChild(cross);
+    const show = i => {
+      cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+      const rows = [["Forecast", "var(--accent)", fmtK(FCST[i])], ["Backlog", "var(--accent-a35)", fmtK(backlog[i])]];
+      if (withPipe) rows.push(["Pipeline (wtd)", "var(--accent-a16)", fmtK(pipe[i])]);
+      rows.push(["Gap", null, fmtK(Math.max(0, FCST[i] - backlog[i] - (withPipe ? pipe[i] : 0)))]);
+      tip.show(M[i], rows, x(i) * sx(box, W), y(FCST[i]) * sx(box, W));
+    };
+    const hide = () => { cross.setAttribute("visibility", "hidden"); tip.hide(); };
+    svg.addEventListener("pointermove", e => {
+      const bb = svg.getBoundingClientRect(), mx = (e.clientX - bb.left) * W / bb.width;
+      if (mx < L - 20 || mx > L + PW + 20) { hide(); return; }
+      show(Math.max(0, Math.min(N - 1, Math.round((mx - L) / (PW / (N - 1))))));
+    });
+    svg.addEventListener("pointerleave", hide);
+  })();
+
+  /* ---- 7. Note balance trajectory ---- */
+  (function () {
+    const M = ["Jun 26", "Sep 26", "Dec 26", "Mar 27", "Jun 27", "Sep 27", "Dec 27"];
+    const FULL = [3436.6, 3508.0, 3526.7, 3541.8, 3570.6, 3574.6, 3574.3, 3587.9, 3574.2, 3555.7,
+                  3532.2, 3503.6, 3486.3, 3443.5, 3400.6, 3357.6, 3314.6, 3271.5, 3228.3];
+    const N = FULL.length;
+    const W = 420, H = 190, L = 46, R = 26, T = 14, B = 24, PW = W - L - R, PH = H - T - B;
+    const YMIN = 3100, YMAX = 3700;
+    const x = i => L + i * PW / (N - 1), y = v => T + (YMAX - v) / (YMAX - YMIN) * PH;
+    const box = document.getElementById("chart-note");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "main", role: "img",
+      "aria-label": "USC parent note balance trajectory, Base scenario" });
+    box.appendChild(svg);
+    [3200, 3400, 3600].forEach(v => {
+      svg.appendChild(el("line", { x1: L, x2: L + PW, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(txt(L - 6, y(v) + 4, v.toLocaleString(), { "text-anchor": "end", "font-size": 10 }));
+    });
+    [0, 3, 6, 9, 12, 15, 18].forEach((idx, k) => {
+      svg.appendChild(txt(x(idx), H - 4, M[k], { "text-anchor": "middle", "font-size": 10 }));
+    });
+    svg.appendChild(el("path", { fill: "none", stroke: "var(--accent)", "stroke-width": 2,
+      "stroke-linecap": "round", "stroke-linejoin": "round",
+      d: FULL.map((v, i) => (i ? "L" : "M") + x(i) + " " + y(v)).join(" ") }));
+    // peak + end markers
+    const peakI = 7;
+    [[peakI, "peak $3,588K", -6], [N - 1, "$3,228K", -6]].forEach(([i, label, dy]) => {
+      svg.appendChild(el("circle", { cx: x(i), cy: y(FULL[i]), r: 5.5, fill: "var(--surface)" }));
+      svg.appendChild(el("circle", { cx: x(i), cy: y(FULL[i]), r: 3.5, fill: "var(--accent)" }));
+      svg.appendChild(txt(Math.min(x(i), W - 66), y(FULL[i]) + dy, label,
+        { "text-anchor": i === N - 1 ? "end" : "middle", "font-size": 10.5, fill: "var(--ink)", "font-weight": 600 }));
+    });
+    svg.appendChild(txt(L + 4, T + 8, "Parent-note balance ($K)", { "font-size": 10.5, fill: "var(--ink-2)" }));
+  })();
+})();
+</script>
