@@ -126,6 +126,8 @@ rows = [
     "  Backlog & Pipeline — remaining value on active jobs + probability-weighted bids; coverage check.",
     "  FY Summary         — FY2026 landing (H1 actual + H2 forecast) vs budget; FY2027 vs the $6M goal.",
     "  Checks             — anchors to the GL baseline and internal integrity checks.",
+    "  Coverage Chart     — native chart: forecast line vs backlog + pipeline areas, with a 1/0 toggle",
+    "                       cell (B3) that includes or excludes the weighted pipeline live.",
     "",
     "COLOR KEY: blue = input · black = calculated · orange italics = assumption to confirm",
 ]
@@ -554,6 +556,97 @@ for item in [
     ws.cell(row=r, column=1, value="• " + item)
     r += 1
 widths(ws, {"A": 66, "B": 14, "C": 14, "D": 10})
+
+# ============================================================= Coverage Chart
+from openpyxl.chart import AreaChart, LineChart, Reference
+from openpyxl.drawing.line import LineProperties
+
+BLUE, AREA1, AREA2 = "2A78D6", "9EC5F4", "CDE2FB"
+
+ws = wb.create_sheet("Coverage Chart")
+title(ws, "Forecast & work coverage — with pipeline toggle",
+      "Native chart wired to live cells. Set the toggle to 0 to see booked backlog only; edit job remainders or bid probabilities and everything redraws.")
+
+ws.cell(row=3, column=1, value="Include weighted pipeline? (1 = yes, 0 = no)").font = F_SUB
+tog = ws.cell(row=3, column=2, value=1)
+tog.font = F_INPUT
+tog.border = BOX
+TOG = "$B$3"
+
+DATA0 = 24  # data block start row
+ws.cell(row=DATA0 - 1, column=1, value="CHART DATA ($K/month) — formulas reference Backlog & Pipeline and Forecast P&L").font = F_SUB
+ws.cell(row=DATA0, column=1, value="Month")
+for j, m in enumerate(MONTHS):
+    ws.cell(row=DATA0, column=2 + j, value=m)
+
+# per-job burn rows (even spread Jul-26 .. finish); ends = month index of last burn
+JOB_ENDS = [5, 17, 3, 2, 1, 1, 3, 13, 15]  # matches BACKLOG order rows 5..13
+for k, end in enumerate(JOB_ENDS):
+    r = DATA0 + 1 + k
+    ws.cell(row=r, column=1, value="burn: " + BACKLOG[k][1]).font = F_NOTE
+    for j in range(NM):
+        ws.cell(row=r, column=2 + j,
+                value=(f"='Backlog & Pipeline'!$E{5 + k}/{end + 1}" if j <= end else 0))
+BK_ROW = DATA0 + 1 + len(JOB_ENDS)
+ws.cell(row=BK_ROW, column=1, value="Booked backlog").font = F_SUB
+for j in range(NM):
+    col = get_column_letter(2 + j)
+    ws.cell(row=BK_ROW, column=2 + j, value=f"=SUM({col}{DATA0 + 1}:{col}{BK_ROW - 1})")
+
+# per-bid rows: value x prob / duration, from award start
+BID_SCHED = [(2, 6), (4, 12), (4, 12), (5, 18), (4, 12)]  # (start idx, months) rows 18..22
+for k, (s, dur) in enumerate(BID_SCHED):
+    r = BK_ROW + 1 + k
+    ws.cell(row=r, column=1, value="bid: " + PIPE[k][0][:34]).font = F_NOTE
+    for j in range(NM):
+        ws.cell(row=r, column=2 + j,
+                value=(f"='Backlog & Pipeline'!$C{18 + k}*'Backlog & Pipeline'!$D{18 + k}/{dur}"
+                       if s <= j < s + dur else 0))
+PIPE_ROW = BK_ROW + 1 + len(BID_SCHED)
+ws.cell(row=PIPE_ROW, column=1, value="Weighted pipeline (× toggle)").font = F_SUB
+for j in range(NM):
+    col = get_column_letter(2 + j)
+    ws.cell(row=PIPE_ROW, column=2 + j,
+            value=f"=SUM({col}{BK_ROW + 1}:{col}{PIPE_ROW - 1})*{TOG}")
+FC_ROW = PIPE_ROW + 1
+ws.cell(row=FC_ROW, column=1, value="Forecast revenue").font = F_SUB
+for j in range(NM):
+    col = get_column_letter(2 + j)
+    ws.cell(row=FC_ROW, column=2 + j, value=f"='Forecast P&L'!{col}{PL['rev']}")
+
+ws.cell(row=5, column=1, value="Coverage of forecast")
+cov = ws.cell(row=5, column=2,
+              value=f"=(SUM(B{BK_ROW}:S{BK_ROW})+SUM(B{PIPE_ROW}:S{PIPE_ROW}))/SUM(B{FC_ROW}:S{FC_ROW})")
+cov.number_format = PCT
+cov.font = F_SUB
+ws.cell(row=6, column=1, value="Gap to originate ($K)")
+gap = ws.cell(row=6, column=2,
+              value=f"=SUM(B{FC_ROW}:S{FC_ROW})-SUM(B{BK_ROW}:S{BK_ROW})-SUM(B{PIPE_ROW}:S{PIPE_ROW})")
+gap.number_format = KFMT
+gap.font = F_SUB
+
+cats = Reference(ws, min_col=2, max_col=1 + NM, min_row=DATA0)
+area = AreaChart(grouping="stacked")
+area.title = "Forecast revenue vs booked backlog + weighted pipeline ($K/month)"
+area.height, area.width = 10, 24
+area.add_data(Reference(ws, min_col=1, max_col=1 + NM, min_row=BK_ROW), titles_from_data=True, from_rows=True)
+area.add_data(Reference(ws, min_col=1, max_col=1 + NM, min_row=PIPE_ROW), titles_from_data=True, from_rows=True)
+area.set_categories(cats)
+area.series[0].graphicalProperties.solidFill = AREA1
+area.series[1].graphicalProperties.solidFill = AREA2
+area.y_axis.title = "$K per month"
+area.y_axis.scaling.min, area.y_axis.scaling.max = 0, 250
+ln = LineChart()
+ln.add_data(Reference(ws, min_col=1, max_col=1 + NM, min_row=FC_ROW), titles_from_data=True, from_rows=True)
+ln.set_categories(cats)
+ln.series[0].graphicalProperties.line = LineProperties(solidFill=BLUE, w=28000)
+ln.series[0].smooth = False
+ln.y_axis.axId = 200
+ln.y_axis.scaling.min, ln.y_axis.scaling.max = 0, 250
+ln.y_axis.delete = True
+area += ln
+ws.add_chart(area, "A8")
+widths(ws, {"A": 40})
 
 os.makedirs("model", exist_ok=True)
 out = "model/CVR_Model_Phase2_Forecast.xlsx"

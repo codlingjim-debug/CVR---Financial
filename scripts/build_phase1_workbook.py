@@ -91,6 +91,8 @@ rows = [
     "  HWC EPC Baseline     — EPC line financials for context.",
     "  Realization          — the $/hr and labor-multiplier gap analysis plus the utilization × realization grid.",
     "  Checks & Open Items  — tie-outs across all three sources and remaining open questions.",
+    "  Charts               — native charts wired to the data tabs (revenue vs plan/PY, gross margin,",
+    "                         utilization vs target, sales by customer). Edit data; charts redraw.",
     "",
     "COLOR KEY",
     "  Blue  = input / assumption you can change",
@@ -773,6 +775,122 @@ for item in items:
     ws.cell(row=r, column=1, value="• " + item)
     r += 1
 widths(ws, {"A": 90, "B": 14, "C": 14, "D": 10})
+
+# ====================================================================== Charts
+from openpyxl.chart import AreaChart, BarChart, LineChart, Reference
+from openpyxl.chart.marker import Marker
+from openpyxl.drawing.line import LineProperties
+
+BLUE, GRAY, INKC = "2A78D6", "898781", "0B0B0B"
+
+ws = wb.create_sheet("Charts")
+title(ws, "Charts — wired to the data tabs",
+      "Native Excel charts driven by cell values: edit the data tabs and these redraw. Data blocks feeding them start at row 40.")
+
+# ---- chart data blocks (formulas -> live) ----
+MO = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+ws.cell(row=40, column=1, value="CHART DATA — cumulative revenue ($K)").font = F_SUB
+ws.cell(row=41, column=1, value="Month")
+for j, m in enumerate(MO):
+    ws.cell(row=41, column=2 + j, value=m + " 26")
+ws.cell(row=42, column=1, value="Actual (cumulative)")
+ws.cell(row=43, column=1, value="Plan (cumulative)")
+ws.cell(row=44, column=1, value="Prior year (pace)")
+for j in range(6):
+    col = get_column_letter(2 + j)
+    prev = get_column_letter(1 + j)
+    ws.cell(row=42, column=2 + j,
+            value=(f"='Baseline P&L'!{col}5" if j == 0 else f"={prev}42+'Baseline P&L'!{col}5"))
+    ws.cell(row=43, column=2 + j,
+            value=(f"='Baseline P&L'!{col}14" if j == 0 else f"={prev}43+'Baseline P&L'!{col}14"))
+    ws.cell(row=44, column=2 + j, value=round(399.1 / 6 * (j + 1), 1))
+
+ws.cell(row=46, column=1, value="CHART DATA — gross margin %").font = F_SUB
+ws.cell(row=47, column=1, value="Gross margin %")
+ws.cell(row=48, column=1, value="Budget assumption")
+for j in range(6):
+    col = get_column_letter(2 + j)
+    ws.cell(row=47, column=2 + j, value=f"='Baseline P&L'!{col}8").number_format = PCT
+    ws.cell(row=48, column=2 + j, value=0.6157).number_format = PCT
+
+def _line(series, hex_, width=20000, dash=None):
+    lp = LineProperties(solidFill=hex_, w=width)
+    if dash:
+        lp.prstDash = dash
+    series.graphicalProperties.line = lp
+
+# ---- 1. cumulative revenue: 3-series line ----
+c = LineChart()
+c.title = "Cumulative revenue — Actual vs Plan vs Prior Year ($K)"
+c.height, c.width = 8.5, 17
+cats = Reference(ws, min_col=2, max_col=7, min_row=41)
+data = Reference(ws, min_col=1, max_col=7, min_row=42, max_row=44)
+c.add_data(data, titles_from_data=True, from_rows=True)
+c.set_categories(cats)
+_line(c.series[0], BLUE, 28000)
+_line(c.series[1], GRAY)
+_line(c.series[2], GRAY, dash="dash")
+for s in c.series:
+    s.smooth = False
+c.y_axis.title = "$K cumulative"
+ws.add_chart(c, "A3")
+
+# ---- 2. gross margin columns + budget line ----
+bar = BarChart()
+bar.type = "col"
+bar.title = "Gross margin by month vs 61.6% budget assumption"
+bar.height, bar.width = 8.5, 17
+bar.add_data(Reference(ws, min_col=1, max_col=7, min_row=47), titles_from_data=True, from_rows=True)
+bar.set_categories(cats)
+bar.series[0].graphicalProperties.solidFill = BLUE
+bar.y_axis.number_format = "0%"
+bar.y_axis.scaling.min, bar.y_axis.scaling.max = -0.6, 0.8
+ln = LineChart()
+ln.add_data(Reference(ws, min_col=1, max_col=7, min_row=48), titles_from_data=True, from_rows=True)
+ln.set_categories(cats)
+_line(ln.series[0], GRAY, dash="dash")
+ln.y_axis.axId = 200
+ln.y_axis.scaling.min, ln.y_axis.scaling.max = -0.6, 0.8
+ln.y_axis.delete = True
+bar += ln
+ws.add_chart(bar, "A21")
+
+# ---- 3. utilization by person: columns + target markers ----
+ub = BarChart()
+ub.type = "col"
+ub.title = "Billable utilization vs target, by person (YTD)"
+ub.height, ub.width = 8.5, 17
+ucats = Reference(ws2 := wb["Roster & Hours"], min_col=1, min_row=5, max_row=14)
+ub.add_data(Reference(ws2, min_col=6, min_row=4, max_row=14), titles_from_data=True)
+ub.set_categories(ucats)
+ub.series[0].graphicalProperties.solidFill = BLUE
+ub.y_axis.number_format = "0%"
+ub.y_axis.scaling.min, ub.y_axis.scaling.max = 0, 1.05
+tl = LineChart()
+tl.add_data(Reference(ws2, min_col=10, min_row=4, max_row=14), titles_from_data=True)
+tl.set_categories(ucats)
+tl.series[0].graphicalProperties.line.noFill = True
+tl.series[0].marker = Marker(symbol="dash", size=12)
+tl.y_axis.axId = 210
+tl.y_axis.scaling.min, tl.y_axis.scaling.max = 0, 1.05
+tl.y_axis.delete = True
+ub += tl
+ws.add_chart(ub, "A39")
+
+# ---- 4. sales by customer: horizontal bars ----
+wcf = wb["Cash Flow & Customers"]
+cb = BarChart()
+cb.type = "bar"
+cb.title = "Sales by customer — YTD June 2026 ($)"
+cb.height, cb.width = 8.5, 17
+c0 = CUST_TOTAL_ROW - 7
+cb.add_data(Reference(wcf, min_col=2, min_row=c0, max_row=CUST_TOTAL_ROW - 1), titles_from_data=False)
+cb.set_categories(Reference(wcf, min_col=1, min_row=c0, max_row=CUST_TOTAL_ROW - 1))
+cb.series[0].graphicalProperties.solidFill = BLUE
+cb.legend = None
+ws.add_chart(cb, "A57")
+
+widths(ws, {"A": 22})
 
 os.makedirs("model", exist_ok=True)
 out = "model/CVR_Model_Phase1_Baseline.xlsx"
