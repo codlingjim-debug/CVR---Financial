@@ -406,9 +406,13 @@ foot(s, "Public sources: company capital-plan announcements and filings (Utility
 s = pres.addSlide();
 eyebrow(s, "Strategy — business development");
 slideTitle(s, "An owner on every EPC account");
+const HL = { fill: { color: "EAF1FA" } };
 const bdRows = [
   [{ text: "Account", options: { bold: true } }, { text: "EPC pursuit focus", options: { bold: true } },
    { text: "Proposed owner *", options: { bold: true } }],
+  [{ text: "Outside current footprint", options: Object.assign({ bold: true }, HL) },
+   { text: "New utilities & regions beyond MI/IN/IA — Gulf Coast & Texas, MISO/PJM neighbors, data-center-driven grid build-out", options: HL },
+   { text: "BD Lead (new hire) — owns the map, coordinates all account managers", options: Object.assign({ bold: true }, HL) }],
   ["CenterPoint — Indiana", "Substation program continuity; move from job-by-job to a program-level agreement", "Roy Pierce (VP Engineering — current PM)"],
   ["CenterPoint — Houston", "Entry into the $46.3B Houston Electric resiliency build — new territory", "SVP Engineering (Houston-based)"],
   ["DTE Energy", "Conversion program follow-on; revive the Renaissance 345kV pursuit", "Assign — VP Engineering or new AM"],
@@ -422,12 +426,12 @@ s.addTable(bdRows, { x: M, y: 1.5, w: 7.9, colW: [1.75, 3.7, 2.45],
   border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.52, align: "left" });
 rx = M + 8.25; rw = W - M - rx;
 [["Assign today — $0", "Incumbent accounts get named owners from existing leadership. The 590 hours of BD & proposal time already spent YTD becomes a managed funnel instead of volunteer work."],
- ["Add one EPC Account Manager", "Dedicated to the co-op/municipal cluster and the Houston entry. A single EPC win repays the seat — 4–5% engineering pull-through to CVR plus construction margin to HWC."],
- ["Run the cadence", "Monthly account reviews against the pipeline tab. Owners set win probabilities and award dates; BD hours get tracked per account, per the KPI report."],
+ ["Add two seats — BD Lead + AM", "The BD Lead hunts outside the footprint and owns the consolidated-offer story to new logos; the Account Manager works the co-op/municipal cluster and prospects. One EPC win repays both seats — 4–5% engineering pull-through to CVR plus construction margin to HWC."],
+ ["Run the cadence", "Monthly account reviews against the pipeline tab, chaired by the BD Lead. Owners set win probabilities and award dates; BD hours tracked per account."],
 ].forEach((t, i) => {
-  s.addText(t[0], { x: rx, y: 1.55 + i * 1.72, w: rw, h: 0.35, fontSize: 15.5, bold: true,
+  s.addText(t[0], { x: rx, y: 1.5 + i * 1.85, w: rw, h: 0.35, fontSize: 15, bold: true,
     color: i === 1 ? BLUE : INK, fontFace: SANS, margin: 0 });
-  s.addText(t[1], { x: rx, y: 1.92 + i * 1.72, w: rw, h: 1.25, fontSize: 11, color: INK2, fontFace: SANS, margin: 0 });
+  s.addText(t[1], { x: rx, y: 1.87 + i * 1.85, w: rw, h: 1.45, fontSize: 10.5, color: INK2, fontFace: SANS, margin: 0 });
 });
 foot(s, "* Proposed from current relationships on the KPI scorecards — to be confirmed with the team. YTD BD hours by account (KPI report): Great Lakes 56 · CenterPoint 35.5 · Consumers 26.5 · DTE 19.5 · NIPSCO 10 · AES 10 — plus 408 proposal hours.");
 
