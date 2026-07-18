@@ -402,7 +402,36 @@ s.addText([
 ], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
 foot(s, "Public sources: company capital-plan announcements and filings (Utility Dive, SEC 8-K, company releases), July 2026. Wordmarks shown; drop official logo files into reports/assets/logos/ and rebuild to swap them in.");
 
-/* ==================== 14 · FORECAST & COVERAGE ==================== */
+/* ==================== 14 · BUSINESS DEVELOPMENT — ACCOUNT OWNERS ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — business development");
+slideTitle(s, "An owner on every EPC account");
+const bdRows = [
+  [{ text: "Account", options: { bold: true } }, { text: "EPC pursuit focus", options: { bold: true } },
+   { text: "Proposed owner *", options: { bold: true } }],
+  ["CenterPoint — Indiana", "Substation program continuity; move from job-by-job to a program-level agreement", "Roy Pierce (VP Engineering — current PM)"],
+  ["CenterPoint — Houston", "Entry into the $46.3B Houston Electric resiliency build — new territory", "SVP Engineering (Houston-based)"],
+  ["DTE Energy", "Conversion program follow-on; revive the Renaissance 345kV pursuit", "Assign — VP Engineering or new AM"],
+  ["Consumers Energy", "Convert pole/sensor programs into EPC-paired awards", "Frank Miller (Director of Estimating)"],
+  ["MidAmerican (MEC)", "Extend the 4-project EPC substation program", "Ethan McDaniel (EPC PM — current)"],
+  ["Co-op & municipal cluster", "Hoosier, Steuben, Lansing BWL, Great Lakes — the consolidated-offer beachhead", "New EPC Account Manager (hire)"],
+  ["Prospects in motion", "NIPSCO, AES Ohio, AES Indiana, Duke — BD hours already flowing, no owner yet", "New EPC Account Manager (hire)"],
+];
+s.addTable(bdRows, { x: M, y: 1.5, w: 7.9, colW: [1.75, 3.7, 2.45],
+  fontFace: SANS, fontSize: 10, color: INK, valign: "middle",
+  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.52, align: "left" });
+rx = M + 8.25; rw = W - M - rx;
+[["Assign today — $0", "Incumbent accounts get named owners from existing leadership. The 590 hours of BD & proposal time already spent YTD becomes a managed funnel instead of volunteer work."],
+ ["Add one EPC Account Manager", "Dedicated to the co-op/municipal cluster and the Houston entry. A single EPC win repays the seat — 4–5% engineering pull-through to CVR plus construction margin to HWC."],
+ ["Run the cadence", "Monthly account reviews against the pipeline tab. Owners set win probabilities and award dates; BD hours get tracked per account, per the KPI report."],
+].forEach((t, i) => {
+  s.addText(t[0], { x: rx, y: 1.55 + i * 1.72, w: rw, h: 0.35, fontSize: 15.5, bold: true,
+    color: i === 1 ? BLUE : INK, fontFace: SANS, margin: 0 });
+  s.addText(t[1], { x: rx, y: 1.92 + i * 1.72, w: rw, h: 1.25, fontSize: 11, color: INK2, fontFace: SANS, margin: 0 });
+});
+foot(s, "* Proposed from current relationships on the KPI scorecards — to be confirmed with the team. YTD BD hours by account (KPI report): Great Lakes 56 · CenterPoint 35.5 · Consumers 26.5 · DTE 19.5 · NIPSCO 10 · AES 10 — plus 408 proposal hours.");
+
+/* ==================== 15 · FORECAST & COVERAGE ==================== */
 s = pres.addSlide();
 eyebrow(s, "Forward view — Phase 2 model, Base scenario");
 slideTitle(s, "Forecast revenue & work coverage, Jul 2026 – Dec 2027");
