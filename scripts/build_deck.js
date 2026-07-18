@@ -3,6 +3,7 @@
 // workbooks (GL 6/30/26, KPI report 7/11/26, Phase 2 Base scenario).
 const pptxgen = require("pptxgenjs");
 const path = require("path");
+const fs = require("fs");
 const MAN = require(path.join(__dirname, "..", "reports", "assets", "manifest.json"));
 
 function chartImg(s, name, x, y, w) {
@@ -351,7 +352,57 @@ rx = M + 6.9; rw = W - M - rx;
 });
 foot(s, "Integration path per the CVR strategy roadmap: support function → prime engineer → Engineer of Record / turnkey program support.");
 
-/* ==================== 13 · FORECAST & COVERAGE ==================== */
+/* ==================== 13 · ADDRESSABLE EPC MARKET ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — the consolidated offering");
+slideTitle(s, "The addressable EPC market in our current client base");
+// Uses official logo art from reports/assets/logos/<file> when present;
+// falls back to a brand-colored wordmark otherwise.
+function brandMark(slide, x, y, name, sub, color, file) {
+  const p = path.join(__dirname, "..", "reports", "assets", "logos", file);
+  if (fs.existsSync(p)) {
+    slide.addImage({ path: p, x, y, w: 2.3, h: 0.55, sizing: { type: "contain", w: 2.3, h: 0.55 } });
+    slide.addText(sub, { x: x + 2.45, y: y + 0.12, w: 2.6, h: 0.3, fontSize: 10, color: INK2, fontFace: SANS, margin: 0 });
+  } else {
+    slide.addText(name, { x, y, w: 3.9, h: 0.34, fontSize: 17, bold: true, color, fontFace: SANS, margin: 0 });
+    slide.addText(sub, { x, y: y + 0.33, w: 4.6, h: 0.26, fontSize: 10, color: INK2, fontFace: SANS, margin: 0 });
+  }
+}
+const MKT = [
+  ["Consumers Energy", "Michigan — electric & gas", "0057B8", "consumers.png",
+   ">$17B", "5-year capital plan; $8.5B of distribution reliability & resilience through 2029",
+   "Foothold: HVD line-sensor & pole programs live; $3.5M EPC-paired pole-replacement bid pending"],
+  ["DTE Energy", "Michigan — electric & gas", "16376C", "dte.png",
+   "$36.5B", "5-year plan 2026–30 — up 20% on data-center load and grid reliability spend",
+   "Foothold: New Baltimore & Catalina conversions ($2.3M PO); Renaissance 345kV bid on hold"],
+  ["CenterPoint Energy", "Indiana Electric + Houston Electric", "E31937", "centerpoint.png",
+   "$65B", "10-year plan 2026–35; Houston Electric $46.3B; Indiana transmission & data-center upside",
+   "Foothold: 7 active Indiana substation jobs; Houston presence = the expansion runway"],
+  ["MidAmerican Energy (MEC)", "Iowa — Berkshire Hathaway Energy", "14477D", "midamerican.png",
+   "$3.9B", "Wind PRIME program, on top of ~$14B invested in Iowa energy infrastructure since 2004",
+   "Foothold: 4 active EPC substation projects with HWC ($21.7M PO value)"],
+];
+MKT.forEach((m, i) => {
+  const cx = M + (i % 2) * 6.28, cy = 1.5 + Math.floor(i / 2) * 2.42, cw = 6.08, ch = 2.28;
+  s.addShape("roundRect", { x: cx, y: cy, w: cw, h: ch, fill: { color: CARD }, rectRadius: 0.06,
+    line: { color: GRID, width: 0.75 } });
+  brandMark(s, cx + 0.24, cy + 0.18, m[0], m[1], m[2], m[3]);
+  s.addText([
+    { text: m[4] + "  ", options: { bold: true, fontSize: 24, color: INK } },
+    { text: m[5], options: { fontSize: 10.5, color: INK2 } },
+  ], { x: cx + 0.24, y: cy + 0.86, w: cw - 0.48, h: 0.78, fontFace: SANS, margin: 0 });
+  s.addText(m[6], { x: cx + 0.24, y: cy + 1.72, w: cw - 0.48, h: 0.5, fontSize: 10, italic: true,
+    color: INK2, fontFace: SANS, margin: 0 });
+});
+s.addShape("roundRect", { x: M, y: 6.42, w: W - 2 * M, h: 0.52, fill: { color: "EAF1FA" }, rectRadius: 0.05,
+  line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "≈$120B in disclosed capital plans across this client base.  ", options: { bold: true, color: INK } },
+  { text: "0.005% captured as engineering = the $6M Year-2 goal.", options: { color: INK2 } },
+], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
+foot(s, "Public sources: company capital-plan announcements and filings (Utility Dive, SEC 8-K, company releases), July 2026. Wordmarks shown; drop official logo files into reports/assets/logos/ and rebuild to swap them in.");
+
+/* ==================== 14 · FORECAST & COVERAGE ==================== */
 s = pres.addSlide();
 eyebrow(s, "Forward view — Phase 2 model, Base scenario");
 slideTitle(s, "Forecast revenue & work coverage, Jul 2026 – Dec 2027");
