@@ -542,7 +542,47 @@ rx = M + 8.9; rw = W - M - rx;
 });
 foot(s, "CVR holds no cash: deficits draw the note, surpluses repay it (~$5K/mo interest accrues). If the balance isn't flattening by Q1-27, the drivers aren't moving.");
 
-/* ==================== 14 · PRIORITIES ==================== */
+/* ==================== 19 · BID ENGINEERING ACCOUNTING ==================== */
+s = pres.addSlide();
+eyebrow(s, "Forward view — accounting alignment");
+slideTitle(s, "EPC bid engineering: an item to clean up, not a crisis");
+s.addText("The facts", { x: M, y: 1.5, w: 5.0, h: 0.35, fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
+[["405 hrs", "of bid engineering YTD — ≈$62.6K at card rates ($38.5K at cost), unbilled"],
+ ["~60% design", "required before a fixed-price EPC bid can even be submitted — $250–380K of pre-award exposure on the $12.6M bid slate"],
+ ["$30.1K", "of note interest charged to CVR in H1 — roughly a wash against bid engineering at cost"],
+ ["The misalignment", "bid hours are non-billable, so every EPC pursuit CVR supports drags the metrics CVR is judged on — utilization, realization, OILI"],
+].forEach((t, i) => {
+  s.addText(t[0], { x: M, y: 1.95 + i * 1.12, w: 5.0, h: 0.36, fontSize: 17, bold: true,
+    color: i === 3 ? RED : BLUE, fontFace: SANS, margin: 0 });
+  s.addText(t[1], { x: M, y: 2.31 + i * 1.12, w: 5.0, h: 0.72, fontSize: 10.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+const opts = [
+  ["1", "Intercompany bid-support billing", "HWC pays CVR for pre-award engineering on EPC pursuits (cost or card). Hours become billable; cost lands where the benefit lands. Standard EPC practice.", true],
+  ["2", "Win / loss allocation", "Bid engineering capitalizes to the pursuit — charged to the job on a win, absorbed by HWC as a BD expense on a loss.", false],
+  ["3", "Interest credit against bid hours", "Parent credits note interest against documented bid-support hours. Fixes the cash, but leaves the hours non-billable — the metrics stay misaligned.", false],
+];
+opts.forEach((o, i) => {
+  const oy = 1.5 + i * 1.62, ox = M + 5.5, ow = W - M - ox;
+  s.addShape("roundRect", { x: ox, y: oy, w: ow, h: 1.48, fill: { color: o[3] ? "EAF1FA" : CARD },
+    rectRadius: 0.06, line: { color: o[3] ? BLUE : GRID, width: o[3] ? 1.25 : 0.75 } });
+  s.addShape("ellipse", { x: ox + 0.2, y: oy + 0.18, w: 0.42, h: 0.42, fill: { color: BLUE } });
+  s.addText(o[0], { x: ox + 0.2, y: oy + 0.18, w: 0.42, h: 0.42, fontSize: 15, bold: true, color: "FFFFFF",
+    align: "center", valign: "middle", fontFace: SANS, margin: 0 });
+  s.addText([
+    { text: o[1], options: { bold: true, fontSize: 14, color: INK } },
+    { text: o[3] ? "   RECOMMENDED" : "", options: { bold: true, fontSize: 9.5, color: BLUE, charSpacing: 1.5 } },
+  ], { x: ox + 0.78, y: oy + 0.14, w: ow - 1.0, h: 0.32, fontFace: SANS, margin: 0 });
+  s.addText(o[2], { x: ox + 0.78, y: oy + 0.5, w: ow - 1.0, h: 0.9, fontSize: 10.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+s.addShape("roundRect", { x: M, y: 6.45, w: W - 2 * M, h: 0.5, fill: { color: "EAF1FA" }, rectRadius: 0.05,
+  line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "The ask is alignment, not subsidy.  ", options: { bold: true, color: INK } },
+  { text: "Dollars are roughly a wash today — but as EPC volume scales, the accounting should reward the pursuit behavior the strategy demands.", options: { color: INK2 } },
+], { x: M + 0.2, y: 6.51, w: W - 2 * M - 0.4, h: 0.38, fontSize: 12, fontFace: SANS, margin: 0 });
+foot(s, "Bid hours per the KPI report (through 7/11/26); interest per the GL. Raise with the CFO alongside the note-terms discussion.");
+
+/* ==================== 20 · PRIORITIES ==================== */
 s = pres.addSlide();
 s.background = { color: DARK };
 s.addText([
