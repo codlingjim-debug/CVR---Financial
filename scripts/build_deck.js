@@ -68,7 +68,31 @@ s.addText("Baseline through June 2026  ·  Forecast through December 2027",
 s.addText("Sources: GL financial statements 6/30/26 · CVR & EPC KPI report 7/11/26 · 2026 rate sheet · Phase 1 & 2 model workbooks",
   { x: M, y: 6.7, w: W - 2 * M, h: 0.35, fontSize: 10.5, color: MUTED, fontFace: SANS, margin: 0 });
 
-/* ========================= 2 · EXECUTIVE SUMMARY ========================= */
+/* ================================ 2 · AGENDA ================================ */
+s = pres.addSlide();
+eyebrow(s, "Agenda");
+slideTitle(s, "What we'll cover");
+const agenda = [
+  ["1", "Where we stand", "Executive summary · revenue vs plan & prior year · gross margin vs budget · the rate ladder"],
+  ["2", "Operating drivers", "Staff & headcount · utilization by person · sales by customer"],
+  ["3", "Work in hand & work to win", "Backlog on active jobs · known pipeline opportunities"],
+  ["4", "Strategy", "One pursuit engine with HWC Estimating · the consolidated EPC offering · the addressable market · BD account ownership"],
+  ["5", "Forward view", "Forecast & coverage · FY2026 landing and FY2027 scenarios · cash & the parent note"],
+  ["6", "Next 90 days", "Priorities: realization, utilization, the Q4 pipeline, and the monthly rhythm"],
+];
+agenda.forEach((a, i) => {
+  const y = 1.6 + i * 0.86;
+  s.addShape("ellipse", { x: M, y: y + 0.02, w: 0.44, h: 0.44, fill: { color: BLUE } });
+  s.addText(a[0], { x: M, y: y + 0.02, w: 0.44, h: 0.44, fontSize: 15, bold: true, color: "FFFFFF",
+    align: "center", valign: "middle", fontFace: SANS, margin: 0 });
+  s.addText(a[1], { x: M + 0.7, y, w: 3.7, h: 0.45, fontSize: 16.5, bold: true, color: INK,
+    valign: "middle", fontFace: SANS, margin: 0 });
+  s.addText(a[2], { x: M + 4.6, y, w: W - 2 * M - 4.6, h: 0.45, fontSize: 12, color: INK2,
+    valign: "middle", fontFace: SANS, margin: 0 });
+});
+foot(s, "CVR Engineering financial review & forecast · June 2026");
+
+/* ========================= 3 · EXECUTIVE SUMMARY ========================= */
 s = pres.addSlide();
 eyebrow(s, "Executive summary");
 slideTitle(s, "June 2026 — where CVR Engineering stands");
