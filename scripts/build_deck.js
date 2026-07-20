@@ -114,13 +114,13 @@ s.addText([
 ], { x: M, y: 3.7, w: W - 2 * M, h: 0.6, fontSize: 15, color: INK, fontFace: SANS, margin: 0 });
 s.addText([
   { text: "The path forward is quantified.  ", options: { bold: true } },
-  { text: "The Base forecast turns monthly net income positive in November 2026 and delivers a 17.3% OILI return in 2027 — with the $6M revenue goal requiring a deliberate capacity build beyond it.", options: {} },
+  { text: "The Base forecast (reconciled to finance's fully-loaded cost) turns FY2027 net income positive at +$123K — with the $6M / 20% OILI target requiring a deliberate capacity build beyond it.", options: {} },
 ], { x: M, y: 4.4, w: W - 2 * M, h: 0.6, fontSize: 15, color: INK, fontFace: SANS, margin: 0 });
 s.addShape("roundRect", { x: M, y: 5.35, w: W - 2 * M, h: 1.15, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
 const stripW = (W - 2 * M - 0.4) / 3;
 [["H1 2026 net result", "−$320.5K", RED],
- ["Forecast FY2026 landing", "$1.42M rev · −$352K", INK],
- ["FY2027 (Base)", "$2.50M rev · +$432K", GOOD],
+ ["Forecast FY2026 landing", "$1.42M rev · −$482K", INK],
+ ["FY2027 (Base)", "$2.50M rev · +$123K", GOOD],
 ].forEach((t, i) => {
   const x0 = M + 0.2 + i * stripW;
   s.addText(t[0], { x: x0, y: 5.5, w: stripW - 0.2, h: 0.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
@@ -499,11 +499,11 @@ const fyRows = [
    { text: "H2 forecast", options: { bold: true } }, { text: "FY landing", options: { bold: true } },
    { text: "Budget", options: { bold: true } }],
   ["Revenue", "551.0", "872.0", { text: "1,423.0", options: { bold: true } }, "2,029.1"],
-  ["Gross profit", "122.5", "422.4", { text: "544.9", options: { bold: true } }, "1,249.4"],
-  ["Operating income", { text: "−290.5", options: { color: RED } }, "−0.5",
-   { text: "−291.0", options: { bold: true, color: RED } }, "139.4"],
-  ["Net income", { text: "−320.5", options: { color: RED } }, "−31.3",
-   { text: "−351.8", options: { bold: true, color: RED } }, "139.4"],
+  ["Gross profit", "122.5", "496.9", { text: "619.4", options: { bold: true } }, "1,249.4"],
+  ["Operating income", { text: "−290.5", options: { color: RED } }, "−129.9",
+   { text: "−420.4", options: { bold: true, color: RED } }, "139.4"],
+  ["Net income", { text: "−320.5", options: { color: RED } }, "−161.2",
+   { text: "−481.7", options: { bold: true, color: RED } }, "139.4"],
 ];
 s.addTable(fyRows, { x: M, y: 1.5, w: 6.0, colW: [1.7, 1.05, 1.15, 1.1, 1.0],
   fontFace: SANS, fontSize: 11, color: INK, valign: "middle",
@@ -512,8 +512,8 @@ const fy27Rows = [
   [{ text: "FY2027 (Base)", options: { bold: true } }, { text: "Forecast", options: { bold: true } },
    { text: "Goal", options: { bold: true } }],
   ["Revenue", { text: "2,496.6", options: { bold: true } }, "6,000 (42%)"],
-  ["Net income", { text: "+431.6", options: { bold: true, color: GOOD } }, "—"],
-  ["OILI return", { text: "17.3%", options: { bold: true } }, "20%"],
+  ["Net income", { text: "+122.7", options: { bold: true, color: GOOD } }, "—"],
+  ["OILI return", { text: "4.9%", options: { bold: true } }, "20%"],
 ];
 s.addTable(fy27Rows, { x: M, y: 4.0, w: 6.0, colW: [1.9, 2.0, 2.1],
   fontFace: SANS, fontSize: 11, color: INK, valign: "middle",
@@ -522,13 +522,13 @@ const scRows = [
   [{ text: "Scenario", options: { bold: true } }, { text: "FY26 NI", options: { bold: true } },
    { text: "FY27 rev", options: { bold: true } }, { text: "FY27 NI", options: { bold: true } },
    { text: "OILI %", options: { bold: true } }],
-  ["Upside (75% · 95% · 16 FTE)", { text: "−205", options: { color: RED } }, "3,436",
-   { text: "+1,054", options: { color: GOOD } }, "30.7%"],
-  [{ text: "Base (70% · 90% · 13 FTE)", options: { bold: true } }, { text: "−352", options: { color: RED } },
-   { text: "2,497", options: { bold: true } }, { text: "+432", options: { bold: true, color: GOOD } },
-   { text: "17.3%", options: { bold: true } }],
-  ["Downside (no change)", { text: "−444", options: { color: RED } }, "1,542",
-   { text: "−205", options: { color: RED } }, "−13.3%"],
+  ["Upside (75% · 95% · 16 FTE)", { text: "−346", options: { color: RED } }, "3,436",
+   { text: "+689", options: { color: GOOD } }, "20.0%"],
+  [{ text: "Base (70% · 90% · 13 FTE)", options: { bold: true } }, { text: "−482", options: { color: RED } },
+   { text: "2,497", options: { bold: true } }, { text: "+123", options: { bold: true, color: GOOD } },
+   { text: "4.9%", options: { bold: true } }],
+  ["Downside (no change)", { text: "−568", options: { color: RED } }, "1,542",
+   { text: "−458", options: { color: RED } }, "−29.7%"],
 ];
 s.addTable(scRows, { x: M + 6.4, y: 1.5, w: 6.1, colW: [2.5, 0.85, 0.95, 0.9, 0.9],
   fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
@@ -536,10 +536,10 @@ s.addTable(scRows, { x: M + 6.4, y: 1.5, w: 6.1, colW: [2.5, 0.85, 0.95, 0.9, 0.
 s.addShape("roundRect", { x: M + 6.4, y: 3.55, w: 6.1, h: 3.0, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
 s.addText("What the numbers say", { x: M + 6.6, y: 3.75, w: 5.7, h: 0.35, fontSize: 14, bold: true, color: INK, fontFace: SANS, margin: 0 });
 s.addText([
-  { text: "The 2026 budget is out of reach — socialize the re-forecast rather than track to a 2.7× H2 run-rate.", options: { bullet: true, breakLine: true } },
-  { text: "Monthly net income turns positive in November 2026 in the Base case.", options: { bullet: true, breakLine: true } },
-  { text: "The 20% OILI return is a performance goal — reachable. The $6M revenue is a capacity goal (~27 billable FTEs).", options: { bullet: true, breakLine: true } },
-  { text: "Utilization and realization are the two levers that double revenue on the current roster.", options: { bullet: true } },
+  { text: "Cost is now finance's fully-loaded basis — the forecast reconciles to the budget dollar-for-dollar.", options: { bullet: true, breakLine: true } },
+  { text: "The 2026 budget is out of reach; the honest FY26 landing is ~$1.42M revenue and a $480K loss.", options: { bullet: true, breakLine: true } },
+  { text: "FY27 turns positive in the Base case (+$123K); the Upside path reaches the 20% OILI aspiration.", options: { bullet: true, breakLine: true } },
+  { text: "Utilization and realization are the levers — the $6M / 20% target is a capacity build (~27 FTEs).", options: { bullet: true } },
 ], { x: M + 6.6, y: 4.15, w: 5.7, h: 2.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 8 });
 foot(s, "Phase 2 forecast model — scenarios switchable in CVR_Model_Phase2_Forecast.xlsx (Drivers tab).");
 
@@ -550,13 +550,13 @@ slideTitle(s, "Cash & the USC parent note — the early-warning gauge");
 chartImg(s, "note", M, 2.0, 8.0);
 rx = M + 8.9; rw = W - M - rx;
 [["$3.44M", "note balance at 6/30/26 — CVR's entire funding runs through this account", INK],
- ["$3.59M", "Base-case peak in Jan-27, then a steady decline", INK],
- ["−$209K", "paydown by Dec-27 in the Base case; Downside grows it to $3.82M", GOOD],
+ ["$3.77M", "Base-case peak in mid-2027 — the note keeps growing while the turnaround builds", RED],
+ ["+$231K", "still drawing by end-2027 in the Base case; only the Upside path flattens and repays it", RED],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 30, bold: true, color: t[2], fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "CVR holds no cash: deficits draw the note, surpluses repay it (~$5K/mo interest accrues). If the balance isn't flattening by Q1-27, the drivers aren't moving.");
+foot(s, "CVR holds no cash: deficits draw the note, surpluses repay it (~$5K/mo interest accrues). Reconciled to finance's fully-loaded cost — a more conservative trajectory than the prior estimate.");
 
 /* ==================== 19 · BID ENGINEERING ACCOUNTING ==================== */
 s = pres.addSlide();

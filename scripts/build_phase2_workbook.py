@@ -122,6 +122,7 @@ rows = [
     "  Drivers            — scenario selector (1=Base 2=Upside 3=Downside) + scalar inputs (blue).",
     "  Scenario Paths     — the three monthly paths for FTE, utilization, realization. Edit to taste.",
     "  Forecast P&L       — monthly engine output with H2-2026 and FY-2027 subtotals.",
+    "  vs Budget          — forecast vs finance's 2026 monthly budget, line by line (H2-2026).",
     "  Cash & Note        — AR, operating cash, and the parent-note roll-forward (funds every deficit).",
     "  Backlog & Pipeline — remaining value on active jobs + probability-weighted bids; coverage check.",
     "  FY Summary         — FY2026 landing (H1 actual + H2 forecast) vs budget; FY2027 vs the $6M goal.",
@@ -197,12 +198,11 @@ header(ws, r, [1, 2, 3], ["Scalar input", "Value", "Source"])
 r += 1
 scalars = [
     ("Blended card rate ($/hr)", 154.47, '"$"#,##0.00', "Phase 1 Roster & Hours (mix-weighted)"),
-    ("Avg loaded wage per FTE-month ($)", 7756, '#,##0', "GL H1: $465.4K wages ÷ 6 mo ÷ 10 FTE"),
-    ("Direct-charge share of wages", 0.92, PCT, "GL H1: direct labor $428.5K of $465.4K total wages"),
-    ("Burden % of wages", 0.338, PCT, "GL H1 burden lines ÷ wages"),
-    ("Other OpEx per month ($)", 19193, '#,##0', "GL H1: OpEx less burden, overhead, indirect labor, ÷ 6"),
-    ("Corporate overhead per month ($)", 17250, '#,##0', "GL: flat allocation"),
-    ("Interest rate on parent note (APR)", 0.0175, '0.00%', "GL H1: $30.1K ÷ 6 ÷ $3.44M ×12"),
+    ("Direct-labor cost / billable hr ($)", 54.89, '"$"#,##0.00', "2026 Budget: $779.8K direct labor ÷ 14,205 billable hrs"),
+    ("Total loaded labor / FTE-month ($)", 12189, '#,##0', "2026 Budget: $1.422M total labor cost ÷ 9.72 budget FTE ÷ 12"),
+    ("Non-labor OpEx per month ($)", 21748, '#,##0', "2026 Budget: OpEx less all labor & overhead, monthly"),
+    ("Corporate overhead per month ($)", 17250, '#,##0', "2026 Budget: $207K ÷ 12 (flat)"),
+    ("Interest rate on parent note (APR)", 0.0175, '0.00%', "GL H1: $30.1K ÷ 6 ÷ $3.44M ×12 (budget assumes $0)"),
     ("DSO (days sales outstanding)", 46, '0', "GL: AR $139.8K vs H1 revenue"),
     ("Available hours per FTE-month", 173.33, '0.00', "2,080 ÷ 12"),
 ]
@@ -217,17 +217,16 @@ for name, val, fmt, src in scalars:
     s.font = F_NOTE
     s.border = BOX
     r += 1
-widths(ws, {"A": 36, "B": 12, "C": 60})
+widths(ws, {"A": 40, "B": 12, "C": 62})
 # scalar cell map
 CARD = f"Drivers!$B${SCAL0}"
-WAGE = f"Drivers!$B${SCAL0+1}"
-DSHARE = f"Drivers!$B${SCAL0+2}"
-BURDEN = f"Drivers!$B${SCAL0+3}"
-OTHER = f"Drivers!$B${SCAL0+4}"
-OVH = f"Drivers!$B${SCAL0+5}"
-APR = f"Drivers!$B${SCAL0+6}"
-DSO = f"Drivers!$B${SCAL0+7}"
-HRS_MO = f"Drivers!$B${SCAL0+8}"
+DLRATE = f"Drivers!$B${SCAL0+1}"
+LOADFTE = f"Drivers!$B${SCAL0+2}"
+NONLAB = f"Drivers!$B${SCAL0+3}"
+OVH = f"Drivers!$B${SCAL0+4}"
+APR = f"Drivers!$B${SCAL0+5}"
+DSO = f"Drivers!$B${SCAL0+6}"
+HRS_MO = f"Drivers!$B${SCAL0+7}"
 FTE_ROW, UTIL_ROW, REAL_ROW = 6, 7, 8
 
 # =============================================================== Forecast P&L
@@ -261,7 +260,7 @@ r = frow(ws, r, "Billable hours", lambda c: f"=Drivers!{c}${FTE_ROW}*{HRS_MO}*Dr
 REV = r
 r = frow(ws, r, "Revenue", lambda c: f"={c}{BH}*{CARD}*Drivers!{c}${REAL_ROW}/1000", font=F_SUB)
 DL = r
-r = frow(ws, r, "Direct labor", lambda c: f"=Drivers!{c}${FTE_ROW}*{WAGE}*{DSHARE}/1000")
+r = frow(ws, r, "Direct labor (billable hrs × budget rate)", lambda c: f"={c}{BH}*{DLRATE}/1000")
 GPR = r
 r = frow(ws, r, "Gross Profit", lambda c: f"={c}{REV}-{c}{DL}", font=F_SUB)
 lab = ws.cell(row=r, column=1, value="Gross margin %")
@@ -274,12 +273,13 @@ for cc in (H2_COL, FY27_COL):
     c = ws.cell(row=r, column=cc, value=f"={col}{GPR}/{col}{REV}")
     c.number_format = PCT
 r += 1
+# Indirect/other labor = total loaded labor (FTE-driven) − direct labor already in COGS.
+# Total labor is fixed per FTE, so raising utilization shifts cost DL↑ / indirect↓ (OI unaffected by the split).
 IL = r
-r = frow(ws, r, "Indirect labor", lambda c: f"=Drivers!{c}${FTE_ROW}*{WAGE}*(1-{DSHARE})/1000")
-BU = r
-r = frow(ws, r, "Burden (taxes, benefits, vac/hol)", lambda c: f"=Drivers!{c}${FTE_ROW}*{WAGE}*{BURDEN}/1000")
+r = frow(ws, r, "Indirect & other labor (total labor − direct)",
+         lambda c: f"=Drivers!{c}${FTE_ROW}*{LOADFTE}/1000-{c}{DL}")
 OO = r
-r = frow(ws, r, "Other operating expenses", lambda c: f"={OTHER}/1000")
+r = frow(ws, r, "Non-labor operating expenses", lambda c: f"={NONLAB}/1000")
 OV = r
 r = frow(ws, r, "Corporate overhead allocation", lambda c: f"={OVH}/1000")
 TOX = r
@@ -301,11 +301,73 @@ for cc in (H2_COL, FY27_COL):
     c.number_format = PCT
 r += 2
 ws.cell(row=r, column=1,
-        value=("Direct labor follows the GL convention (~92% of wages charged to jobs), so gross margin here is "
-               "comparable to the GL statements — improvement comes from revenue per FTE, not reclassification.")).font = F_NOTE
+        value=("Cost structure reconciled to the 2026 CVR Budget (finance): direct labor = billable hours × $54.89; "
+               "total labor is fixed per FTE, so utilization gains flow to Operating Income. At the budget operating "
+               "point (9.72 FTE, 70% util, ~$142.85 realized) this reproduces the budget's $104.1K GP and $11.6K OI/month.")).font = F_NOTE
+r += 1
+ws.cell(row=r, column=1,
+        value=("BUDGET (finance, flat monthly): Revenue $169.1K · Direct labor $65.0K · GP $104.1K · OpEx $92.5K · "
+               "Operating Income $11.6K · Interest $0 · Net Income $11.6K. Full monthly compare on the 'vs Budget' tab.")).font = F_NOTE
 widths(ws, {"A": 34, **{get_column_letter(c): 9 for c in range(2, 2 + NM)},
             get_column_letter(H2_COL): 11, get_column_letter(FY27_COL): 11})
-PL = {"rev": REV, "gp": GPR, "oi": OI, "int": INT, "ni": NI, "bh": BH}
+PL = {"rev": REV, "gp": GPR, "oi": OI, "int": INT, "ni": NI, "bh": BH, "dl": DL, "tox": TOX}
+
+# ================================================================= vs Budget
+# Finance's 2026 budget is a flat monthly spread; only Jul-Dec 2026 overlaps the
+# forecast horizon, so the compare covers H2-2026 (6 months) line by line.
+ws = wb.create_sheet("vs Budget")
+title(ws, "Forecast vs 2026 Budget (finance) — H2-2026, line by line ($K)",
+      "Budget = flat monthly per the 2026 CVR Budget V5. Forecast = active scenario from Forecast P&L. Δ = Forecast − Budget.")
+H2_MONTHS = MONTHS[:6]
+BUDGET_MO = {"Revenue": 169.094, "Direct labor": 64.980, "Gross Profit": 104.114,
+             "Total Operating Expenses": 92.497, "Operating Income": 11.617,
+             "Interest": 0.0, "Net Income": 11.617}
+# forecast source rows on Forecast P&L
+FC_ROWS = {"Revenue": PL["rev"], "Direct labor": PL["dl"], "Gross Profit": PL["gp"],
+           "Total Operating Expenses": PL["tox"], "Operating Income": PL["oi"],
+           "Interest": PL["int"], "Net Income": PL["ni"]}
+header(ws, 4, list(range(1, 6)), ["H2-2026 ($K)", "Forecast", "Budget", "Δ (Fcst − Bud)", "Δ %"])
+r = 5
+for label in ["Revenue", "Direct labor", "Gross Profit", "Total Operating Expenses",
+              "Operating Income", "Interest", "Net Income"]:
+    ws.cell(row=r, column=1, value=label).border = BOX
+    # forecast H2 sum = SUM of Jul..Dec on Forecast P&L (cols B..G)
+    fc = ws.cell(row=r, column=2, value=f"=SUM('Forecast P&L'!B{FC_ROWS[label]}:G{FC_ROWS[label]})")
+    bud = ws.cell(row=r, column=3, value=round(BUDGET_MO[label] * 6, 1))
+    d = ws.cell(row=r, column=4, value=f"=B{r}-C{r}")
+    dp = ws.cell(row=r, column=5, value=f'=IF(C{r}=0,"n/a",B{r}/C{r}-1)')
+    for cell in (fc, bud, d):
+        cell.number_format = KFMT
+        cell.border = BOX
+    dp.number_format = PCT
+    dp.border = BOX
+    if label in ("Gross Profit", "Operating Income", "Net Income"):
+        for cc in (1, 2, 3, 4):
+            ws.cell(row=r, column=cc).font = F_SUB
+    r += 1
+r += 1
+ws.cell(row=r, column=1, value="Full monthly budget (flat) for reference:").font = F_SUB
+r += 1
+header(ws, r, list(range(1, 2 + 6)), ["Budget $K"] + H2_MONTHS)
+r += 1
+for label in ["Revenue", "Direct labor", "Gross Profit", "Total Operating Expenses",
+              "Operating Income", "Net Income"]:
+    ws.cell(row=r, column=1, value=label).border = BOX
+    for j in range(6):
+        c = ws.cell(row=r, column=2 + j, value=round(BUDGET_MO[label], 1))
+        c.number_format = KFMT
+        c.border = BOX
+    r += 1
+r += 1
+for note in [
+    "Budget carries $0 interest; the forecast accrues ~$5K/mo on the parent note — so forecast Net Income trails",
+    "budget by roughly that amount even at matched operating performance.",
+    "The full-year budget ($2,029K revenue / +$139K NI) is a flat 1/12 spread; H1 landed 46% under it, so the",
+    "meaningful compare is H2 forward — shown above — plus the FY landing on the FY Summary tab.",
+]:
+    ws.cell(row=r, column=1, value=note).font = F_NOTE
+    r += 1
+widths(ws, {"A": 30, "B": 12, "C": 12, "D": 14, "E": 10, "F": 9, "G": 9})
 
 # ================================================================ Cash & Note
 ws = wb.create_sheet("Cash & Note")

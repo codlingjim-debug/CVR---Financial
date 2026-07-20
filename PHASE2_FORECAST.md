@@ -8,38 +8,43 @@
 
 ## What it is
 
-A driver-based re-forecast: `revenue = FTE × hours × utilization × card rate × realization`, with costs following the GL's actual structure (92% direct-charge share, 33.8% burden, $19.2K/mo other OpEx, $17,250/mo overhead, interest accruing on the parent note). The official 2026 budget is **not** the base case — H1 came in 46% under it — it appears as a comparison line. A scenario selector switches the whole model between Base / Upside / Downside paths; every driver path and scalar is editable.
+A driver-based re-forecast: `revenue = FTE × hours × utilization × card rate × realization`, with the cost side reconciled to finance's 2026 budget (direct labor at $54.89/billable hour, total loaded labor $12,189/FTE-month, non-labor OpEx and $17,250/mo overhead per the budget, interest accruing on the parent note). The official 2026 budget is **not** the base case — H1 came in 46% under it — it appears as a comparison line. A scenario selector switches the whole model between Base / Upside / Downside paths; every driver path and scalar is editable.
 
 Backlog (remaining PO value on the nine active jobs: **$697K**) and the probability-weighted bid pipeline (**$1,135K**) provide a coverage check against forecast revenue, and a Cash & Note tab rolls the USC parent note forward monthly — CVR's actual funding mechanism.
+
+> **Reconciled to finance's 2026 CVR Budget (V5).** The cost side now uses finance's fully-loaded labor
+> ($12,189/FTE-month) and budget OpEx structure; the engine reproduces the budget dollar-for-dollar at the
+> budget operating point. This is more conservative than the earlier estimate — FY27 Base net income moves
+> from +$432K to +$123K — and the parent note now grows through 2027 in the Base case rather than paying down.
 
 ## Headline outcomes (as built)
 
 | | FY2026 landing | FY2027 | OILI % (FY27) | Note balance 12/31/27 |
 |---|---|---|---|---|
-| **Base** (util 59→70%, real 79→90%, 10→13 FTE) | $1.42M rev, −$352K NI | **$2.50M rev, +$432K NI** | **17.3%** | $3.23M (−$209K paydown) |
-| **Upside** (75% / 95% / 16 FTE) | $1.63M rev, −$205K NI | $3.44M rev, +$1.05M NI | 30.7% | $2.59M |
-| **Downside** (no improvement, no hires) | $1.30M rev, −$444K NI | $1.54M rev, −$205K NI | −13.3% | $3.82M (still growing) |
+| **Base** (util 59→70%, real 79→90%, 10→13 FTE) | $1.42M rev, −$482K NI | **$2.50M rev, +$123K NI** | **4.9%** | $3.67M (+$231K, still drawing) |
+| **Upside** (75% / 95% / 16 FTE) | $1.66M rev, −$346K NI | $3.44M rev, +$689K NI | 20.0% | $3.10M |
+| **Downside** (no improvement, no hires) | $1.30M rev, −$568K NI | $1.54M rev, −$458K NI | −29.7% | $4.20M (still growing) |
 | *Official 2026 budget* | *$2.03M rev, +$139K NI* | — | — | — |
 
 ## What the numbers say
 
-1. **The 2026 budget is out of reach; the honest landing zone is ~$1.3–1.6M revenue with a $200–450K loss.** Even the Upside path (aggressive utilization, realization, and hiring from July) doesn't reach breakeven for the year — H1's hole is too deep. Recommend socializing a re-forecast with USC rather than tracking to a number that requires a 2.7× H2 revenue run-rate.
+1. **The 2026 budget is out of reach; the honest landing zone is ~$1.3–1.7M revenue with a $480–570K loss.** Even the Upside path doesn't reach breakeven for the year — H1's hole is too deep. Recommend socializing a re-forecast with USC rather than tracking to a number that requires a 2.7× H2 revenue run-rate.
 
-2. **The business turns profitable in the Base case around Q4 2026 / Q1 2027** and posts a meaningful FY27: +$432K net income at a 17.3% OILI return — *just under* the 20% Year-2 target on returns, at **42% of the $6M revenue goal**. The 20% OILI return is reachable with modest over-performance on realization or utilization; the $6M revenue is not reachable on 13 FTEs. Revenue goal = headcount goal: roughly **27 billable FTEs** at target utilization support $6M (per the Phase 1 ceiling math).
+2. **FY2027 turns profitable in the Base case: +$123K net income at a 4.9% OILI return**, at **42% of the $6M revenue goal**. On finance's fully-loaded cost basis the return is thinner than the earlier estimate — the **Upside path reaches the 20% OILI aspiration** (and +$689K NI), so the 20% target is a stretch that needs both the utilization/realization gains and the hiring ramp. The $6M revenue remains a capacity goal: roughly **27 billable FTEs** at target utilization (per the Phase 1 ceiling math).
 
 3. **Coverage is 54% — the BD gap is quantified at ~$1.5M.** Backlog + weighted pipeline covers $1.83M of the Base case's $3.37M 18-month revenue. A gap is normal at this horizon, but below ~60% the forecast leans on unidentified sales. Treat the ~$1.5M as Estimating/BD's origination target — and note the Lansing BWL joint-use audit ($1.35M) is the single biggest pipeline swing factor.
 
-4. **The parent note starts paying down in the Base case** — $209K by end-2027 after peaking near $3.5M. In the Downside it keeps growing ($3.82M), which makes the note trajectory a clean early-warning indicator for USC reporting: if the balance isn't flattening by Q1 2027, the drivers aren't moving.
+4. **The parent note keeps growing in the Base case** — up $231K to $3.67M by end-2027, peaking $3.77M mid-year. Only the Upside path flattens and repays it. That makes the note trajectory a clean early-warning gauge for USC reporting: if the balance isn't turning down by 2027, the drivers aren't moving fast enough.
 
 ## Model limits (stated on the Checks tab)
 
-Revenue is capacity-driven with a coverage discipline, not a job-by-job burn schedule; hires are assumed productive in month one; pipeline probabilities are placeholders (50% / the 67% observed win rate) that Estimating should own; escalation is off until the 2027 rate sheet exists; and the 92% direct-charge share mirrors the GL convention pending salary detail.
+Revenue is capacity-driven with a coverage discipline, not a job-by-job burn schedule; hires are assumed productive in month one; pipeline probabilities are placeholders (50% / the 67% observed win rate) that Estimating should own; escalation is off until the 2027 rate sheet exists; and total labor is held fixed per FTE (finance's budget basis), so the DL/indirect split moves with utilization while operating income does not.
 
 ## Suggested next steps
 
 1. Review the Base path assumptions with Roy and Frank — especially the hiring timing (Oct-26, Jan-27, Jun-27) and the utilization ramp.
 2. Set real win probabilities and award dates on the pipeline tab.
-3. When salary data arrives, replace the average-wage engine with a person-level labor build (closes the last Phase 1 item too).
+3. ~~When salary data arrives, replace the average-wage engine with a person-level labor build~~ ✅ done — reconciled to finance's 2026 budget.
 4. Phase 3 (dashboard + scenario polish) and Phase 4 (monthly actuals rhythm) per the plan — the Actuals & Variance cadence can start with July's close.
 
 ## Rebuilding
