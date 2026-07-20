@@ -84,6 +84,7 @@ rows = [
     "  Assumptions          — global inputs (blue). Overhead, interest, and burden now sourced from GL.",
     "  Rates                — 2026 rate sheet, effective January 2026.",
     "  Roster & Hours       — people, classifications, YTD hours and utilization vs target, value at card rates.",
+    "  Labor Cost           — per-person standard cost rates (COINS timesheet report), loaded cost, and margin by role.",
     "  Baseline P&L         — CVR monthly actuals vs budget, Jan–Jun 2026 (Jan–May per KPI report, June per GL).",
     "  GL Income Stmt       — full line-item income statement, June and YTD, actual vs budget vs prior year.",
     "  Balance Sheet        — 6/30/2026 vs one year ago vs annual budget.",
@@ -103,6 +104,7 @@ rows = [
     "  data/CVR_Rate_Sheet_2026.pdf",
     "  data/CVR_EPC_KPI_2026-07-11.pdf",
     "  data/CVR_Financial_Statements_2026-06-30.pdf",
+    "  data/CVR_Timesheet_Costs_Jul2026_JC016755.pdf",
 ]
 for i, text in enumerate(rows, start=3):
     c = ws.cell(row=i, column=1, value=text)
@@ -262,6 +264,104 @@ ws.cell(row=rt + 2, column=1,
                "billable utilization. Roster above sums slightly lower (~193 hrs unattributed on the report page).")).font = F_NOTE
 widths(ws, {"A": 18, "B": 20, "C": 30, "D": 11, "E": 12, "F": 11, "G": 13, "H": 9, "I": 12, "J": 12, "K": 12, "L": 16})
 ROSTER_TOTAL_ROW = rt
+
+# ================================================================= Labor Cost
+# Per-person standard labor cost rates from the COINS Job Status - Timesheet
+# Costs Report (JC016755), July 2026. Rates are consistent to the penny across
+# every timesheet line, so they are COINS standard cost rates, not raw actuals.
+# Assessed as base/pay rates (burden-exclusive) — see notes on the tab.
+COST_RATES = {
+    "Roy Pierce": 149.57,
+    "Hayley Worthen": 138.05,
+    "Bhkti Patel": 107.60,
+    "Francis Wagner": 107.60,
+    "Kevin Metts": 92.39,
+    "Craig Peterson": 77.16,
+    "Taylor Nelson": 77.16,
+    "Collin Allen": 51.11,
+    # not present on the pages captured — to confirm from a full report:
+    "Randy Pynenberg": None,
+    "Auston Hopson": None,
+    "Tom Little": None,
+    "Erin Bryden": None,
+    "Patrick Nicholson": None,
+}
+ws = wb.create_sheet("Labor Cost")
+title(ws, "Labor Cost — standard rates and margin by person",
+      "Cost rates from COINS Timesheet Costs Report (JC016755), Jul 2026. Loaded cost = raw × (1 + burden). Burden on Assumptions.")
+cols = list(range(1, 9))
+header(ws, 4, cols, [
+    "Name", "Billing classification", "Bill rate / hr", "Raw cost / hr",
+    "Loaded cost / hr", "Margin / hr (bill − loaded)", "Cost multiplier (bill ÷ loaded)", "Billable value @ card"])
+lc0 = 5
+order = ["Roy Pierce", "Hayley Worthen", "Bhkti Patel", "Francis Wagner", "Kevin Metts",
+         "Craig Peterson", "Taylor Nelson", "Collin Allen", "Randy Pynenberg", "Auston Hopson"]
+cls_by_name = {name: cls for name, cls, *rest in ROSTER}
+roster_row_by_name = {name: r0 + i for i, (name, *rest) in enumerate(ROSTER)}
+for i, name in enumerate(order):
+    r = lc0 + i
+    cls = cls_by_name[name]
+    ws.cell(row=r, column=1, value=name).border = BOX
+    ws.cell(row=r, column=2, value=cls).border = BOX
+    rate_cell = ws.cell(row=r, column=3, value=f"=Rates!B{RATE_ROWS[cls]}")
+    rate_cell.number_format = USD
+    rate_cell.border = BOX
+    raw = COST_RATES.get(name)
+    rc = ws.cell(row=r, column=4, value=raw)
+    rc.number_format = USD
+    rc.border = BOX
+    if raw is None:
+        rc.value = "TBD"
+        rc.font = F_FLAG
+    # loaded = raw * (1 + burden)  [Assumptions burden lives at B9]
+    lc = ws.cell(row=r, column=5, value=(f"=D{r}*(1+Assumptions!$B$9)" if raw is not None else None))
+    lc.number_format = USD
+    lc.border = BOX
+    mg = ws.cell(row=r, column=6, value=(f"=C{r}-E{r}" if raw is not None else None))
+    mg.number_format = USD
+    mg.border = BOX
+    mult = ws.cell(row=r, column=7, value=(f"=C{r}/E{r}" if raw is not None else None))
+    mult.number_format = '0.00"x"'
+    mult.border = BOX
+    # billable value at card, pulled from Roster & Hours col L
+    rr = roster_row_by_name[name]
+    bv = ws.cell(row=r, column=8, value=f"='Roster & Hours'!L{rr}")
+    bv.number_format = '"$"#,##0'
+    bv.border = BOX
+lct = lc0 + len(order)
+ws.cell(row=lct, column=1, value="Blended (weighted by billable hrs)").font = F_SUB
+# weighted blended raw & loaded cost across people with known rates and hours
+bl_raw = ws.cell(row=lct, column=4,
+                 value=(f"=SUMPRODUCT('Roster & Hours'!I{r0}:I{r0+7},D{lc0}:D{lc0+7})/"
+                        f"SUM('Roster & Hours'!I{r0}:I{r0+7})"))
+bl_raw.number_format = USD
+bl_raw.font = F_SUB
+bl_load = ws.cell(row=lct, column=5, value=f"=D{lct}*(1+Assumptions!$B$9)")
+bl_load.number_format = USD
+bl_load.font = F_SUB
+for col in range(1, 9):
+    ws.cell(row=lct, column=col).fill = FILL_TOT
+    ws.cell(row=lct, column=col).border = BOX
+r = lct + 2
+notes = [
+    "RAW vs BURDENED — assessment: these are base/pay rates, burden-EXCLUSIVE. Two tells:",
+    "  1. The GL books burden (FICA, UI, WC, health, pension, benefits, vac/hol = $157.4K YTD) as separate",
+    "     operating-expense lines, NOT inside Cost of Revenues. If the job-cost rate were fully loaded, that",
+    "     burden would sit in COGS instead — it cannot be in both. So the rate feeding COGS is burden-free.",
+    "  2. On the COINS internal-labor job (9715), PTO, holiday and sick hours are booked at the SAME per-person",
+    "     rate. A fully-burdened rate would double-count fringe when vacation/holiday time is also charged at it.",
+    "Therefore: loaded cost = raw × (1 + burden%), burden ≈ 33.8% blended (Assumptions!B9). Note the blend is",
+    "approximate — health insurance is ~flat $/head (heavier on lower-paid staff) and payroll taxes cap on high",
+    "earners, so true burden % is higher at the bottom of the roster and lower at the top.",
+    "TO CONFIRM DEFINITIVELY: ask payroll/COINS admin what the standard cost rate includes, or reconcile the",
+    "timesheet direct-labor total to the GL 'Labor-Design Services' line ($428.5K YTD).",
+    "Cost rates cluster by grade (both Engineer IIIs = $107.60), a good validation. Taylor Nelson costs at the",
+    "Engineer I rate ($77.16) despite the assumed Engineer II billing class — worth confirming.",
+]
+for note in notes:
+    ws.cell(row=r, column=1, value=note).font = F_NOTE
+    r += 1
+widths(ws, {"A": 30, "B": 20, "C": 13, "D": 13, "E": 14, "F": 20, "G": 20, "H": 16})
 
 # ============================================================== Baseline P&L
 ws = wb.create_sheet("Baseline P&L")
