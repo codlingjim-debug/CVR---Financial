@@ -16,16 +16,16 @@
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
   const txt = (x, y, s, a) => { const t = el("text", Object.assign({ x, y, "font-size": 12, fill: "#898781" }, a || {})); t.textContent = s; return t; };
   const BLUE = "#2a78d6", LIGHT = "#9EC5F4", RED = "#e34948", INK = "#0b0b0b", INK2 = "#52514e", GRID = "#e1e0d9";
-  // name, class, loaded cost, bill rate, multiplier, underwater
+  // name, class, loaded cost, bill rate, multiplier — 2026 CVR Budget (finance)
   const DATA = [
-    ["Kevin Metts", "Designer II", 123.62, 95.70, "0.77×", true],
-    ["Bhkti Patel", "Engineer III", 143.97, 152.21, "1.06×", false],
-    ["Francis Wagner", "Engineer III", 143.97, 152.21, "1.06×", false],
-    ["Craig Peterson", "Engineer I", 103.24, 112.27, "1.09×", false],
-    ["Collin Allen", "Graphics Tech", 68.39, 76.14, "1.11×", false],
-    ["Hayley Worthen", "Senior Engineer", 184.71, 241.57, "1.31×", false],
-    ["Taylor Nelson", "Engineer II (bill)", 103.24, 138.09, "1.34×", false],
-    ["Roy Pierce", "Principal Engineer", 200.12, 360.72, "1.80×", false],
+    ["Kevin Metts", "Designer II", 78.86, 132.60, "1.68×", false],
+    ["Taylor Nelson", "Engineer I", 65.98, 112.27, "1.70×", false],
+    ["Francis Wagner", "Engineer III", 82.72, 152.21, "1.84×", false],
+    ["Collin Allen", "Graphics Tech", 40.17, 76.14, "1.90×", false],
+    ["Craig Peterson", "Engineer I", 57.68, 112.27, "1.95×", false],
+    ["Bhkti Patel", "Engineer III", 75.32, 152.21, "2.02×", false],
+    ["Hayley Worthen", "Senior Engineer", 116.44, 241.57, "2.07×", false],
+    ["Roy Pierce", "Principal Engineer", 139.02, 308.70, "2.22×", false],
   ];
   const W = 930, ROW = 46, L = 168, R = 96, T = 8, PW = W - L - R;
   const H = T + DATA.length * ROW + 26, XMAX = 380;
@@ -51,7 +51,7 @@
     svg.appendChild(txt(W - 6, cy + 2, mult, { "text-anchor": "end", "font-size": 13, fill: under ? RED : INK, "font-weight": 700 }));
   });
   const lg = document.getElementById("legend");
-  [["Bill rate (card)", LIGHT], ["Loaded cost (raw × 1.338)", BLUE], ["Bills below cost", RED]].forEach(([t, c]) => {
+  [["Budget bill rate", LIGHT], ["Loaded cost (base + 25% benefits + bonus)", BLUE]].forEach(([t, c]) => {
     const k = document.createElement("span"); k.className = "key";
     const sv = document.createElementNS(NS, "svg"); sv.setAttribute("width", 14); sv.setAttribute("height", 12); sv.setAttribute("viewBox", "0 0 14 12");
     sv.appendChild(el("rect", { x: 0, y: 0, width: 14, height: 12, rx: 3, fill: c }));

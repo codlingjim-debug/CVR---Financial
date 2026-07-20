@@ -172,7 +172,7 @@ s.addText([
 rx = M + 8.0; rw = W - M - rx;
 [["79%", "realization — $32/hr of card rate not reaching revenue (~$145K in H1)"],
  ["Lead suspect", "intercompany pricing on HWC work (20% of sales); billing lag and write-offs also in scope"],
- ["Now sourced", "per-person cost rates confirmed from the COINS timesheet report — see the next slide"],
+ ["Now sourced", "per-person cost confirmed from finance's 2026 budget — every role clears its rate (next slide)"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.6, w: rw, h: 0.5, fontSize: 26, bold: true, color: i === 0 ? RED : INK, fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.6, w: rw, h: 1.0, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
@@ -182,18 +182,18 @@ foot(s, "H1 2026: 4,747 billable hours (through 7/11) · blended card rate mix-w
 /* ===================== 6 · MARGIN BY ROLE (RATE CARD) ===================== */
 s = pres.addSlide();
 eyebrow(s, "Operating drivers");
-slideTitle(s, "Margin by role — a rate-card problem, quantified");
+slideTitle(s, "Margin by role — the rate card holds");
 chartImg(s, "margin", M, 1.5, 8.3);
 rx = M + 8.6; rw = W - M - rx;
-[["Designer II", "bills BELOW its own loaded cost ($96 vs $124) — underwater on every billable hour", RED],
- ["Engineer III", "≈6% margin at full card ($152 vs $144) — goes negative after 79% realization", RED],
- ["The pattern", "mid-grades don't clear loaded cost with room to survive realization, overhead, and interest", INK],
- ["The fix", "a rate-card review, now defensible with actual per-person cost by grade", BLUE],
+[["1.7×–2.2×", "every role clears its bill rate at a healthy labor multiplier on finance's loaded-cost basis", GOOD],
+ ["Not a pricing problem", "the rate card is adequate — no classification bills below its cost", INK],
+ ["So where's the gap?", "budget blends to 2.6× revenue-per-labor-dollar; H1 actual ran 1.29× — that gap is realization and utilization, not the card", RED],
+ ["Focus the fix there", "close the realization gap and lift utilization — the two levers that move margin", BLUE],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.55 + i * 1.32, w: rw, h: 0.33, fontSize: 16, bold: true, color: t[2], fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 1.9 + i * 1.32, w: rw, h: 1.0, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "Loaded cost = COINS standard cost rate × 1.338 (GL-derived burden). Cost rates are base/pay (burden-exclusive). Source: COINS Timesheet Costs Report, Jul 2026.");
+foot(s, "Loaded cost = base + 25% benefits + bonus per hour. Source: 2026 CVR Budget V5 (finance), tab Labor Rates-DP.");
 
 /* ========================== 7 · STAFF & HEADCOUNT ========================== */
 s = pres.addSlide();

@@ -84,7 +84,7 @@ rows = [
     "  Assumptions          — global inputs (blue). Overhead, interest, and burden now sourced from GL.",
     "  Rates                — 2026 rate sheet, effective January 2026.",
     "  Roster & Hours       — people, classifications, YTD hours and utilization vs target, value at card rates.",
-    "  Labor Cost           — per-person standard cost rates (COINS timesheet report), loaded cost, and margin by role.",
+    "  Labor Cost           — per-person loaded cost, bill rate and margin by role (2026 CVR Budget, finance).",
     "  Baseline P&L         — CVR monthly actuals vs budget, Jan–Jun 2026 (Jan–May per KPI report, June per GL).",
     "  GL Income Stmt       — full line-item income statement, June and YTD, actual vs budget vs prior year.",
     "  Balance Sheet        — 6/30/2026 vs one year ago vs annual budget.",
@@ -105,6 +105,7 @@ rows = [
     "  data/CVR_EPC_KPI_2026-07-11.pdf",
     "  data/CVR_Financial_Statements_2026-06-30.pdf",
     "  data/CVR_Timesheet_Costs_Jul2026_JC016755.pdf",
+    "  data/2026_CVR_Budget_V5.xlsx  (finance — authoritative labor & budget build)",
 ]
 for i, text in enumerate(rows, start=3):
     c = ws.cell(row=i, column=1, value=text)
@@ -266,102 +267,84 @@ widths(ws, {"A": 18, "B": 20, "C": 30, "D": 11, "E": 12, "F": 11, "G": 13, "H": 
 ROSTER_TOTAL_ROW = rt
 
 # ================================================================= Labor Cost
-# Per-person standard labor cost rates from the COINS Job Status - Timesheet
-# Costs Report (JC016755), July 2026. Rates are consistent to the penny across
-# every timesheet line, so they are COINS standard cost rates, not raw actuals.
-# Assessed as base/pay rates (burden-exclusive) — see notes on the tab.
-COST_RATES = {
-    "Roy Pierce": 149.57,
-    "Hayley Worthen": 138.05,
-    "Bhkti Patel": 107.60,
-    "Francis Wagner": 107.60,
-    "Kevin Metts": 92.39,
-    "Craig Peterson": 77.16,
-    "Taylor Nelson": 77.16,
-    "Collin Allen": 51.11,
-    # not present on the pages captured — to confirm from a full report:
-    "Randy Pynenberg": None,
-    "Auston Hopson": None,
-    "Tom Little": None,
-    "Erin Bryden": None,
-    "Patrick Nicholson": None,
+# AUTHORITATIVE SOURCE: 2026 CVR Budget V5 (finance), tab "Labor Rates-DP".
+# Per-person base salary, 25% benefits load, bonus, resulting loaded cost per
+# hour ("Eff Hrly"), conservative budget bill rate, and the hours plan.
+# The COINS timesheet report (JC016755) rates are carried as a reference column;
+# they run higher because that construct appears to include overhead / a billable-
+# hour divisor, so it is NOT comparable 1:1 to the bill rate (see notes).
+# name: (base, loaded_cost_hr, budget_bill_rate, budget_billable_hrs, coins_ref)
+BUDGET_LABOR = {
+    "Roy Pierce":     (198600.48, 139.02, 308.70, 882,  149.57),
+    "Hayley Worthen": (166335.73, 116.44, 241.57, 1274, 138.05),
+    "Bhkti Patel":    (120510.00,  75.32, 152.21, 1470, 107.60),
+    "Francis Wagner": (132355.00,  82.72, 152.21, 1470, 107.60),
+    "Kevin Metts":    (126173.90,  78.86, 132.60, 1568,  92.39),
+    "Craig Peterson": ( 92288.00,  57.68, 112.27, 1568,  77.16),
+    "Taylor Nelson":  (105575.00,  65.98, 112.27, 1666,  77.16),
+    "Collin Allen":   ( 64272.00,  40.17,  76.14, 1666,  51.11),
+    "Alicia":         ( 92082.00,  57.55, 102.10, 1666,  None),  # F-col $120 is a sheet input error; uses E/2000
+    "Randy Pynenberg":(  4177.68,  78.00, 201.22, 475,   None),  # PT
+    "Auston Hopson":  (  1151.54,  20.00,  76.14, 500,   None),  # PT
 }
 ws = wb.create_sheet("Labor Cost")
-title(ws, "Labor Cost — standard rates and margin by person",
-      "Cost rates from COINS Timesheet Costs Report (JC016755), Jul 2026. Loaded cost = raw × (1 + burden). Burden on Assumptions.")
-cols = list(range(1, 9))
-header(ws, 4, cols, [
-    "Name", "Billing classification", "Bill rate / hr", "Raw cost / hr",
-    "Loaded cost / hr", "Margin / hr (bill − loaded)", "Cost multiplier (bill ÷ loaded)", "Billable value @ card"])
-lc0 = 5
+title(ws, "Labor Cost & Margin by Person — 2026 Budget (finance)",
+      "Source: 2026 CVR Budget V5, tab Labor Rates-DP. Loaded cost = base + 25% benefits + bonus, per hour. Multiplier = bill ÷ loaded cost.")
+header(ws, 4, list(range(1, 9)), [
+    "Name", "Base salary", "Loaded cost / hr", "Budget bill rate / hr",
+    "Multiplier (bill ÷ cost)", "Budget billable hrs", "Budget revenue @ bill",
+    "COINS cost / hr (ref)"])
 order = ["Roy Pierce", "Hayley Worthen", "Bhkti Patel", "Francis Wagner", "Kevin Metts",
-         "Craig Peterson", "Taylor Nelson", "Collin Allen", "Randy Pynenberg", "Auston Hopson"]
-cls_by_name = {name: cls for name, cls, *rest in ROSTER}
-roster_row_by_name = {name: r0 + i for i, (name, *rest) in enumerate(ROSTER)}
+         "Craig Peterson", "Taylor Nelson", "Collin Allen", "Alicia", "Randy Pynenberg", "Auston Hopson"]
+lc0 = 5
 for i, name in enumerate(order):
     r = lc0 + i
-    cls = cls_by_name[name]
+    base, cost, bill, bhrs, coins = BUDGET_LABOR[name]
     ws.cell(row=r, column=1, value=name).border = BOX
-    ws.cell(row=r, column=2, value=cls).border = BOX
-    rate_cell = ws.cell(row=r, column=3, value=f"=Rates!B{RATE_ROWS[cls]}")
-    rate_cell.number_format = USD
-    rate_cell.border = BOX
-    raw = COST_RATES.get(name)
-    rc = ws.cell(row=r, column=4, value=raw)
-    rc.number_format = USD
-    rc.border = BOX
-    if raw is None:
-        rc.value = "TBD"
-        rc.font = F_FLAG
-    # loaded = raw * (1 + burden)  [Assumptions burden lives at B9]
-    lc = ws.cell(row=r, column=5, value=(f"=D{r}*(1+Assumptions!$B$9)" if raw is not None else None))
-    lc.number_format = USD
-    lc.border = BOX
-    mg = ws.cell(row=r, column=6, value=(f"=C{r}-E{r}" if raw is not None else None))
-    mg.number_format = USD
-    mg.border = BOX
-    mult = ws.cell(row=r, column=7, value=(f"=C{r}/E{r}" if raw is not None else None))
-    mult.number_format = '0.00"x"'
-    mult.border = BOX
-    # billable value at card, pulled from Roster & Hours col L
-    rr = roster_row_by_name[name]
-    bv = ws.cell(row=r, column=8, value=f"='Roster & Hours'!L{rr}")
-    bv.number_format = '"$"#,##0'
-    bv.border = BOX
+    c = ws.cell(row=r, column=2, value=base); c.number_format = '"$"#,##0'; c.border = BOX
+    c = ws.cell(row=r, column=3, value=cost); c.number_format = USD; c.border = BOX
+    c = ws.cell(row=r, column=4, value=bill); c.number_format = USD; c.border = BOX
+    m = ws.cell(row=r, column=5, value=f"=D{r}/C{r}"); m.number_format = '0.00"x"'; m.border = BOX
+    if name == "Alicia":
+        ws.cell(row=r, column=1).font = F_FLAG
+    c = ws.cell(row=r, column=6, value=bhrs); c.number_format = HRS; c.border = BOX
+    c = ws.cell(row=r, column=7, value=f"=D{r}*F{r}"); c.number_format = '"$"#,##0'; c.border = BOX
+    cr = ws.cell(row=r, column=8, value=(coins if coins is not None else "—"))
+    cr.number_format = USD; cr.border = BOX; cr.font = F_NOTE
 lct = lc0 + len(order)
-ws.cell(row=lct, column=1, value="Blended (weighted by billable hrs)").font = F_SUB
-# weighted blended raw & loaded cost across people with known rates and hours
-bl_raw = ws.cell(row=lct, column=4,
-                 value=(f"=SUMPRODUCT('Roster & Hours'!I{r0}:I{r0+7},D{lc0}:D{lc0+7})/"
-                        f"SUM('Roster & Hours'!I{r0}:I{r0+7})"))
-bl_raw.number_format = USD
-bl_raw.font = F_SUB
-bl_load = ws.cell(row=lct, column=5, value=f"=D{lct}*(1+Assumptions!$B$9)")
-bl_load.number_format = USD
-bl_load.font = F_SUB
+ws.cell(row=lct, column=1, value="TOTAL / blended").font = F_SUB
+c = ws.cell(row=lct, column=6, value=f"=SUM(F{lc0}:F{lct-1})"); c.number_format = HRS; c.font = F_SUB
+c = ws.cell(row=lct, column=7, value=f"=SUM(G{lc0}:G{lct-1})"); c.number_format = '"$"#,##0'; c.font = F_SUB
+# blended cost & bill weighted by budget billable hours
+bc = ws.cell(row=lct, column=3, value=f"=SUMPRODUCT(C{lc0}:C{lct-1},F{lc0}:F{lct-1})/F{lct}")
+bc.number_format = USD; bc.font = F_SUB
+bb = ws.cell(row=lct, column=4, value=f"=G{lct}/F{lct}"); bb.number_format = USD; bb.font = F_SUB
+bm = ws.cell(row=lct, column=5, value=f"=D{lct}/C{lct}"); bm.number_format = '0.00"x"'; bm.font = F_SUB
 for col in range(1, 9):
     ws.cell(row=lct, column=col).fill = FILL_TOT
     ws.cell(row=lct, column=col).border = BOX
 r = lct + 2
 notes = [
-    "RAW vs BURDENED — assessment: these are base/pay rates, burden-EXCLUSIVE. Two tells:",
-    "  1. The GL books burden (FICA, UI, WC, health, pension, benefits, vac/hol = $157.4K YTD) as separate",
-    "     operating-expense lines, NOT inside Cost of Revenues. If the job-cost rate were fully loaded, that",
-    "     burden would sit in COGS instead — it cannot be in both. So the rate feeding COGS is burden-free.",
-    "  2. On the COINS internal-labor job (9715), PTO, holiday and sick hours are booked at the SAME per-person",
-    "     rate. A fully-burdened rate would double-count fringe when vacation/holiday time is also charged at it.",
-    "Therefore: loaded cost = raw × (1 + burden%), burden ≈ 33.8% blended (Assumptions!B9). Note the blend is",
-    "approximate — health insurance is ~flat $/head (heavier on lower-paid staff) and payroll taxes cap on high",
-    "earners, so true burden % is higher at the bottom of the roster and lower at the top.",
-    "TO CONFIRM DEFINITIVELY: ask payroll/COINS admin what the standard cost rate includes, or reconcile the",
-    "timesheet direct-labor total to the GL 'Labor-Design Services' line ($428.5K YTD).",
-    "Cost rates cluster by grade (both Engineer IIIs = $107.60), a good validation. Taylor Nelson costs at the",
-    "Engineer I rate ($77.16) despite the assumed Engineer II billing class — worth confirming.",
+    "READING: every role clears its bill rate at a healthy multiplier (1.7x-2.2x on finance's loaded-cost basis).",
+    "The rate card is adequate; the margin gap is realization and utilization, not per-role pricing.",
+    "",
+    "BUDGET vs ACTUAL multiplier: budget blends to ~2.6x (revenue ÷ direct labor). H1 actual ran 1.29x - that gap",
+    "is under-realization and low utilization, NOT the cost structure (which the budget confirms is sound).",
+    "",
+    "COINS timesheet 'cost' (ref column) runs ~1.5-1.9x these loaded costs. It appears to include overhead or a",
+    "billable-hour divisor, so it overstates cost when compared 1:1 to bill rates. It is shown for reference only;",
+    "finance's loaded-cost basis is authoritative. (An earlier draft using the COINS figures wrongly showed some",
+    "roles 'underwater' - corrected here.)",
+    "",
+    "Burden: finance uses 25% benefits (note on the source tab: 'previously used 35%'), with FICA, taxes, WC,",
+    "health, pension and bonus itemized separately. Alicia's source eff-hourly ($120) is a sheet input error",
+    "(E-col ÷ 2000 = $57.55); shown corrected and flagged.",
 ]
 for note in notes:
     ws.cell(row=r, column=1, value=note).font = F_NOTE
     r += 1
-widths(ws, {"A": 30, "B": 20, "C": 13, "D": 13, "E": 14, "F": 20, "G": 20, "H": 16})
+widths(ws, {"A": 22, "B": 13, "C": 15, "D": 18, "E": 20, "F": 18, "G": 20, "H": 18})
+
 
 # ============================================================== Baseline P&L
 ws = wb.create_sheet("Baseline P&L")
