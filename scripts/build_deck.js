@@ -444,7 +444,7 @@ s.addText([
   { text: "≈$120B in disclosed capital plans across this client base.  ", options: { bold: true, color: INK } },
   { text: "0.005% captured as engineering = the $6M Year-2 goal.", options: { color: INK2 } },
 ], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
-foot(s, "Public sources: company capital-plan announcements and filings (Utility Dive, SEC 8-K, company releases), July 2026. Wordmarks shown; drop official logo files into reports/assets/logos/ and rebuild to swap them in.");
+foot(s, "Public sources: company capital-plan announcements and filings (Utility Dive, SEC 8-K, company releases), July 2026. Logos are the property of their respective owners; shown for internal reference only.");
 
 /* ==================== 14 · BUSINESS DEVELOPMENT — ACCOUNT OWNERS ==================== */
 s = pres.addSlide();
