@@ -273,6 +273,8 @@ const bkRows = [
    { text: "PO value", options: { bold: true } }, { text: "Billed", options: { bold: true } },
    { text: "Remaining", options: { bold: true } }, { text: "Finish", options: { bold: true } }],
   ["001-0003", "DTE — New Baltimore Conversion", "$1,428.8K", "$1,216.3K", "$212.5K", "Dec-27"],
+  [{ text: "NEW", options: { bold: true, color: GOOD } }, { text: "Consumers — 2026 Pole Replacements (WON)", options: { bold: true } },
+   "$300.0K", "$0.0K", { text: "$300.0K", options: { bold: true } }, "Dec-27"],
   ["017-0007", "CenterPoint — Leonard Rd 69kV", "$200.0K", "$6.7K", "$193.3K", "Oct-27"],
   ["017-0006", "CenterPoint — Northwest 69kV", "$110.6K", "$4.4K", "$106.2K", "Aug-27"],
   ["017-0003", "CenterPoint — Gateway 69kV", "$203.0K", "$131.2K", "$71.8K", "Aug-26"],
@@ -282,14 +284,14 @@ const bkRows = [
   ["016-0001", "Cloverland — Manistique Pump Stn", "$111.5K", "$106.6K", "$4.9K", "Sep-26"],
   ["017-0005", "CenterPoint — Angel Mounds 69kV", "$97.0K", "$95.1K", "$1.8K", "Oct-26"],
   [{ text: "", options: {} }, { text: "Total backlog remaining", options: { bold: true } },
-   { text: "", options: {} }, { text: "", options: {} }, { text: "$696.8K", options: { bold: true } }, ""],
+   { text: "", options: {} }, { text: "", options: {} }, { text: "$996.8K", options: { bold: true } }, ""],
 ];
 s.addTable(bkRows, { x: M, y: 1.5, w: 8.9, colW: [0.95, 3.4, 1.25, 1.25, 1.25, 0.8],
   fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
   border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.36, align: "left" });
 rx = M + 9.2; rw = W - M - rx;
-[["$697K", "booked work remaining — about 5 months of Base-forecast revenue"],
- ["2 jobs", "carry 57% of it (New Baltimore, Leonard Rd), both finishing late 2027"],
+[["$997K", "booked work remaining — up $300K on the new Consumers pole win"],
+ ["2 jobs", "carry over half of it (New Baltimore, Leonard Rd), both finishing late 2027"],
  ["3 close-outs", "Gateway, Rockport, Manistique wrap by Oct-26 — replacement work needed now"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: BLUE, fontFace: SANS, margin: 0 });
@@ -306,25 +308,27 @@ const ppRows = [
    { text: "CVR scope", options: { bold: true } }, { text: "Paired EPC", options: { bold: true } },
    { text: "Win prob.", options: { bold: true } }, { text: "Weighted", options: { bold: true } },
    { text: "Award", options: { bold: true } }],
+  [{ text: "2026 Pole Replacements", options: { color: GOOD } }, { text: "Consumers Energy", options: { color: GOOD } },
+   { text: "$300.0K", options: { color: GOOD } }, { text: "$3,451.1K", options: { color: GOOD } },
+   { text: "WON", options: { bold: true, color: GOOD } }, { text: "→ backlog", options: { color: GOOD } }, "Q3-26"],
   ["Joint Use Audit", "Lansing Board of Water & Light", "$1,350.0K", "—", "50%", "$675.0K", "Q4-26"],
   ["Rosehill–Rockport 69kV", "Hoosier Energy REC", "$290.0K", "$5,590.9K", "50%", "$145.0K", "Q4-26"],
-  ["2026 Pole Replacements", "Consumers Energy", "$276.5K", "$3,451.1K", "67%", "$185.2K", "Q4-26"],
   ["Jacksonburg–Gateway 69kV", "Hoosier Energy REC", "$160.0K", "$3,548.5K", "50%", "$80.0K", "Q4-26"],
   ["Frontier Make Ready", "Steuben County REMC", "$100.0K", "—", "50%", "$50.0K", "Q3-26"],
   ["Renaissance 345kV Substation", "DTE Energy", "TBD", "—", "on hold", "—", "hold"],
-  [{ text: "", options: {} }, { text: "Total", options: { bold: true } },
-   { text: "$2,176.5K", options: { bold: true } }, { text: "$12,590.5K", options: { bold: true } },
-   { text: "", options: {} }, { text: "$1,135.2K", options: { bold: true } }, ""],
+  [{ text: "", options: {} }, { text: "Pending total (ex-won)", options: { bold: true } },
+   { text: "$1,900.0K", options: { bold: true } }, { text: "$9,139.4K", options: { bold: true } },
+   { text: "", options: {} }, { text: "$950.0K", options: { bold: true } }, ""],
 ];
 s.addTable(ppRows, { x: M, y: 1.5, w: 9.6, colW: [2.15, 2.15, 1.15, 1.25, 0.95, 1.1, 0.85],
   fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
   border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.4, align: "left" });
 rx = M + 9.9; rw = W - M - rx;
-[["67%", "2026 win rate to date (up from 50% in 2025)"],
- ["4–5%", "engineering share of paired EPC contract value — every EPC win pulls CVR scope with it"],
- ["$1.5M", "origination gap beyond this list to fully cover the 18-month Base forecast"],
+[["WON", "Consumers pole replacements — $300K CVR scope now booked to backlog", GOOD],
+ ["4–5%", "engineering share of paired EPC contract value — every EPC win pulls CVR scope with it", BLUE],
+ ["$1.6M", "origination gap beyond this list to fully cover the 18-month Base forecast", RED],
 ].forEach((t, i) => {
-  s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: i === 2 ? RED : BLUE, fontFace: SANS, margin: 0 });
+  s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: t[2], fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
 });
 foot(s, "KPI current-bids page, 7/11/26. Win probabilities are planning placeholders (2026 win rate or 50%) — Estimating to own final numbers and award dates.");
@@ -383,7 +387,7 @@ s.addText([
   { text: "Every EPC win feeds both P&Ls: construction margin to HWC, and 4–5% of contract value as engineering scope to CVR — the revenue that funds the capacity build toward $6M.", options: { bullet: true } },
 ], { x: M, y: 3.9, w: 6.4, h: 2.6, fontSize: 13, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 10 });
 rx = M + 6.9; rw = W - M - rx;
-[["$12.6M", "of EPC-paired bids already in market with Hoosier and Consumers", BLUE],
+[["$9.1M", "of EPC-paired bids still in market with Hoosier (Consumers pole program now won)", BLUE],
  ["4–5%", "engineering pull-through on every EPC contract won", BLUE],
  ["67%", "2026 win rate — the consolidated offer is landing", GOOD],
 ].forEach((t, i) => {
@@ -411,7 +415,7 @@ function brandMark(slide, x, y, name, sub, color, file) {
 const MKT = [
   ["Consumers Energy", "Michigan — electric & gas", "0057B8", "consumers.png",
    ">$17B", "5-year capital plan; $8.5B of distribution reliability & resilience through 2029",
-   "Foothold: HVD line-sensor & pole programs live; $3.5M EPC-paired pole-replacement bid pending"],
+   "Foothold: HVD line-sensor program live; 2026 pole replacements WON ($300K CVR scope, $3.45M EPC-paired)"],
   ["DTE Energy", "Michigan — electric & gas", "16376C", "dte.png",
    "$36.5B", "5-year plan 2026–30 — up 20% on data-center load and grid reliability spend",
    "Foothold: New Baltimore & Catalina conversions ($2.3M PO); Renaissance 345kV bid on hold"],
@@ -481,9 +485,9 @@ eyebrow(s, "Forward view — Phase 2 model, Base scenario");
 slideTitle(s, "Forecast revenue & work coverage, Jul 2026 – Dec 2027");
 chartImg(s, "cov", M, 2.2, 8.6);
 rx = M + 8.9; rw = W - M - rx;
-[["49%", "of the 18-month forecast covered by backlog + weighted pipeline", BLUE],
- ["21%", "covered by booked backlog alone", INK],
- ["$1,724K", "gap to originate — the BD target; thinnest coverage is H2-2027", RED],
+[["52%", "of the 18-month forecast covered by backlog + weighted pipeline", BLUE],
+ ["30%", "covered by booked backlog alone — up with the Consumers pole win", INK],
+ ["$1,609K", "gap to originate — the BD target; thinnest coverage is H2-2027", RED],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 30, bold: true, color: t[2], fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
@@ -564,7 +568,7 @@ eyebrow(s, "Forward view — accounting alignment");
 slideTitle(s, "EPC bid engineering: an item to clean up, not a crisis");
 s.addText("The facts", { x: M, y: 1.5, w: 5.0, h: 0.35, fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
 [["405 hrs", "of bid engineering YTD — ≈$62.6K at card rates ($38.5K at cost), unbilled"],
- ["~60% design", "required before a fixed-price EPC bid can even be submitted — $250–380K of pre-award exposure on the $12.6M bid slate"],
+ ["~60% design", "required before a fixed-price EPC bid can even be submitted — $200–300K of pre-award exposure on the $9.1M bid slate still in market"],
  ["$30.1K", "of note interest charged to CVR in H1 — roughly a wash against bid engineering at cost"],
  ["The misalignment", "bid hours are non-billable, so every EPC pursuit CVR supports drags the metrics CVR is judged on — utilization, realization, OILI"],
 ].forEach((t, i) => {

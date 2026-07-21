@@ -417,6 +417,7 @@ BACKLOG = [
     ("017-0005", "CenterPoint — Angel Mounds 69kV", 96.987, 95.148, "Oct-26", "88% complete"),
     ("017-0006", "CenterPoint — Northwest 69kV", 110.555, 4.365, "Aug-27", "13% — early"),
     ("017-0007", "CenterPoint — Leonard Rd 69kV", 199.994, 6.739, "Oct-27", "17% — early"),
+    ("(new)", "Consumers — 2026 Pole Replacements", 300.000, 0.000, "Dec-27", "WON — award $300K; EPC-paired $3.45M"),
 ]
 r0 = 5
 for i, (job, name, po, billed, fin, note) in enumerate(BACKLOG):
@@ -450,7 +451,6 @@ PIPE = [
     ("Jacksonburg–Gateway (EPC-paired $3.55M)", "Hoosier Energy", 160.0, 0.50, "Q4-26"),
     ("Rosehill–Rockport (EPC-paired $5.59M)", "Hoosier Energy", 290.0, 0.50, "Q4-26"),
     ("Joint Use Audit", "Lansing Board of Water & Light", 1350.0, 0.50, "Q4-26"),
-    ("2026 Pole Replacements (EPC-paired $3.45M)", "Consumers Energy", 276.0, 0.67, "Q4-26"),
     ("Renaissance 345kV Substation (ON HOLD)", "DTE Energy", 0.0, 0.00, "hold"),
 ]
 p0 = r
@@ -642,7 +642,7 @@ for j, m in enumerate(MONTHS):
     ws.cell(row=DATA0, column=2 + j, value=m)
 
 # per-job burn rows (even spread Jul-26 .. finish); ends = month index of last burn
-JOB_ENDS = [5, 17, 3, 2, 1, 1, 3, 13, 15]  # matches BACKLOG order rows 5..13
+JOB_ENDS = [5, 17, 3, 2, 1, 1, 3, 13, 15, 17]  # matches BACKLOG order rows 5..14 (last = won Consumers pole)
 for k, end in enumerate(JOB_ENDS):
     r = DATA0 + 1 + k
     ws.cell(row=r, column=1, value="burn: " + BACKLOG[k][1]).font = F_NOTE
@@ -656,13 +656,13 @@ for j in range(NM):
     ws.cell(row=BK_ROW, column=2 + j, value=f"=SUM({col}{DATA0 + 1}:{col}{BK_ROW - 1})")
 
 # per-bid rows: value x prob / duration, from award start
-BID_SCHED = [(2, 6), (4, 12), (4, 12), (5, 18), (4, 12)]  # (start idx, months) rows 18..22
+BID_SCHED = [(2, 6), (4, 12), (4, 12), (5, 18)]  # (start idx, months) Frontier, Jacksonburg, Rosehill, Lansing
 for k, (s, dur) in enumerate(BID_SCHED):
     r = BK_ROW + 1 + k
     ws.cell(row=r, column=1, value="bid: " + PIPE[k][0][:34]).font = F_NOTE
     for j in range(NM):
         ws.cell(row=r, column=2 + j,
-                value=(f"='Backlog & Pipeline'!$C{18 + k}*'Backlog & Pipeline'!$D{18 + k}/{dur}"
+                value=(f"='Backlog & Pipeline'!$C{19 + k}*'Backlog & Pipeline'!$D{19 + k}/{dur}"
                        if s <= j < s + dur else 0))
 PIPE_ROW = BK_ROW + 1 + len(BID_SCHED)
 ws.cell(row=PIPE_ROW, column=1, value="Weighted pipeline (× toggle)").font = F_SUB
