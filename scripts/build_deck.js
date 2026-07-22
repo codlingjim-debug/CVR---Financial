@@ -484,6 +484,17 @@ s.addText([
 ], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
 foot(s, "Public sources: latest company capital-plan disclosures (Q1 2025–Q1 2026 earnings / SEC filings); plan windows vary (2025–29 to 2026–30) — confirm current guidance. Relationship notes are CVR-internal account intel. Logos are the property of their respective owners.");
 
+/* ==================== 13c · FOOTPRINT MAP ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — where we play and where we're going");
+slideTitle(s, "CVR's EPC footprint and the national target map");
+{
+  const mw = 10.4, mh = mw / (1360 / 720);
+  s.addImage({ path: path.join(__dirname, "..", "reports", "assets", "footprint_map.png"),
+    x: (W - mw) / 2, y: 1.48, w: mw, h: mh });
+}
+foot(s, "Blue = states with a current CVR client; amber = expansion-target service territories. State shading illustrates each utility's footprint, not CVR's contracted scope.");
+
 /* ==================== 14 · BUSINESS DEVELOPMENT — ACCOUNT OWNERS ==================== */
 s = pres.addSlide();
 eyebrow(s, "Strategy — business development");
