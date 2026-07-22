@@ -76,8 +76,8 @@ const agenda = [
   ["1", "Where we stand", "Executive summary · revenue vs plan & prior year · gross margin vs budget · the rate ladder"],
   ["2", "Operating drivers", "Staff & headcount · utilization by person · sales by customer"],
   ["3", "Work in hand & work to win", "Backlog on active jobs · known pipeline opportunities"],
-  ["4", "Strategy", "One pursuit engine with HWC Estimating · the consolidated EPC offering · the addressable market · BD account ownership"],
-  ["5", "Forward view", "Forecast & coverage · FY2026 landing and FY2027 scenarios · cash & the parent note"],
+  ["4", "Strategy", "One pursuit engine with HWC Estimating · the consolidated EPC offering · the addressable market · national expansion targets · BD account ownership"],
+  ["5", "Forward view", "Forecast & coverage · FY2026 landing and FY2027 scenarios · EPC accounting alignment"],
   ["6", "Next 90 days", "Priorities: realization, utilization, the Q4 pipeline, and the monthly rhythm"],
 ];
 agenda.forEach((a, i) => {
@@ -446,6 +446,44 @@ s.addText([
 ], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
 foot(s, "Public sources: company capital-plan announcements and filings (Utility Dive, SEC 8-K, company releases), July 2026. Logos are the property of their respective owners; shown for internal reference only.");
 
+/* ==================== 13b · NEW-LOGO EXPANSION TARGETS ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — beyond the current footprint");
+slideTitle(s, "Target “new logos” — the national expansion list");
+const TGT = [
+  ["AEP", "American Electric Power · 11-state footprint", "F58025", "aep.png",
+   "$78B", "Five-year capital plan raised to ~$78B (May 2026) on signed data-center load; largest transmission owner in the U.S.",
+   "Where we stand: — to be added"],
+  ["FirstEnergy", "OH · PA · NJ · WV · MD · ~6M customers", "1C3F94", "firstenergy.png",
+   "$36B", "“Energize365” grid plan, 2026–30 — up ~30% vs. prior; transmission & distribution modernization and reliability",
+   "Where we stand: — to be added"],
+  ["PG&E", "Pacific Gas & Electric · N. & Central California", "0033A0", "pge.png",
+   "$73B", "$73B 2026–30 capital plan — wildfire undergrounding, grid hardening, and data-center-driven load growth",
+   "Where we stand: — to be added"],
+  ["Southern Company", "Georgia · Alabama · Mississippi · electric + gas", "00539B", "southern.png",
+   "$81B", "Five-year plan raised to $81B (Feb 2026) — data-center & manufacturing load; Georgia Power system growth",
+   "Where we stand: — to be added"],
+];
+TGT.forEach((m, i) => {
+  const cx = M + (i % 2) * 6.28, cy = 1.5 + Math.floor(i / 2) * 2.42, cw = 6.08, ch = 2.28;
+  s.addShape("roundRect", { x: cx, y: cy, w: cw, h: ch, fill: { color: CARD }, rectRadius: 0.06,
+    line: { color: GRID, width: 0.75 } });
+  brandMark(s, cx + 0.24, cy + 0.18, m[0], m[1], m[2], m[3]);
+  s.addText([
+    { text: m[4] + "  ", options: { bold: true, fontSize: 24, color: INK } },
+    { text: m[5], options: { fontSize: 10.5, color: INK2 } },
+  ], { x: cx + 0.24, y: cy + 0.86, w: cw - 0.48, h: 0.78, fontFace: SANS, margin: 0 });
+  s.addText(m[6], { x: cx + 0.24, y: cy + 1.72, w: cw - 0.48, h: 0.5, fontSize: 10, italic: true,
+    color: BLUE, fontFace: SANS, margin: 0 });
+});
+s.addShape("roundRect", { x: M, y: 6.42, w: W - 2 * M, h: 0.52, fill: { color: "EAF1FA" }, rectRadius: 0.05,
+  line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "≈$268B in disclosed five-year capital plans across these four targets.  ", options: { bold: true, color: INK } },
+  { text: "The BD Lead's national pursuit list — beyond the current Michigan / Indiana / Iowa base.", options: { color: INK2 } },
+], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
+foot(s, "Public sources: latest company capital-plan disclosures (Q1 2025–Q1 2026 earnings / SEC filings); plan windows vary (2025–29 to 2026–30) — confirm current guidance. Relationship notes to follow. Drop official logos into reports/assets/logos/ (aep.png, firstenergy.png, pge.png, southern.png) to swap the wordmarks.");
+
 /* ==================== 14 · BUSINESS DEVELOPMENT — ACCOUNT OWNERS ==================== */
 s = pres.addSlide();
 eyebrow(s, "Strategy — business development");
@@ -547,21 +585,6 @@ s.addText([
 ], { x: M + 6.6, y: 4.15, w: 5.7, h: 2.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 8 });
 foot(s, "Phase 2 forecast model — scenarios switchable in CVR_Model_Phase2_Forecast.xlsx (Drivers tab).");
 
-/* ==================== 13 · CASH & PARENT NOTE ==================== */
-s = pres.addSlide();
-eyebrow(s, "Forward view");
-slideTitle(s, "Cash & the USC parent note — the early-warning gauge");
-chartImg(s, "note", M, 2.0, 8.0);
-rx = M + 8.9; rw = W - M - rx;
-[["$3.44M", "note balance at 6/30/26 — CVR's entire funding runs through this account", INK],
- ["$3.77M", "Base-case peak in mid-2027 — the note keeps growing while the turnaround builds", RED],
- ["+$231K", "still drawing by end-2027 in the Base case; only the Upside path flattens and repays it", RED],
-].forEach((t, i) => {
-  s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 30, bold: true, color: t[2], fontFace: SANS, margin: 0 });
-  s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
-});
-foot(s, "CVR holds no cash: deficits draw the note, surpluses repay it (~$5K/mo interest accrues). Reconciled to finance's fully-loaded cost — a more conservative trajectory than the prior estimate.");
-
 /* ==================== 19 · BID ENGINEERING ACCOUNTING ==================== */
 s = pres.addSlide();
 eyebrow(s, "Forward view — accounting alignment");
@@ -569,7 +592,7 @@ slideTitle(s, "EPC bid engineering: an item to clean up, not a crisis");
 s.addText("The facts", { x: M, y: 1.5, w: 5.0, h: 0.35, fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
 [["405 hrs", "of bid engineering YTD — ≈$62.6K at card rates ($38.5K at cost), unbilled"],
  ["~60% design", "required before a fixed-price EPC bid can even be submitted — $200–300K of pre-award exposure on the $9.1M bid slate still in market"],
- ["$30.1K", "of note interest charged to CVR in H1 — roughly a wash against bid engineering at cost"],
+ ["Absorbed today", "these hours land in CVR's overhead with no offsetting credit — immaterial now, but it compounds as EPC pursuit volume grows"],
  ["The misalignment", "bid hours are non-billable, so every EPC pursuit CVR supports drags the metrics CVR is judged on — utilization, realization, OILI"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: M, y: 1.95 + i * 1.12, w: 5.0, h: 0.36, fontSize: 17, bold: true,
@@ -579,7 +602,7 @@ s.addText("The facts", { x: M, y: 1.5, w: 5.0, h: 0.35, fontSize: 16, bold: true
 const opts = [
   ["1", "Intercompany bid-support billing", "HWC pays CVR for pre-award engineering on EPC pursuits (cost or card). Hours become billable; cost lands where the benefit lands. Standard EPC practice.", true],
   ["2", "Win / loss allocation", "Bid engineering capitalizes to the pursuit — charged to the job on a win, absorbed by HWC as a BD expense on a loss.", false],
-  ["3", "Interest credit against bid hours", "Parent credits note interest against documented bid-support hours. Fixes the cash, but leaves the hours non-billable — the metrics stay misaligned.", false],
+  ["3", "Carve it out of the metrics", "Track bid-support hours in a separate BD cost pool so CVR's utilization and realization aren't penalized for pursuit work — a reporting fix, not a cash fix.", false],
 ];
 opts.forEach((o, i) => {
   const oy = 1.5 + i * 1.62, ox = M + 5.5, ow = W - M - ox;
@@ -598,9 +621,9 @@ s.addShape("roundRect", { x: M, y: 6.45, w: W - 2 * M, h: 0.5, fill: { color: "E
   line: { color: GRID, width: 0.75 } });
 s.addText([
   { text: "The ask is alignment, not subsidy.  ", options: { bold: true, color: INK } },
-  { text: "Dollars are roughly a wash today — but as EPC volume scales, the accounting should reward the pursuit behavior the strategy demands.", options: { color: INK2 } },
+  { text: "The dollars are small today — but as EPC volume scales, the accounting should reward the pursuit behavior the strategy demands.", options: { color: INK2 } },
 ], { x: M + 0.2, y: 6.51, w: W - 2 * M - 0.4, h: 0.38, fontSize: 12, fontFace: SANS, margin: 0 });
-foot(s, "Bid hours per the KPI report (through 7/11/26); interest per the GL. Raise with the CFO alongside the note-terms discussion.");
+foot(s, "Bid hours per the KPI report (through 7/11/26). Raise with the CFO as an EPC accounting-alignment item.");
 
 /* ==================== 20 · PRIORITIES ==================== */
 s = pres.addSlide();
@@ -614,7 +637,7 @@ const pris = [
   ["1", "Close the realization gap", "Decompose the $145K H1 gap: confirm intercompany rate treatment for HWC work, chase billing lag, stop write-offs. Worth up to $32 more per billable hour."],
   ["2", "Lift utilization toward targets", "Focused plans for the three largest gaps; fill non-billable time with the bid backlog. Reaching targets adds ~27% capacity with zero hires."],
   ["3", "Win the Q4 pipeline", "Lansing BWL audit is the single biggest swing ($1,350K). Land the Hoosier/Consumers EPC-paired work — each EPC win pulls 4–5% engineering scope with it."],
-  ["4", "Start the monthly rhythm", "July close goes into the actuals-vs-forecast cadence; note-balance trajectory is the early-warning gauge for USC reporting."],
+  ["4", "Start the monthly rhythm", "July close goes into the actuals-vs-forecast cadence; the monthly cash draw on USC is the early-warning gauge for reporting."],
 ];
 pris.forEach((p, i) => {
   const y = 1.75 + i * 1.32;
