@@ -453,16 +453,16 @@ slideTitle(s, "Target “new logos” — the national expansion list");
 const TGT = [
   ["AEP", "American Electric Power · 11-state footprint", "F58025", "aep.png",
    "$78B", "Five-year capital plan raised to ~$78B (May 2026) on signed data-center load; largest transmission owner in the U.S.",
-   "Where we stand: — to be added"],
+   "Where we stand: new leadership post-BHE takeover; strong Director/PM and procurement relationships (JimC + potential BD)."],
   ["FirstEnergy", "OH · PA · NJ · WV · MD · ~6M customers", "1C3F94", "firstenergy.png",
    "$36B", "“Energize365” grid plan, 2026–30 — up ~30% vs. prior; transmission & distribution modernization and reliability",
-   "Where we stand: — to be added"],
+   "Where we stand: key C-suite relationships to leverage — an open door to EPC."],
   ["PG&E", "Pacific Gas & Electric · N. & Central California", "0033A0", "pge.png",
    "$73B", "$73B 2026–30 capital plan — wildfire undergrounding, grid hardening, and data-center-driven load growth",
-   "Where we stand: — to be added"],
+   "Where we stand: BD-led — a potential long-term EPC relationship to build."],
   ["Southern Company", "Georgia · Alabama · Mississippi · electric + gas", "00539B", "southern.png",
    "$81B", "Five-year plan raised to $81B (Feb 2026) — data-center & manufacturing load; Georgia Power system growth",
-   "Where we stand: — to be added"],
+   "Where we stand: relationally weaker, but a major EPC distribution program at Georgia Power."],
 ];
 TGT.forEach((m, i) => {
   const cx = M + (i % 2) * 6.28, cy = 1.5 + Math.floor(i / 2) * 2.42, cw = 6.08, ch = 2.28;
@@ -482,7 +482,7 @@ s.addText([
   { text: "≈$268B in disclosed five-year capital plans across these four targets.  ", options: { bold: true, color: INK } },
   { text: "The BD Lead's national pursuit list — beyond the current Michigan / Indiana / Iowa base.", options: { color: INK2 } },
 ], { x: M + 0.2, y: 6.5, w: W - 2 * M - 0.4, h: 0.36, fontSize: 12.5, fontFace: SANS, margin: 0 });
-foot(s, "Public sources: latest company capital-plan disclosures (Q1 2025–Q1 2026 earnings / SEC filings); plan windows vary (2025–29 to 2026–30) — confirm current guidance. Relationship notes to follow. Drop official logos into reports/assets/logos/ (aep.png, firstenergy.png, pge.png, southern.png) to swap the wordmarks.");
+foot(s, "Public sources: latest company capital-plan disclosures (Q1 2025–Q1 2026 earnings / SEC filings); plan windows vary (2025–29 to 2026–30) — confirm current guidance. Relationship notes are CVR-internal account intel. Logos are the property of their respective owners.");
 
 /* ==================== 14 · BUSINESS DEVELOPMENT — ACCOUNT OWNERS ==================== */
 s = pres.addSlide();
