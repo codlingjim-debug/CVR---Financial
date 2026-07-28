@@ -528,73 +528,84 @@ rx = M + 8.25; rw = W - M - rx;
 });
 foot(s, "* Proposed from current relationships on the KPI scorecards — to be confirmed with the team. YTD BD hours by account (KPI report): Great Lakes 56 · CenterPoint 35.5 · Consumers 26.5 · DTE 19.5 · NIPSCO 10 · AES 10 — plus 408 proposal hours.");
 
-/* ==================== 15 · FORECAST & COVERAGE ==================== */
+/* ==================== 15 · EPC-WIN ACCUMULATION (CHART) ==================== */
 s = pres.addSlide();
-eyebrow(s, "Forward view — Phase 2 model, Base scenario");
-slideTitle(s, "Forecast revenue & work coverage, Jul 2026 – Dec 2027");
-chartImg(s, "cov", M, 2.2, 8.6);
-rx = M + 8.9; rw = W - M - rx;
-[["52%", "of the 18-month forecast covered by backlog + weighted pipeline", BLUE],
- ["30%", "covered by booked backlog alone — up with the Consumers pole win", INK],
- ["$1,609K", "gap to originate — the BD target; thinnest coverage is H2-2027", RED],
-].forEach((t, i) => {
-  s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 30, bold: true, color: t[2], fontFace: SANS, margin: 0 });
-  s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
-});
-foot(s, "Forecast = FTE × hours × utilization × card rate × realization (Base path: 59→70% utilization, 79→90% realization, 10→13 FTE).");
-
-/* ==================== 12 · FY LANDING & SCENARIOS ==================== */
-s = pres.addSlide();
-eyebrow(s, "Forward view");
-slideTitle(s, "FY2026 landing, FY2027 outlook, and scenarios");
-const fyRows = [
-  [{ text: "FY2026 ($K)", options: { bold: true } }, { text: "H1 actual", options: { bold: true } },
-   { text: "H2 forecast", options: { bold: true } }, { text: "FY landing", options: { bold: true } },
-   { text: "Budget", options: { bold: true } }],
-  ["Revenue", "551.0", "872.0", { text: "1,423.0", options: { bold: true } }, "2,029.1"],
-  ["Gross profit", "122.5", "496.9", { text: "619.4", options: { bold: true } }, "1,249.4"],
-  ["Operating income", { text: "−290.5", options: { color: RED } }, "−129.9",
-   { text: "−420.4", options: { bold: true, color: RED } }, "139.4"],
-  ["Net income", { text: "−320.5", options: { color: RED } }, "−161.2",
-   { text: "−481.7", options: { bold: true, color: RED } }, "139.4"],
-];
-s.addTable(fyRows, { x: M, y: 1.5, w: 6.0, colW: [1.7, 1.05, 1.15, 1.1, 1.0],
-  fontFace: SANS, fontSize: 11, color: INK, valign: "middle",
-  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.38, align: "left" });
-const fy27Rows = [
-  [{ text: "FY2027 (Base)", options: { bold: true } }, { text: "Forecast", options: { bold: true } },
-   { text: "Goal", options: { bold: true } }],
-  ["Revenue", { text: "2,496.6", options: { bold: true } }, "6,000 (42%)"],
-  ["Net income", { text: "+122.7", options: { bold: true, color: GOOD } }, "—"],
-  ["OILI return", { text: "4.9%", options: { bold: true } }, "20%"],
-];
-s.addTable(fy27Rows, { x: M, y: 4.0, w: 6.0, colW: [1.9, 2.0, 2.1],
-  fontFace: SANS, fontSize: 11, color: INK, valign: "middle",
-  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.38, align: "left" });
-const scRows = [
-  [{ text: "Scenario", options: { bold: true } }, { text: "FY26 NI", options: { bold: true } },
-   { text: "FY27 rev", options: { bold: true } }, { text: "FY27 NI", options: { bold: true } },
-   { text: "OILI %", options: { bold: true } }],
-  ["Upside (75% · 95% · 16 FTE)", { text: "−346", options: { color: RED } }, "3,436",
-   { text: "+689", options: { color: GOOD } }, "20.0%"],
-  [{ text: "Base (70% · 90% · 13 FTE)", options: { bold: true } }, { text: "−482", options: { color: RED } },
-   { text: "2,497", options: { bold: true } }, { text: "+123", options: { bold: true, color: GOOD } },
-   { text: "4.9%", options: { bold: true } }],
-  ["Downside (no change)", { text: "−568", options: { color: RED } }, "1,542",
-   { text: "−458", options: { color: RED } }, "−29.7%"],
-];
-s.addTable(scRows, { x: M + 6.4, y: 1.5, w: 6.1, colW: [2.5, 0.85, 0.95, 0.9, 0.9],
-  fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
-  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.4, align: "left" });
-s.addShape("roundRect", { x: M + 6.4, y: 3.55, w: 6.1, h: 3.0, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
-s.addText("What the numbers say", { x: M + 6.6, y: 3.75, w: 5.7, h: 0.35, fontSize: 14, bold: true, color: INK, fontFace: SANS, margin: 0 });
+eyebrow(s, "Forward view — the EPC compounding effect");
+slideTitle(s, "Each EPC win compounds two CVR streams");
 s.addText([
-  { text: "Cost is now finance's fully-loaded basis — the forecast reconciles to the budget dollar-for-dollar.", options: { bullet: true, breakLine: true } },
-  { text: "The 2026 budget is out of reach; the honest FY26 landing is ~$1.42M revenue and a $480K loss.", options: { bullet: true, breakLine: true } },
-  { text: "FY27 turns positive in the Base case (+$123K); the Upside path reaches the 20% OILI aspiration.", options: { bullet: true, breakLine: true } },
-  { text: "Utilization and realization are the levers — the $6M / 20% target is a capacity build (~27 FTEs).", options: { bullet: true } },
-], { x: M + 6.6, y: 4.15, w: 5.7, h: 2.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 8 });
-foot(s, "Phase 2 forecast model — scenarios switchable in CVR_Model_Phase2_Forecast.xlsx (Drivers tab).");
+  { text: "Every EPC dollar won returns ~12.5% to CVR — ", options: {} },
+  { text: "pull-through engineering", options: { bold: true, color: BLUE } },
+  { text: " plus ", options: {} },
+  { text: "captured material margin", options: { bold: true, color: GOOD } },
+  { text: ". As wins accumulate, both streams compound.", options: {} },
+], { x: M, y: 1.26, w: W - 2 * M, h: 0.4, fontSize: 13.5, color: INK, fontFace: SANS, margin: 0 });
+[[BLUE, "Pull-through engineering — 8% of EPC"], [GREEN, "Captured material margin — 4.6% of EPC"]].forEach((lg, i) => {
+  const lx = M + i * 5.7, ly = 1.74;
+  s.addShape("rect", { x: lx, y: ly, w: 0.2, h: 0.2, fill: { color: lg[0] }, line: { color: GRID, width: 0.5 } });
+  s.addText(lg[1], { x: lx + 0.3, y: ly - 0.04, w: 5.3, h: 0.3, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+// cumulative stacked columns: engineering (bottom) + captured material margin (top)
+const CUM = [
+  ["$3M", "first paired wins", 0.276, 0.157, "$0.4M"],
+  ["$15M", "near-term pipeline", 1.20, 0.6825, "$1.9M"],
+  ["$50M", "+ AEP program", 4.0, 2.275, "$6.3M"],
+  ["$100M", "+ FirstEnergy", 8.0, 4.55, "$12.6M"],
+  ["$150M", "at-scale run-rate", 12.0, 6.825, "$18.8M"],
+];
+const PX0 = 1.5, PX1 = 12.6, BASE = 5.75, VMAX = 20, SC = (BASE - 2.25) / VMAX;
+[0, 5, 10, 15, 20].forEach(v => {
+  const gy = BASE - v * SC;
+  s.addShape("rect", { x: PX0, y: gy, w: PX1 - PX0, h: 0.011, fill: { color: GRID }, line: { type: "none" } });
+  s.addText("$" + v + "M", { x: PX0 - 0.72, y: gy - 0.12, w: 0.62, h: 0.24, align: "right", fontSize: 9, color: MUTED, fontFace: SANS, margin: 0 });
+});
+const slot = (PX1 - PX0) / CUM.length, cw = 1.0;
+CUM.forEach((d, i) => {
+  const cx = PX0 + i * slot + slot / 2;
+  const engH = d[2] * SC, matH = d[3] * SC;
+  s.addShape("rect", { x: cx - cw / 2, y: BASE - engH, w: cw, h: engH, fill: { color: BLUE }, line: { color: "FFFFFF", width: 0.75 } });
+  s.addShape("rect", { x: cx - cw / 2, y: BASE - engH - matH, w: cw, h: matH, fill: { color: GREEN }, line: { color: "FFFFFF", width: 0.75 } });
+  s.addText(d[4], { x: cx - 0.85, y: BASE - engH - matH - 0.3, w: 1.7, h: 0.26, align: "center", fontSize: 12.5, bold: true, color: INK, fontFace: SANS, margin: 0 });
+  s.addText([
+    { text: d[0], options: { bold: true, fontSize: 12, color: INK, breakLine: true } },
+    { text: d[1], options: { fontSize: 9.5, color: INK2 } },
+  ], { x: cx - 1.05, y: BASE + 0.08, w: 2.1, h: 0.5, align: "center", fontFace: SANS, margin: 0 });
+});
+foot(s, "Illustrative accumulation at CVR's capture rates (8% engineering; 13% material margin on 35% materials = 4.6% of EPC). Columns are cumulative CVR annual revenue as EPC wins build toward the $150M at-scale run-rate.");
+
+/* ==================== 12 · EPC-WIN ACCUMULATION (ECONOMICS) ==================== */
+s = pres.addSlide();
+eyebrow(s, "Forward view — the EPC compounding effect");
+slideTitle(s, "The accumulation economics — and the BD payoff");
+const accRows = [
+  [{ text: "EPC won ($M/yr)", options: { bold: true } }, { text: "Pull-through eng", options: { bold: true } },
+   { text: "Captured mat’l margin", options: { bold: true } }, { text: "CVR managed rev", options: { bold: true } },
+   { text: "CVR operating income", options: { bold: true } }, { text: "vs $400K BD", options: { bold: true } }],
+  ["$15M", "$1.2M", "$0.7M", "$1.9M", { text: "$0.8M", options: { color: GOOD } }, "1.9×"],
+  ["$50M", "$4.0M", "$2.3M", "$6.3M", { text: "$2.5M", options: { color: GOOD } }, "6.3×"],
+  ["$100M", "$8.0M", "$4.6M", "$12.6M", { text: "$5.1M", options: { color: GOOD } }, "12.6×"],
+  [{ text: "$150M", options: { bold: true } }, { text: "$12.0M", options: { bold: true } },
+   { text: "$6.8M", options: { bold: true } }, { text: "$18.8M", options: { bold: true } },
+   { text: "$7.6M", options: { bold: true, color: GOOD } }, { text: "18.9×", options: { bold: true } }],
+];
+s.addTable(accRows, { x: M, y: 1.6, w: 7.4, colW: [1.35, 1.15, 1.35, 1.25, 1.4, 0.9],
+  fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
+  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.52, align: "left" });
+// takeaway band under the table
+s.addShape("roundRect", { x: M, y: 4.55, w: 7.4, h: 1.0, fill: { color: "EAF1FA" }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "The ladder is BD-limited, not capability-limited.  ", options: { bold: true, color: INK } },
+  { text: "CVR can engineer and procure the work today — winning it is the gate. Fund the pursuit and the accumulation follows.", options: { color: INK2 } },
+], { x: M + 0.2, y: 4.62, w: 7.0, h: 0.86, fontSize: 12.5, fontFace: SANS, margin: 0, valign: "middle" });
+// insight panel
+s.addShape("roundRect", { x: 8.3, y: 1.6, w: 4.4, h: 3.95, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
+s.addText("What this means", { x: 8.5, y: 1.8, w: 4.0, h: 0.35, fontSize: 14, bold: true, color: INK, fontFace: SANS, margin: 0 });
+s.addText([
+  { text: "Even $15M of EPC won returns ~1.9× the BD cost in operating income.", options: { bullet: true, breakLine: true } },
+  { text: "AEP + FirstEnergy are the accelerators — they carry the ladder from $15M toward $100M+.", options: { bullet: true, breakLine: true } },
+  { text: "Every EPC dollar compounds both streams; the return scales straight down the column.", options: { bullet: true, breakLine: true } },
+  { text: "One ~$400K BD resource is the lever on the whole ladder — it converts warm relationships into booked wins.", options: { bullet: true } },
+], { x: 8.5, y: 2.25, w: 4.0, h: 3.2, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 8 });
+foot(s, "Managed revenue = engineering (8%) + captured material margin (13% on 35% = 4.6%). Operating income nets ~2 pts procurement/carry and 15% engineering margin. Detail on the 'EPC At-Scale Model' tab.");
 
 /* ==================== 12b · AT-SCALE EPC MODEL ==================== */
 s = pres.addSlide();
