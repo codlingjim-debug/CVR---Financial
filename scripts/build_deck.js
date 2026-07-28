@@ -707,10 +707,10 @@ s.addText([
 ], { x: M, y: 0.5, w: W - 2 * M, h: 0.3, fontSize: 11, fontFace: SANS, margin: 0 });
 s.addText("Priorities", { x: M, y: 0.85, w: W - 2 * M, h: 0.6, fontSize: 30, bold: true, color: "FFFFFF", fontFace: SANS, margin: 0 });
 const pris = [
-  ["1", "Close the realization gap", "Decompose the $145K H1 gap: confirm intercompany rate treatment for HWC work, chase billing lag, stop write-offs. Worth up to $32 more per billable hour."],
-  ["2", "Lift utilization toward targets", "Focused plans for the three largest gaps; fill non-billable time with the bid backlog. Reaching targets adds ~27% capacity with zero hires."],
-  ["3", "Win the Q4 pipeline", "Lansing BWL audit is the single biggest swing ($1,350K). Land the Hoosier/Consumers EPC-paired work — each EPC win pulls 4–5% engineering scope with it."],
-  ["4", "Start the monthly rhythm", "July close goes into the actuals-vs-forecast cadence; the monthly cash draw on USC is the early-warning gauge for reporting."],
+  ["1", "Fund the BD resource — now", "One dedicated BD hire (~$300K/yr all-in) to convert AEP and FirstEnergy — both warm. A single mid-size EPC award pays it back in year one."],
+  ["2", "Win the near-term pipeline", "Lansing BWL audit is the biggest swing ($1,350K); land the Hoosier/Consumers EPC-paired work — each EPC win pulls engineering + material margin to CVR."],
+  ["3", "Lift utilization and realization", "Close the $145K H1 realization gap (confirm HWC rate treatment, chase billing lag) and fill non-billable time with the bid backlog — ~27% more capacity, no hires."],
+  ["4", "Start the monthly rhythm", "July close into the actuals-vs-forecast cadence; the monthly cash draw on USC is the early-warning gauge for reporting."],
 ];
 pris.forEach((p, i) => {
   const y = 1.75 + i * 1.32;
@@ -722,5 +722,50 @@ pris.forEach((p, i) => {
 });
 s.addText("CVR Engineering · prepared July 2026 · model workbooks and data in the CVR---Financial repository",
   { x: M, y: H - 0.45, w: W - 2 * M, h: 0.3, fontSize: 9.5, color: MUTED, fontFace: SANS, margin: 0 });
+
+/* ==================== 22 · THE ASK ==================== */
+s = pres.addSlide();
+eyebrow(s, "The decision");
+slideTitle(s, "The ask: a BD resource to convert AEP + FirstEnergy");
+s.addText("Two warm IOU targets and a consolidated EPC-with-HWC offering that's ready — the missing piece is dedicated pursuit capacity.",
+  { x: M, y: 1.28, w: W - 2 * M, h: 0.4, fontSize: 13.5, color: INK, fontFace: SANS, margin: 0 });
+const WARM = [
+  ["aep.png", "F58025", "~$78B capital plan · 11-state footprint",
+   "New leadership post-BHE takeover; strong Director/PM + procurement relationships (JimC + potential BD).",
+   "Transmission & distribution substation EPC — CVR engineering + material margin, HWC construction."],
+  ["firstenergy.png", "1C3F94", "$36B “Energize365” grid plan (2026–30)",
+   "Key C-suite relationships to leverage — an open door to EPC.",
+   "Grid-modernization & substation programs across OH · PA · NJ · WV · MD."],
+];
+WARM.forEach((wc, i) => {
+  const cx = M + i * 6.3, cy = 1.75, cw = 5.8, ch = 2.05;
+  s.addShape("roundRect", { x: cx, y: cy, w: cw, h: ch, fill: { color: CARD }, rectRadius: 0.06, line: { color: GRID, width: 0.75 } });
+  brandMark(s, cx + 0.24, cy + 0.2, "", wc[2], wc[1], wc[0]);
+  s.addText([{ text: "Why warm:  ", options: { bold: true, color: INK } }, { text: wc[3], options: { color: INK2 } }],
+    { x: cx + 0.24, y: cy + 0.95, w: cw - 0.48, h: 0.55, fontSize: 11, fontFace: SANS, margin: 0 });
+  s.addText([{ text: "Entry:  ", options: { bold: true, color: INK } }, { text: wc[4], options: { color: INK2 } }],
+    { x: cx + 0.24, y: cy + 1.5, w: cw - 0.48, h: 0.5, fontSize: 11, fontFace: SANS, margin: 0 });
+});
+// the ask band
+s.addShape("roundRect", { x: M, y: 3.95, w: W - 2 * M, h: 0.66, fill: { color: "EAF1FA" }, rectRadius: 0.06, line: { color: BLUE, width: 1 } });
+s.addText([
+  { text: "The ask:  ", options: { bold: true, color: BLUE } },
+  { text: "fund one BD resource now — ", options: { bold: true, color: INK } },
+  { text: "~$300K/yr all-in", options: { bold: true, color: BLUE } },
+  { text: " — dedicated to AEP + FirstEnergy pursuit.", options: { bold: true, color: INK } },
+], { x: M + 0.25, y: 3.95, w: W - 2 * M - 0.5, h: 0.66, fontSize: 16, fontFace: SANS, margin: 0, valign: "middle" });
+// payback tiles
+const TW2 = (W - 2 * M - 3 * 0.16) / 4;
+[
+  ["BD investment", "~$300K/yr", "one senior BD resource, all-in", INK],
+  ["One EPC win covers it", "~$0.43M", "CVR take on a single $3.45M job", GOOD],
+  ["At 10% of the vision", "~$0.76M", "CVR OI at ~$15M/yr EPC", BLUE],
+  ["Full at-scale upside", "$7.6M", "CVR OI at $150M/yr", GOOD],
+].forEach((t, i) => tile(s, M + i * (TW2 + 0.16), 4.78, TW2, t[0], t[1], t[2], t[3]));
+s.addText([
+  { text: "Decision requested:  ", options: { bold: true, color: INK } },
+  { text: "approve the BD hire now to open AEP + FirstEnergy pursuit immediately.", options: { color: INK2 } },
+], { x: M, y: 6.12, w: W - 2 * M, h: 0.35, fontSize: 13, fontFace: SANS, margin: 0 });
+foot(s, "BD cost ~$300K/yr all-in (base + benefits + travel). Returns per the 'EPC At-Scale Model' tab; a single mid-size EPC award pays back the resource in year one.");
 
 pres.writeFile({ fileName: "reports/CVR_Deck_Jun2026.pptx" }).then(() => console.log("wrote reports/CVR_Deck_Jun2026.pptx"));

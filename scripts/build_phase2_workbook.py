@@ -566,6 +566,29 @@ ws.cell(row=r, column=1, value="Note balance at 12/31/27").border = BOX
 c = ws.cell(row=r, column=2, value="='Cash & Note'!S10")
 c.number_format = KFMT
 r += 2
+# At-scale EPC model (future state) — surfaced beside the near-term scenarios
+_mm = '$#,##0.00'
+ws.cell(row=r, column=1, value="AT-SCALE EPC MODEL (future state — see 'EPC At-Scale Model' tab), $M").font = F_SUB
+r += 1
+for label, ref, fmt, bold in [
+    ("CVR managed revenue", "='EPC At-Scale Model'!B29", _mm, False),
+    ("CVR operating income (OILI)", "='EPC At-Scale Model'!B32", _mm, True),
+    ("OILI margin (managed)", "='EPC At-Scale Model'!B33", PCT, False),
+    ("Multiple of the $6M / 20% goal profit", "='EPC At-Scale Model'!B42", '0.0"×"', True),
+]:
+    a = ws.cell(row=r, column=1, value=label)
+    a.border = BOX
+    c = ws.cell(row=r, column=2, value=ref)
+    c.number_format = fmt
+    c.border = BOX
+    if bold:
+        a.font = F_SUB
+        c.font = F_SUB
+    r += 1
+ws.cell(row=r, column=1,
+        value=("At-scale figures are $M and reflect $150M/yr EPC with CVR taking engineering + material margin "
+               "(HWC keeps equipment + labor). A future-state target, not the FY27 forecast above.")).font = F_NOTE
+r += 2
 ws.cell(row=r, column=1,
         value=("The gap between FY27 forecast revenue and the $6M goal is structural (billable capacity), not "
                "effort: closing it requires the hiring ramp AND winning EPC-paired engineering at scale — see the "
