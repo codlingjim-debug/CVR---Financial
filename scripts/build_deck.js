@@ -453,7 +453,7 @@ slideTitle(s, "Target “new logos” — the national expansion list");
 const TGT = [
   ["AEP", "American Electric Power · 11-state footprint", "F58025", "aep.png",
    "$78B", "Five-year capital plan raised to ~$78B (May 2026) on signed data-center load; largest transmission owner in the U.S.",
-   "Where we stand: new leadership post-BHE takeover; strong Director/PM and procurement relationships (JimC + potential BD)."],
+   "Where we stand: recent management changes; strong Director/PM and procurement relationships (JimC + potential BD)."],
   ["FirstEnergy", "OH · PA · NJ · WV · MD · ~6M customers", "1C3F94", "firstenergy.png",
    "$36B", "“Energize365” grid plan, 2026–30 — up ~30% vs. prior; transmission & distribution modernization and reliability",
    "Where we stand: key C-suite relationships to leverage — an open door to EPC."],
@@ -707,7 +707,7 @@ s.addText([
 ], { x: M, y: 0.5, w: W - 2 * M, h: 0.3, fontSize: 11, fontFace: SANS, margin: 0 });
 s.addText("Priorities", { x: M, y: 0.85, w: W - 2 * M, h: 0.6, fontSize: 30, bold: true, color: "FFFFFF", fontFace: SANS, margin: 0 });
 const pris = [
-  ["1", "Fund the BD resource — now", "One dedicated BD hire (~$300K/yr all-in) to convert AEP and FirstEnergy — both warm. A single mid-size EPC award pays it back in year one."],
+  ["1", "Fund the BD resource — now", "One dedicated BD hire (~$400K/yr all-in) to convert AEP and FirstEnergy — both warm. A single mid-size EPC award pays it back in year one."],
   ["2", "Win the near-term pipeline", "Lansing BWL audit is the biggest swing ($1,350K); land the Hoosier/Consumers EPC-paired work — each EPC win pulls engineering + material margin to CVR."],
   ["3", "Lift utilization and realization", "Close the $145K H1 realization gap (confirm HWC rate treatment, chase billing lag) and fill non-billable time with the bid backlog — ~27% more capacity, no hires."],
   ["4", "Start the monthly rhythm", "July close into the actuals-vs-forecast cadence; the monthly cash draw on USC is the early-warning gauge for reporting."],
@@ -731,7 +731,7 @@ s.addText("Two warm IOU targets and a consolidated EPC-with-HWC offering that's 
   { x: M, y: 1.28, w: W - 2 * M, h: 0.4, fontSize: 13.5, color: INK, fontFace: SANS, margin: 0 });
 const WARM = [
   ["aep.png", "F58025", "~$78B capital plan · 11-state footprint",
-   "New leadership post-BHE takeover; strong Director/PM + procurement relationships (JimC + potential BD).",
+   "Recent management changes; strong Director/PM + procurement relationships (JimC + potential BD).",
    "Transmission & distribution substation EPC — CVR engineering + material margin, HWC construction."],
   ["firstenergy.png", "1C3F94", "$36B “Energize365” grid plan (2026–30)",
    "Key C-suite relationships to leverage — an open door to EPC.",
@@ -751,13 +751,13 @@ s.addShape("roundRect", { x: M, y: 3.95, w: W - 2 * M, h: 0.66, fill: { color: "
 s.addText([
   { text: "The ask:  ", options: { bold: true, color: BLUE } },
   { text: "fund one BD resource now — ", options: { bold: true, color: INK } },
-  { text: "~$300K/yr all-in", options: { bold: true, color: BLUE } },
+  { text: "~$400K/yr all-in", options: { bold: true, color: BLUE } },
   { text: " — dedicated to AEP + FirstEnergy pursuit.", options: { bold: true, color: INK } },
 ], { x: M + 0.25, y: 3.95, w: W - 2 * M - 0.5, h: 0.66, fontSize: 16, fontFace: SANS, margin: 0, valign: "middle" });
 // payback tiles
 const TW2 = (W - 2 * M - 3 * 0.16) / 4;
 [
-  ["BD investment", "~$300K/yr", "one senior BD resource, all-in", INK],
+  ["BD investment", "~$400K/yr", "one senior BD resource, all-in", INK],
   ["One EPC win covers it", "~$0.43M", "CVR take on a single $3.45M job", GOOD],
   ["At 10% of the vision", "~$0.76M", "CVR OI at ~$15M/yr EPC", BLUE],
   ["Full at-scale upside", "$7.6M", "CVR OI at $150M/yr", GOOD],
@@ -766,6 +766,6 @@ s.addText([
   { text: "Decision requested:  ", options: { bold: true, color: INK } },
   { text: "approve the BD hire now to open AEP + FirstEnergy pursuit immediately.", options: { color: INK2 } },
 ], { x: M, y: 6.12, w: W - 2 * M, h: 0.35, fontSize: 13, fontFace: SANS, margin: 0 });
-foot(s, "BD cost ~$300K/yr all-in (base + benefits + travel). Returns per the 'EPC At-Scale Model' tab; a single mid-size EPC award pays back the resource in year one.");
+foot(s, "BD cost ~$400K/yr all-in (base + benefits + travel). Returns per the 'EPC At-Scale Model' tab; a single mid-size EPC award pays back the resource in year one.");
 
 pres.writeFile({ fileName: "reports/CVR_Deck_Jun2026.pptx" }).then(() => console.log("wrote reports/CVR_Deck_Jun2026.pptx"));
