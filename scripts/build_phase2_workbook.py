@@ -126,6 +126,8 @@ rows = [
     "  Cash & Note        — AR, operating cash, and the parent-note roll-forward (funds every deficit).",
     "  Backlog & Pipeline — remaining value on active jobs + probability-weighted bids; coverage check.",
     "  FY Summary         — FY2026 landing (H1 actual + H2 forecast) vs budget; FY2027 vs the $6M goal.",
+    "  EPC At-Scale Model — revised business model: CVR earns engineering + material margin on a $150M/yr EPC program",
+    "                       (steady-state illustration; HWC keeps equipment + labor margin).",
     "  Checks             — anchors to the GL baseline and internal integrity checks.",
     "  Coverage Chart     — native chart: forecast line vs backlog + pipeline areas, with a 1/0 toggle",
     "                       cell (B3) that includes or excludes the weighted pipeline live.",
@@ -569,6 +571,132 @@ ws.cell(row=r, column=1,
                "effort: closing it requires the hiring ramp AND winning EPC-paired engineering at scale — see the "
                "utilization × realization grid in the Phase 1 workbook for the per-FTE ceiling math.")).font = F_NOTE
 widths(ws, {"A": 28, "B": 13, "C": 14, "D": 12, "E": 14, "F": 13})
+
+# =========================================================== EPC At-Scale Model
+ws = wb.create_sheet("EPC At-Scale Model")
+title(ws, "Revised Business Model — EPC at Scale: CVR earns engineering + material margin",
+      "Steady-state illustration at $150M/yr EPC (NOT the near-term forecast). CVR takes engineering scope + material "
+      "margin; HWC keeps equipment + labor margin. Blue = input; grey = calculated.")
+MM = '$#,##0.00;($#,##0.00)'
+MULT = '0.0"×"'
+
+
+def _sec(r, text):
+    c = ws.cell(row=r, column=1, value=text)
+    c.font = F_SUB
+    return r + 1
+
+
+def _val(r, label, value, fmt=MM, inp=False, bold=False, note=None, fill=None):
+    a = ws.cell(row=r, column=1, value=label)
+    b = ws.cell(row=r, column=2, value=value)
+    b.number_format = fmt
+    b.border = BOX
+    if inp:
+        b.font = F_INPUT
+    elif bold:
+        b.font = F_SUB
+        a.font = F_SUB
+    if fill:
+        b.fill = fill
+    if note:
+        n = ws.cell(row=r, column=3, value=note)
+        n.font = F_NOTE
+    return r + 1
+
+
+r = 4
+r = _sec(r, "DRIVERS — edit the blue cells")
+rEPC = r; r = _val(r, "EPC program volume ($M/yr)", 150.0, MM, inp=True, note="Consolidated EPC run-rate (HWC + CVR)")
+rMS = r; r = _val(r, "CVR materials share of EPC", 0.35, PCT, inp=True, note="Materials through CVR; major equipment stays with HWC")
+rMG = r; r = _val(r, "Material gross margin", 0.13, PCT, inp=True, note="CVR procurement markup on materials")
+rPC = r; r = _val(r, "Procurement + WC carry (pts of flow)", 0.02, PCT, inp=True, note="Purchasing staff + working-capital carry")
+rES = r; r = _val(r, "Engineering pull-through (% of EPC)", 0.08, PCT, inp=True, note="CVR engineering scope at this scale")
+rEG = r; r = _val(r, "Engineering gross margin", 0.60, PCT, inp=True, note="Engineering revenue less direct labor")
+rEO = r; r = _val(r, "Engineering operating margin", 0.15, PCT, inp=True, note="Engineering OI as % of eng revenue, at scale")
+rWC = r; r = _val(r, "Working-capital carry (days of flow)", 45, '0', inp=True, note="Days from paying suppliers to reimbursement")
+r += 1
+r = _sec(r, "MATERIAL PROCUREMENT — CVR as principal ($M)")
+rMrev = r; r = _val(r, "Materials revenue (billed)", f"=B{rEPC}*B{rMS}")
+rMcogs = r; r = _val(r, "Materials cost (COGS, at cost)", f"=B{rMrev}*(1-B{rMG})")
+rMgm = r; r = _val(r, "Material gross margin", f"=B{rMrev}*B{rMG}")
+ws.cell(row=rMgm, column=3, value=f"=B{rMG}").number_format = PCT
+ws.cell(row=rMgm, column=3).font = F_NOTE
+rMpc = r; r = _val(r, "Procurement + working-capital cost", f"=B{rMrev}*B{rPC}")
+rMnet = r; r = _val(r, "Material net contribution", f"=B{rMgm}-B{rMpc}", bold=True)
+r += 1
+r = _sec(r, "ENGINEERING SERVICES ($M)")
+rErev = r; r = _val(r, "Engineering revenue", f"=B{rEPC}*B{rES}")
+rEgp = r; r = _val(r, "Engineering gross profit", f"=B{rErev}*B{rEG}")
+rEoi = r; r = _val(r, "Engineering operating income", f"=B{rErev}*B{rEO}", bold=True)
+rEox = r; r = _val(r, "Engineering OpEx (= GP − OI)", f"=B{rEgp}-B{rEoi}")
+r += 1
+r = _sec(r, "COMBINED CVR — STEADY STATE ($M)")
+rGross = r; r = _val(r, "CVR revenue — gross / principal basis", f"=B{rErev}+B{rMrev}", note="CVR takes title to materials")
+rMgd = r; r = _val(r, "CVR revenue — managed-margin basis", f"=B{rErev}+B{rMgm}", bold=True, note="engineering + material margin")
+rGP = r; r = _val(r, "CVR gross profit", f"=B{rEgp}+B{rMgm}")
+rOC = r; r = _val(r, "Total operating cost", f"=B{rEox}+B{rMpc}")
+rOI = r; r = _val(r, "CVR operating income (OILI)", f"=B{rGP}-B{rOC}", bold=True, fill=FILL_TOT)
+rOIm = r; r = _val(r, "OI margin — managed revenue", f"=B{rOI}/B{rMgd}", PCT)
+rOIg = r; r = _val(r, "OI margin — gross revenue", f"=B{rOI}/B{rGross}", PCT)
+rWCr = r; r = _val(r, "Working-capital requirement ($M)", f"=B{rMrev}*B{rWC}/365", note="materials flow × carry days")
+r += 1
+r = _sec(r, "CONTEXT vs TODAY & THE YEAR-2 GOAL ($M)")
+rTod = r; r = _val(r, "CVR revenue today (managed, ~FY26)", 1.42, MM, inp=True, note="current baseline")
+rThis = r; r = _val(r, "This model — managed revenue", f"=B{rMgd}")
+rGoal = r; r = _val(r, "Year-2 goal operating profit ($6M × 20%)", 1.20, MM, inp=True)
+rThisOI = r; r = _val(r, "This model — operating income", f"=B{rOI}")
+rMult = r; r = _val(r, "Multiple of the Year-2 goal profit", f"=B{rOI}/B{rGoal}", MULT, bold=True)
+r += 1
+r = _sec(r, "PER-PROJECT ILLUSTRATION — a $3.45M EPC job ($M)")
+rJob = r; r = _val(r, "EPC job value", 3.45, MM, inp=True, note="Consumers-paired size")
+rJm = r; r = _val(r, "Materials (share of job)", f"=B{rJob}*B{rMS}")
+rJmm = r; r = _val(r, "CVR material margin", f"=B{rJm}*B{rMG}")
+rJe = r; r = _val(r, "CVR engineering scope", f"=B{rJob}*B{rES}")
+rJt = r; r = _val(r, "CVR total take on the job", f"=B{rJmm}+B{rJe}", bold=True)
+rJp = r; r = _val(r, "CVR take as % of job value", f"=B{rJt}/B{rJob}", PCT)
+rJv = r; r = _val(r, "vs engineering-only today ($0.30M)", f"=B{rJt}-0.3", note="uplift from adding material margin")
+r += 1
+r = _sec(r, "SENSITIVITY — CVR operating income ($M): materials share × material margin")
+rHdr = r
+ws.cell(row=rHdr, column=1, value="share ↓  /  margin →").font = F_SUB
+MARGINS = [0.07, 0.10, 0.13, 0.16]
+for j, m in enumerate(MARGINS):
+    c = ws.cell(row=rHdr, column=2 + j, value=m)
+    c.number_format = PCT
+    c.font = F_SUB
+    c.border = BOX
+SHARES = [0.25, 0.30, 0.35, 0.40, 0.45]
+rShare0 = rHdr + 1
+for i, sh in enumerate(SHARES):
+    rr = rShare0 + i
+    a = ws.cell(row=rr, column=1, value=sh)
+    a.number_format = PCT
+    a.font = F_SUB
+    a.border = BOX
+    for j, m in enumerate(MARGINS):
+        col = get_column_letter(2 + j)
+        cell = ws.cell(row=rr, column=2 + j,
+                       value=f"=$B${rEPC}*$A{rr}*({col}${rHdr}-$B${rPC})+$B${rEoi}")
+        cell.number_format = MM
+        cell.border = BOX
+        if abs(sh - 0.35) < 1e-9 and abs(m - 0.13) < 1e-9:
+            cell.fill = FILL_TOT
+            cell.font = F_SUB
+r = rShare0 + len(SHARES) + 1
+for note in [
+    "Steady-state at $150M/yr EPC — a future-state illustration, not the 18-month forecast. Reaching it depends on the "
+    "EPC ramp (BD origination + HWC delivery capacity).",
+    "Materials shown on a PRINCIPAL basis (CVR takes title): CVR recognizes ~$52.5M materials revenue and ~$45.7M COGS. "
+    "On a managed-margin (agent) basis, CVR 'revenue' is engineering + material margin ≈ $18.8M.",
+    "CVR carries material procurement and price/obsolescence risk plus ~$6.5M of working capital; the 2-pt carry cost is "
+    "a placeholder — confirm payment terms and a financing line with USC/HWC.",
+    "HWC retains equipment procurement and the labor/construction margin, so CVR participates in EPC economics without "
+    "taking construction-execution risk.",
+]:
+    ws.cell(row=r, column=1, value="• " + note).font = F_NOTE
+    r += 1
+widths(ws, {"A": 46, "B": 16, "C": 16, "D": 14, "E": 14, "F": 14})
 
 # ====================================================================== Checks
 ws = wb.create_sheet("Checks")

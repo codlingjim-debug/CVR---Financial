@@ -596,6 +596,68 @@ s.addText([
 ], { x: M + 6.6, y: 4.15, w: 5.7, h: 2.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0, paraSpaceAfter: 8 });
 foot(s, "Phase 2 forecast model — scenarios switchable in CVR_Model_Phase2_Forecast.xlsx (Drivers tab).");
 
+/* ==================== 12b · AT-SCALE EPC MODEL ==================== */
+s = pres.addSlide();
+eyebrow(s, "Strategy — the revised business model");
+slideTitle(s, "At scale: CVR earns engineering + material margin");
+s.addText([
+  { text: "Perform ~$150M of EPC a year and CVR captures the ", options: {} },
+  { text: "engineering scope", options: { bold: true, color: BLUE } },
+  { text: " and the ", options: {} },
+  { text: "material margin", options: { bold: true, color: GOOD } },
+  { text: " — while HWC keeps the equipment and the labor / construction margin.", options: {} },
+], { x: M, y: 1.32, w: W - 2 * M, h: 0.4, fontSize: 14, color: INK, fontFace: SANS, margin: 0 });
+s.addText("WHERE THE $150M/YR PROGRAM REVENUE FLOWS", { x: M, y: 1.98, w: W - 2 * M, h: 0.26,
+  fontSize: 10.5, bold: true, color: INK2, charSpacing: 1.5, fontFace: SANS, margin: 0 });
+s.addText([
+  { text: "CVR captures the blue + green bands — ", options: {} },
+  { text: "$18.8M managed revenue (12.5% of the program).", options: { bold: true, color: INK } },
+], { x: M, y: 2.28, w: W - 2 * M, h: 0.3, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
+// value-split bar of the $150M
+const BW = W - 2 * M, BY = 2.72, BH = 0.9;
+const SEG = [
+  { pct: 0.08, color: BLUE, t: "$12.0M", tc: "FFFFFF" },
+  { pct: 0.0455, color: GREEN, t: "", tc: "FFFFFF" },
+  { pct: 0.3045, color: "D8D6CE", t: "Materials at cost · $45.7M", tc: INK },
+  { pct: 0.57, color: "AEB4B9", t: "HWC — equipment + labor + construction · $85.5M", tc: "FFFFFF" },
+];
+let bx = M;
+SEG.forEach(sg => {
+  const sw = sg.pct * BW;
+  s.addShape("rect", { x: bx, y: BY, w: sw, h: BH, fill: { color: sg.color }, line: { color: "FFFFFF", width: 1 } });
+  if (sg.t) s.addText(sg.t, { x: bx, y: BY, w: sw, h: BH, align: "center", valign: "middle",
+    fontSize: 11, bold: true, color: sg.tc, fontFace: SANS, margin: 0 });
+  bx += sw;
+});
+// legend (2 × 2)
+[
+  [BLUE, "CVR engineering — $12.0M (8%)"],
+  [GREEN, "CVR material margin — $6.8M (4.6%)"],
+  ["D8D6CE", "Materials at cost (pass-through) — $45.7M (30%)"],
+  ["AEB4B9", "HWC equipment + labor + construction — $85.5M (57%)"],
+].forEach((lg, i) => {
+  const lx = M + (i % 2) * 6.15, ly = 3.85 + Math.floor(i / 2) * 0.34;
+  s.addShape("rect", { x: lx, y: ly + 0.02, w: 0.2, h: 0.2, fill: { color: lg[0] }, line: { color: GRID, width: 0.5 } });
+  s.addText(lg[1], { x: lx + 0.3, y: ly - 0.03, w: 5.7, h: 0.3, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
+});
+// stat tiles
+const TW = (W - 2 * M - 4 * 0.16) / 5;
+[
+  ["CVR managed revenue", "$18.8M", "engineering + material margin", INK],
+  ["CVR gross profit", "$14.0M", "eng GP + material margin", INK],
+  ["CVR operating income", "$7.6M", "steady-state OILI", GOOD],
+  ["vs the $6M / 20% goal", "6.3×", "the goal operating profit", BLUE],
+  ["Working capital", "~$6.5M", "materials carry — needs a facility", RED],
+].forEach((t, i) => tile(s, M + i * (TW + 0.16), 4.62, TW, t[0], t[1], t[2], t[3]));
+// caveat strip
+s.addShape("roundRect", { x: M, y: 5.98, w: W - 2 * M, h: 0.54, fill: { color: "EAF1FA" }, rectRadius: 0.05,
+  line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "Steady-state at $150M/yr — a future-state target, not the current forecast.  ", options: { bold: true, color: INK } },
+  { text: "CVR would carry ~$6.5M working capital and material procurement / price risk; confirm payment terms and a financing line with USC / HWC.", options: { color: INK2 } },
+], { x: M + 0.2, y: 6.06, w: W - 2 * M - 0.4, h: 0.4, fontSize: 11, fontFace: SANS, margin: 0 });
+foot(s, "Drivers editable in CVR_Model_Phase2_Forecast.xlsx → 'EPC At-Scale Model' tab: 35% materials share · 13% material margin (net ~2 pts carry) · 8% engineering pull-through · 15% engineering operating margin.");
+
 /* ==================== 19 · BID ENGINEERING ACCOUNTING ==================== */
 s = pres.addSlide();
 eyebrow(s, "Forward view — accounting alignment");

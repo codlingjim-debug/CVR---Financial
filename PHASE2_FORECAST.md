@@ -36,6 +36,24 @@ Backlog (remaining PO value on the nine active jobs: **$697K**) and the probabil
 
 4. **The parent note keeps growing in the Base case** — up $231K to $3.67M by end-2027, peaking $3.77M mid-year. Only the Upside path flattens and repays it. That makes the note trajectory a clean early-warning gauge for USC reporting: if the balance isn't turning down by 2027, the drivers aren't moving fast enough.
 
+## The at-scale EPC model — material margin (new)
+
+A separate **"EPC At-Scale Model"** tab models a future-state where CVR performs **$150M/yr of EPC** and captures the **engineering scope + the material margin**, while HWC keeps the equipment and the labor/construction margin. It is a steady-state illustration, **not** the near-term forecast.
+
+At the default drivers — **35% materials through CVR, 13% material gross margin, net ~2 pts** procurement/working-capital carry, and **8% engineering pull-through at ~15% operating margin**:
+
+| | $M/yr |
+|---|---|
+| Material margin (13% on $52.5M), net of ~2-pt carry | **+$5.78M** |
+| Engineering (8% of EPC = $12.0M rev, 15% OM) | **+$1.80M** |
+| **CVR operating income (OILI)** | **≈$7.6M** |
+| CVR managed revenue (eng + material margin) | $18.8M |
+| CVR gross profit | $14.0M |
+| Multiple of the $6M/20% goal profit ($1.2M) | **6.3×** |
+| Working-capital requirement (~45-day carry on materials) | ~$6.5M |
+
+Per-project, on a $3.45M Consumers-paired EPC job, CVR's take rises from the **$0.30M engineering-only** scope to **~$0.43M (12.5%)** once material margin is added. The tab includes a materials-share × material-margin **sensitivity grid**. Caveats: reaching $150M/yr depends on the EPC ramp; materials are shown on a principal basis (CVR takes title, ~$52.5M revenue / ~$45.7M COGS); CVR carries procurement/price risk and ~$6.5M of working capital that needs a confirmed financing line with USC/HWC.
+
 ## Model limits (stated on the Checks tab)
 
 Revenue is capacity-driven with a coverage discipline, not a job-by-job burn schedule; hires are assumed productive in month one; pipeline probabilities are placeholders (50% / the 67% observed win rate) that Estimating should own; escalation is off until the 2027 rate sheet exists; and total labor is held fixed per FTE (finance's budget basis), so the DL/indirect split moves with utilization while operating income does not.
