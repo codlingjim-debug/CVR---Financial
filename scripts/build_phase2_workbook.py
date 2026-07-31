@@ -407,7 +407,7 @@ widths(ws, {"A": 30, **{get_column_letter(c): 9 for c in range(2, 2 + NM)}})
 # ========================================================= Backlog & Pipeline
 ws = wb.create_sheet("Backlog & Pipeline")
 title(ws, "Backlog, Pipeline, and Forecast Coverage (all figures $K)",
-      "Backlog = remaining PO value on active jobs (KPI scorecard 7/11/26). Pipeline = pending bids × win probability.")
+      "Backlog = remaining PO value on active jobs (KPI scorecard 7/25/26). Pipeline = pending bids × win probability.")
 header(ws, 4, list(range(1, 8)), ["Job", "Customer / name", "PO value", "Billed to date", "Remaining", "Sched. finish", "Note"])
 BACKLOG = [
     ("001-0001", "DTE — Catalina Conversion Ph 3", 838.451, 806.331, "2026", "construction support tail"),
@@ -419,7 +419,7 @@ BACKLOG = [
     ("017-0005", "CenterPoint — Angel Mounds 69kV", 96.987, 95.148, "Oct-26", "88% complete"),
     ("017-0006", "CenterPoint — Northwest 69kV", 110.555, 4.365, "Aug-27", "13% — early"),
     ("017-0007", "CenterPoint — Leonard Rd 69kV", 199.994, 6.739, "Oct-27", "17% — early"),
-    ("(new)", "Consumers — 2026 Pole Replacements", 300.000, 0.000, "Dec-27", "WON — award $300K; EPC-paired $3.45M"),
+    ("(new)", "Consumers — 2026 Pole Replacements", 276.450, 0.000, "Dec-27", "WON — award $276K; EPC-paired $3.45M"),
 ]
 r0 = 5
 for i, (job, name, po, billed, fin, note) in enumerate(BACKLOG):
@@ -453,7 +453,8 @@ PIPE = [
     ("Jacksonburg–Gateway (EPC-paired $3.55M)", "Hoosier Energy", 160.0, 0.50, "Q4-26"),
     ("Rosehill–Rockport (EPC-paired $5.59M)", "Hoosier Energy", 290.0, 0.50, "Q4-26"),
     ("Joint Use Audit", "Lansing Board of Water & Light", 1350.0, 0.50, "Q4-26"),
-    ("Renaissance 345kV Substation (ON HOLD)", "DTE Energy", 0.0, 0.00, "hold"),
+    ("Renaissance 345kV Substation (6 MOD switches)", "DTE Energy", 0.0, 0.00, "Sep-26 — in bid"),
+    ("VanMeter 161kV Substation (EPC-paired)", "MEC (MidAmerican)", 0.0, 0.00, "Sep-26 — in bid"),
 ]
 p0 = r
 for i, (bid, cust, val, prob, when) in enumerate(PIPE):
@@ -763,7 +764,7 @@ for item in [
     "Revenue is capacity-driven; the coverage check disciplines it against booked work, but it is not a job-by-job burn schedule.",
     "Direct-charge share (92%) mirrors the GL convention; when salary detail arrives, split wages properly by person.",
     "The FTE path assumes hires are productive in month one — add ramp months per hire if that proves optimistic.",
-    "Pipeline probabilities are placeholders at the 2026 win rate (67%) or 50% — Estimating should own these numbers.",
+    "Pipeline probabilities are placeholders at the 2026 win rate (69%) or 50% — Estimating should own these numbers.",
     "Escalation is off (card rate and wages flat through 2027) — turn on via the scalar inputs when the 2027 rate sheet lands.",
 ]:
     ws.cell(row=r, column=1, value="• " + item)

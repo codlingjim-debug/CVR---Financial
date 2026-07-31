@@ -145,7 +145,7 @@
       <div class="tile"><div class="label">vs plan</div><div class="value">54.3%</div><div class="delta">$464K behind budget</div></div>
       <div class="tile"><div class="label">vs prior year</div><div class="value">+38.1%</div><div class="delta">PY YTD $399K</div></div>
       <div class="tile"><div class="label">Gross margin YTD</div><div class="value">22.2%</div><div class="delta">budget assumes 61.6%</div></div>
-      <div class="tile"><div class="label">Utilization</div><div class="value">59.0%</div><div class="delta">vs 75% median target</div></div>
+      <div class="tile"><div class="label">Utilization</div><div class="value">60.8%</div><div class="delta">vs 75% median target</div></div>
       <div class="tile"><div class="label">Realization</div><div class="value">79%</div><div class="delta">$122 realized vs $154 card</div></div>
     </div>
 
@@ -171,7 +171,7 @@
     <h2 class="section">Operating drivers</h2>
     <div class="card">
       <h3>Billable utilization vs target, by person (2026 YTD)</h3>
-      <p class="sub">Bar = actual billable share; tick = individual target. Team 59.0% vs 75% median target.</p>
+      <p class="sub">Bar = actual billable share; tick = individual target. Team 60.8% vs 75% median target.</p>
       <div class="legend" id="legend-ut"></div>
       <div class="chart-box" id="chart-ut"></div>
       <div class="foot">Hours through 7/11/26. Randy Pynenberg and Auston Hopson have small YTD hour bases (68 / 18 hrs).</div>
@@ -408,11 +408,11 @@
   /* ---- 3. Utilization ---- */
   (function () {
     const DATA = [
-      ["Auston Hopson", 100.0, 100.0, 18], ["Randy Pynenberg", 89.7, 95.0, 68],
-      ["Craig Peterson", 79.6, 75.4, 1017], ["Bhkti Patel", 74.4, 70.7, 1045],
-      ["Hayley Worthen", 66.9, 61.3, 952], ["Francis Wagner", 62.5, 70.7, 992],
-      ["Taylor Nelson", 61.0, 80.1, 1045], ["Collin Allen", 57.6, 80.1, 985],
-      ["Kevin Metts", 38.4, 75.4, 890], ["Roy Pierce", 32.7, 42.4, 847],
+      ["Auston Hopson", 100.0, 100.0, 22], ["Randy Pynenberg", 89.7, 95.0, 68],
+      ["Craig Peterson", 81.4, 75.4, 1111], ["Bhkti Patel", 76.0, 70.7, 1118],
+      ["Hayley Worthen", 68.3, 61.3, 994], ["Francis Wagner", 65.2, 70.7, 1070],
+      ["Taylor Nelson", 61.0, 80.1, 1045], ["Collin Allen", 59.4, 80.1, 1030],
+      ["Kevin Metts", 38.4, 75.4, 890], ["Roy Pierce", 35.3, 42.4, 881],
     ];
     const W = 940, ROW = 27, L = 146, R = 56, T = 6, PW = W - L - R;
     const H = T + DATA.length * ROW + 22;
@@ -528,7 +528,7 @@
     const N = 18;
     const FCST = [128.5, 132.3, 136.1, 154.0, 158.3, 162.7, 182.4, 187.3, 192.3, 197.3, 202.4, 219.3,
                   219.3, 219.3, 219.3, 219.3, 219.3, 219.3];
-    const JOBS = [[32.1, 5], [212.5, 17], [59.2, 3], [4.9, 2], [71.8, 1], [15.0, 1], [1.8, 3], [106.2, 13], [193.3, 15], [300.0, 17]];
+    const JOBS = [[32.1, 5], [212.5, 17], [59.2, 3], [4.9, 2], [71.8, 1], [15.0, 1], [1.8, 3], [106.2, 13], [193.3, 15], [276.45, 17]];
     const BIDS = [[100, 0.50, 2, 6], [160, 0.50, 4, 12], [290, 0.50, 4, 12], [1350, 0.50, 5, 18]];
     const backlog = new Array(N).fill(0);
     JOBS.forEach(([rem, end]) => { const m = rem / (end + 1); for (let i = 0; i <= end && i < N; i++) backlog[i] += m; });

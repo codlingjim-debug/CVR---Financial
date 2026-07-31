@@ -34,7 +34,9 @@ async def main():
                  + SRC.read_text() + "</body></html>")
     tmp = OUT / "_render.html"
     tmp.write_text(page_html)
-    manifest = {}
+    # merge into any existing manifest so charts rendered elsewhere (e.g. margin) survive
+    mpath = OUT / "manifest.json"
+    manifest = json.loads(mpath.read_text()) if mpath.exists() else {}
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(executable_path="/opt/pw-browsers/chromium")
         page = await browser.new_page(viewport={"width": 1020, "height": 1400},
