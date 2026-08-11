@@ -1,0 +1,399 @@
+ERMHDR	15.2	2026-08-12	Project	admin	admin	dbxDatabaseNoName	Project Management	USD
+%T	CURRTYPE
+%F	curr_id	decimal_digit_cnt	curr_symbol	decimal_symbol	digit_group_symbol	pos_curr_fmt_type	neg_curr_fmt_type	curr_type	curr_short_name	group_digit_cnt	base_exch_rate
+%R	1	2	$	.	,	#1.1	(#1.1)	US Dollar	USD	3	1
+%T	CALENDAR
+%F	clndr_id	default_flag	clndr_name	proj_id	base_clndr_id	last_chng_date	clndr_type	day_hr_cnt	week_hr_cnt	month_hr_cnt	year_hr_cnt	rsrc_private	clndr_data
+%R	100	Y	CVR Standard 5x8				CA_Base	8	40	172	2000	N	(0||CalendarData()((0||DaysOfWeek()((0||1()())(0||2()((0||0(s|08:00|f|12:00)())(0||1(s|13:00|f|17:00)())))(0||3()((0||0(s|08:00|f|12:00)())(0||1(s|13:00|f|17:00)())))(0||4()((0||0(s|08:00|f|12:00)())(0||1(s|13:00|f|17:00)())))(0||5()((0||0(s|08:00|f|12:00)())(0||1(s|13:00|f|17:00)())))(0||6()((0||0(s|08:00|f|12:00)())(0||1(s|13:00|f|17:00)())))(0||7()()))))(0||Exceptions()()))
+%T	PROJECT
+%F	proj_id	fy_start_month_num	rsrc_self_add_flag	allow_complete_flag	rsrc_multi_assign_flag	checkout_flag	project_flag	step_complete_flag	cost_qty_recalc_flag	batch_sum_flag	name_sep_char	def_complete_pct_type	proj_short_name	clndr_id	task_code_base	task_code_step	priority_num	wbs_max_sum_level	strgy_priority_num	last_checksum	critical_drtn_hr_cnt	def_cost_per_qty	last_recalc_date	plan_start_date	scd_end_date	add_date	plan_end_date	def_duration_type	task_code_prefix	guid	def_qty_type	add_by_name	def_rate_type	add_act_remain_flag	act_this_per_link_flag	def_task_type	act_pct_link_flag	critical_path_type	task_code_prefix_flag	def_rollup_dates_flag	use_project_baseline_flag	rem_target_link_flag	reset_planned_flag	allow_neg_act_flag	sum_assign_level	export_flag
+%R	1000	1	Y	Y	Y	N	Y	N	N	N	.	CP_Drtn	CVR-MASTER	100	1000	10	500	2	500		0	100	2026-08-12 08:00	2026-08-12 08:00	2028-05-17 17:00	2026-08-12 08:00	2028-05-17 17:00	DT_FixedDrtn	A		QT_Hour	admin	COST_PER_QTY	N	N	TT_Task	N	CT_TotFloat	Y	Y	N	Y	N	N	SL_Taskrsrc	Y
+%T	SCHEDOPTIONS
+%F	schedoptions_id	proj_id	sched_outer_depend_type	sched_open_critical_flag	sched_lag_early_start_flag	sched_retained_logic	sched_setplantoforecast	sched_float_type	sched_calendar_on_relationship_lag	sched_use_expect_end_flag	sched_progress_override
+%R	1	1000	SD_Both	N	N	Y	N	FT_TotalFloat	CCal_Task	Y	N
+%T	PROJWBS
+%F	wbs_id	proj_id	obs_id	seq_num	proj_node_flag	sum_data_flag	status_code	wbs_short_name	wbs_name	parent_wbs_id	ev_user_pct	ev_etc_user_value	ev_compute_type	ev_etc_compute_type
+%R	2000	1000		10	Y	Y	WS_Open	CVR-MASTER	CVR Master Program		6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2001	1000		20	N	Y	WS_Open	CPE	CenterPoint Energy — Direct Engineering	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2002	1000		30	N	Y	WS_Open	CPE.GW	017-0003 Gateway 69kV	2001	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2003	1000		40	N	Y	WS_Open	CPE.RK	017-0004 Rockport 69kV	2001	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2004	1000		50	N	Y	WS_Open	CPE.AM	017-0005 Angel Mounds 69kV	2001	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2005	1000		60	N	Y	WS_Open	CPE.NW	017-0006 Northwest 69kV Cap Banks	2001	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2006	1000		70	N	Y	WS_Open	CPE.LR	017-0007 Leonard Rd 69kV Cap Banks	2001	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2007	1000		80	N	Y	WS_Open	DTE	DTE Energy	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2008	1000		90	N	Y	WS_Open	DTE.NB	001-0003 New Baltimore Conversion (39-WO pilot)	2007	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2009	1000		100	N	Y	WS_Open	DTE.CT	001-0001 Catalina Ph 3 — Support Tail	2007	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2010	1000		110	N	Y	WS_Open	DTE.RN	Renaissance 345kV — 6 MOD Switches (bid)	2007	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2011	1000		120	N	Y	WS_Open	CON	Consumers Energy	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2012	1000		130	N	Y	WS_Open	CON.HVD	005-0004 2026 HVD Line Sensors	2011	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2013	1000		140	N	Y	WS_Open	CON.PR	2026 Pole Replacements — EPC w/ HWC (WON)	2011	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2014	1000		150	N	Y	WS_Open	MEC	MEC — EPC Support with HWC	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2015	1000		160	N	Y	WS_Open	MEC.SP	24000168 Sub P GSU & Substation	2014	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2016	1000		170	N	Y	WS_Open	MEC.EW	24000170 Enterprise Way South	2014	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2017	1000		180	N	Y	WS_Open	MEC.VM	VanMeter 161kV Substation + 6mi Line (bid)	2014	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2018	1000		190	N	Y	WS_Open	CLV	016-0001 Cloverland — Manistique Closeout	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2019	1000		200	N	Y	WS_Open	PIPE	Pending Pipeline (contingent on award)	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%R	2020	1000		210	N	Y	WS_Open	GOV	Program Governance & Operating Rhythm	2000	6	0.16	EC_Cmp_pct	EE_Rem_hr
+%T	RSRC
+%F	rsrc_id	parent_rsrc_id	clndr_id	rsrc_seq_num	rsrc_name	rsrc_short_name	def_qty_per_hr	cost_qty_type	active_flag	auto_compute_act_flag	def_cost_qty_link_flag	ot_flag	curr_id	rsrc_type
+%R	1		100	10	Roy Pierce — Principal Engineer	RP	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	2		100	20	Hayley Worthen — Senior Engineer	HW	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	3		100	30	Randy Pynenberg — Engineer IV	RD	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	4		100	40	Bhkti Patel — Engineer III	BP	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	5		100	50	Francis Wagner — Engineer III	FW	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	6		100	60	Taylor Nelson — Engineer II	TN	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	7		100	70	Craig Peterson — Engineer I	CP	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	8		100	80	Kevin Metts — Designer II	KM	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	9		100	90	Collin Allen — Graphics Technician	CA	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	10		100	100	Auston Hopson — Graphics Technician	AH	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	11		100	110	Senior PM (starts 8/24)	SPM	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	12		100	120	T-Line Engineer (open req)	TLE	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	13		100	130	Substation Engineer (open req)	SSE	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	14		100	140	Structural Engineer (open req)	STE	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	15		100	150	CVR Estimating (per CVR-PROC-001)	EST	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	16		100	160	PLS Procurement	PLS	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%R	17		100	170	HWC Construction PM (coordination)	HPM	1	QT_Hour	Y	Y	Y	N	1	RT_Labor
+%T	TASK
+%F	task_id	proj_id	wbs_id	clndr_id	phys_complete_pct	complete_pct_type	task_type	duration_type	status_code	task_code	task_name	total_float_hr_cnt	free_float_hr_cnt	remain_drtn_hr_cnt	act_work_qty	remain_work_qty	target_work_qty	target_drtn_hr_cnt	target_equip_qty	act_equip_qty	remain_equip_qty	cstr_date	act_start_date	act_end_date	late_start_date	late_end_date	expect_end_date	early_start_date	early_end_date	restart_date	reend_date	target_start_date	target_end_date	rem_late_start_date	rem_late_end_date	cstr_type	priority_type	suspend_date	resume_date	float_path	float_path_order	cstr_date2	cstr_type2	driving_path_flag	create_date	update_date	auto_compute_act_flag	rev_fdbk_flag	lock_plan_flag
+%R	10000	1000	2002	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	GW-CLO	Gateway 69kV — final billing & record prints	0	0	120	0	120	120	120	0	0	0				2026-08-12 08:00	2026-09-01 17:00		2026-08-12 08:00	2026-09-01 17:00			2026-08-12 08:00	2026-09-01 17:00	2026-08-12 08:00	2026-09-01 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10001	1000	2002	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	GW-FIN	Gateway 69kV complete	0	0	0	0	0	0	0	0	0	0				2026-09-02 08:00	2026-09-02 17:00		2026-09-02 08:00	2026-09-02 17:00			2026-09-02 08:00	2026-09-02 17:00	2026-09-02 08:00	2026-09-02 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10002	1000	2003	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RK-CLO	Rockport 69kV — closeout & record prints	0	0	120	0	120	120	120	0	0	0				2026-08-12 08:00	2026-09-01 17:00		2026-08-12 08:00	2026-09-01 17:00			2026-08-12 08:00	2026-09-01 17:00	2026-08-12 08:00	2026-09-01 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10003	1000	2003	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	RK-FIN	Rockport 69kV complete	0	0	0	0	0	0	0	0	0	0				2026-09-02 08:00	2026-09-02 17:00		2026-09-02 08:00	2026-09-02 17:00			2026-09-02 08:00	2026-09-02 17:00	2026-09-02 08:00	2026-09-02 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10004	1000	2004	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	AM-CLO	Angel Mounds — record prints & closeout	0	0	160	0	160	160	160	0	0	0				2026-08-12 08:00	2026-09-08 17:00		2026-08-12 08:00	2026-09-08 17:00			2026-08-12 08:00	2026-09-08 17:00	2026-08-12 08:00	2026-09-08 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10005	1000	2004	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	AM-FIN	Angel Mounds complete	0	0	0	0	0	0	0	0	0	0				2026-09-09 08:00	2026-09-09 17:00		2026-09-09 08:00	2026-09-09 17:00			2026-09-09 08:00	2026-09-09 17:00	2026-09-09 08:00	2026-09-09 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10006	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-60	Northwest — 60% design (cap banks + protection)	0	0	360	0	360	360	360	0	0	0				2026-08-12 08:00	2026-10-13 17:00		2026-08-12 08:00	2026-10-13 17:00			2026-08-12 08:00	2026-10-13 17:00	2026-08-12 08:00	2026-10-13 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10007	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-90	Northwest — 90% design & CenterPoint review	0	0	320	0	320	320	320	0	0	0				2026-10-14 08:00	2026-12-08 17:00		2026-10-14 08:00	2026-12-08 17:00			2026-10-14 08:00	2026-12-08 17:00	2026-10-14 08:00	2026-12-08 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10008	1000	2005	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NW-IFC	Northwest — IFC issued (engineering complete)	0	0	0	0	0	0	0	0	0	0				2026-12-22 08:00	2026-12-22 17:00		2026-12-22 08:00	2026-12-22 17:00			2026-12-22 08:00	2026-12-22 17:00	2026-12-22 08:00	2026-12-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10009	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-CB-TRN	EOR transmittal to PLS — 69kV capacitor banks	0	0	40	0	40	40	40	0	0	0				2026-12-23 08:00	2026-12-29 17:00		2026-12-23 08:00	2026-12-29 17:00			2026-12-23 08:00	2026-12-29 17:00	2026-12-23 08:00	2026-12-29 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10010	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-CB-PO	PO placed — 69kV capacitor banks	0	0	120	0	120	120	120	0	0	0				2026-12-30 08:00	2027-01-19 17:00		2026-12-30 08:00	2027-01-19 17:00			2026-12-30 08:00	2027-01-19 17:00	2026-12-30 08:00	2027-01-19 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10011	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-CB-FAB	Fabrication & lead time — 69kV capacitor banks (30 wks)	0	0	1200	0	1200	1200	1200	0	0	0				2027-01-20 08:00	2027-08-17 17:00		2027-01-20 08:00	2027-08-17 17:00			2027-01-20 08:00	2027-08-17 17:00	2027-01-20 08:00	2027-08-17 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10012	1000	2005	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NW-CB-DLV	Delivery on site — 69kV capacitor banks	0	0	0	0	0	0	0	0	0	0	2027-05-03 08:00			2027-08-18 08:00	2027-08-18 17:00		2027-08-18 08:00	2027-08-18 17:00			2027-08-18 08:00	2027-08-18 17:00	2027-08-18 08:00	2027-08-18 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10013	1000	2005	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NW-SUP	Northwest — construction support & energization	0	0	480	0	480	480	480	0	0	0				2027-08-19 08:00	2027-11-10 17:00		2027-08-19 08:00	2027-11-10 17:00			2027-08-19 08:00	2027-11-10 17:00	2027-08-19 08:00	2027-11-10 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10014	1000	2005	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	NW-FIN	Northwest 69kV complete	0	0	0	0	0	0	0	0	0	0				2027-11-11 08:00	2027-11-11 17:00		2027-11-11 08:00	2027-11-11 17:00			2027-11-11 08:00	2027-11-11 17:00	2027-11-11 08:00	2027-11-11 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10015	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-60	Leonard Rd — 60% design (2 cap banks + breaker-and-a-half)	0	0	400	0	400	400	400	0	0	0				2026-08-12 08:00	2026-10-20 17:00		2026-08-12 08:00	2026-10-20 17:00			2026-08-12 08:00	2026-10-20 17:00	2026-08-12 08:00	2026-10-20 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10016	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-90	Leonard Rd — 90% design & CenterPoint review	0	0	320	0	320	320	320	0	0	0				2026-10-21 08:00	2026-12-15 17:00		2026-10-21 08:00	2026-12-15 17:00			2026-10-21 08:00	2026-12-15 17:00	2026-10-21 08:00	2026-12-15 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10017	1000	2006	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	LR-IFC	Leonard Rd — IFC issued (engineering complete)	0	0	0	0	0	0	0	0	0	0				2026-12-29 08:00	2026-12-29 17:00		2026-12-29 08:00	2026-12-29 17:00			2026-12-29 08:00	2026-12-29 17:00	2026-12-29 08:00	2026-12-29 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10018	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-CB-TRN	EOR transmittal to PLS — 69kV capacitor banks	0	0	40	0	40	40	40	0	0	0				2026-12-30 08:00	2027-01-05 17:00		2026-12-30 08:00	2027-01-05 17:00			2026-12-30 08:00	2027-01-05 17:00	2026-12-30 08:00	2027-01-05 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10019	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-CB-PO	PO placed — 69kV capacitor banks	0	0	120	0	120	120	120	0	0	0				2027-01-06 08:00	2027-01-26 17:00		2027-01-06 08:00	2027-01-26 17:00			2027-01-06 08:00	2027-01-26 17:00	2027-01-06 08:00	2027-01-26 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10020	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-CB-FAB	Fabrication & lead time — 69kV capacitor banks (30 wks)	0	0	1200	0	1200	1200	1200	0	0	0				2027-01-27 08:00	2027-08-24 17:00		2027-01-27 08:00	2027-08-24 17:00			2027-01-27 08:00	2027-08-24 17:00	2027-01-27 08:00	2027-08-24 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10021	1000	2006	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	LR-CB-DLV	Delivery on site — 69kV capacitor banks	0	0	0	0	0	0	0	0	0	0	2027-07-06 08:00			2027-08-25 08:00	2027-08-25 17:00		2027-08-25 08:00	2027-08-25 17:00			2027-08-25 08:00	2027-08-25 17:00	2027-08-25 08:00	2027-08-25 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10022	1000	2006	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	LR-SUP	Leonard Rd — construction support & energization	0	0	480	0	480	480	480	0	0	0				2027-08-26 08:00	2027-11-17 17:00		2027-08-26 08:00	2027-11-17 17:00			2027-08-26 08:00	2027-11-17 17:00	2027-08-26 08:00	2027-11-17 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10023	1000	2006	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	LR-FIN	Leonard Rd 69kV complete	0	0	0	0	0	0	0	0	0	0				2027-11-18 08:00	2027-11-18 17:00		2027-11-18 08:00	2027-11-18 17:00			2027-11-18 08:00	2027-11-18 17:00	2027-11-18 08:00	2027-11-18 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10024	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-PIL	CVR-PROC-001 pilot kickoff (one schedule, one cost picture)	0	0	80	0	80	80	80	0	0	0				2026-08-12 08:00	2026-08-25 17:00		2026-08-12 08:00	2026-08-25 17:00			2026-08-12 08:00	2026-08-25 17:00	2026-08-12 08:00	2026-08-25 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10025	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-WO1	WO packages — batch 1 (12 WOs) engineering complete	0	0	440	0	440	440	440	0	0	0				2026-08-19 08:00	2026-11-03 17:00		2026-08-19 08:00	2026-11-03 17:00			2026-08-19 08:00	2026-11-03 17:00	2026-08-19 08:00	2026-11-03 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10026	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-WO2	WO packages — batch 2 (14 WOs) engineering complete	0	0	440	0	440	440	440	0	0	0				2026-11-04 08:00	2027-01-19 17:00		2026-11-04 08:00	2027-01-19 17:00			2026-11-04 08:00	2027-01-19 17:00	2026-11-04 08:00	2027-01-19 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10027	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-WO3	WO packages — batch 3 (13 WOs) engineering complete	0	0	400	0	400	400	400	0	0	0				2027-01-20 08:00	2027-03-30 17:00		2027-01-20 08:00	2027-03-30 17:00			2027-01-20 08:00	2027-03-30 17:00	2027-01-20 08:00	2027-03-30 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10028	1000	2008	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NB-IFC	New Baltimore — all 39 WOs IFC (engineering complete)	0	0	0	0	0	0	0	0	0	0				2027-03-31 08:00	2027-03-31 17:00		2027-03-31 08:00	2027-03-31 17:00			2027-03-31 08:00	2027-03-31 17:00	2027-03-31 08:00	2027-03-31 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10029	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-PL-TRN	EOR transmittal to PLS — distribution/transmission poles	0	0	40	0	40	40	40	0	0	0				2026-11-04 08:00	2026-11-10 17:00		2026-11-04 08:00	2026-11-10 17:00			2026-11-04 08:00	2026-11-10 17:00	2026-11-04 08:00	2026-11-10 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10030	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-PL-PO	PO placed — distribution/transmission poles	0	0	120	0	120	120	120	0	0	0				2026-11-11 08:00	2026-12-01 17:00		2026-11-11 08:00	2026-12-01 17:00			2026-11-11 08:00	2026-12-01 17:00	2026-11-11 08:00	2026-12-01 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10031	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-PL-FAB	Fabrication & lead time — distribution/transmission poles (16 wks)	0	0	640	0	640	640	640	0	0	0				2026-12-02 08:00	2027-03-23 17:00		2026-12-02 08:00	2027-03-23 17:00			2026-12-02 08:00	2027-03-23 17:00	2026-12-02 08:00	2027-03-23 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10032	1000	2008	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NB-PL-DLV	Delivery on site — distribution/transmission poles	0	0	0	0	0	0	0	0	0	0	2027-03-15 08:00			2027-03-24 08:00	2027-03-24 17:00		2027-03-24 08:00	2027-03-24 17:00			2027-03-24 08:00	2027-03-24 17:00	2027-03-24 08:00	2027-03-24 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10033	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-CD-TRN	EOR transmittal to PLS — conductor / OPGW / hardware	0	0	40	0	40	40	40	0	0	0				2026-11-04 08:00	2026-11-10 17:00		2026-11-04 08:00	2026-11-10 17:00			2026-11-04 08:00	2026-11-10 17:00	2026-11-04 08:00	2026-11-10 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10034	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-CD-PO	PO placed — conductor / OPGW / hardware	0	0	120	0	120	120	120	0	0	0				2026-11-11 08:00	2026-12-01 17:00		2026-11-11 08:00	2026-12-01 17:00			2026-11-11 08:00	2026-12-01 17:00	2026-11-11 08:00	2026-12-01 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10035	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-CD-FAB	Fabrication & lead time — conductor / OPGW / hardware (16 wks)	0	0	640	0	640	640	640	0	0	0				2026-12-02 08:00	2027-03-23 17:00		2026-12-02 08:00	2027-03-23 17:00			2026-12-02 08:00	2027-03-23 17:00	2026-12-02 08:00	2027-03-23 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10036	1000	2008	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NB-CD-DLV	Delivery on site — conductor / OPGW / hardware	0	0	0	0	0	0	0	0	0	0	2027-03-15 08:00			2027-03-24 08:00	2027-03-24 17:00		2027-03-24 08:00	2027-03-24 17:00			2027-03-24 08:00	2027-03-24 17:00	2027-03-24 08:00	2027-03-24 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10037	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-SRP	Material surplus triage & BOM-vs-actual reconciliation	0	0	240	0	240	240	240	0	0	0				2026-08-12 08:00	2026-09-22 17:00		2026-08-12 08:00	2026-09-22 17:00			2026-08-12 08:00	2026-09-22 17:00	2026-08-12 08:00	2026-09-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10038	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-OBK	DTE open-book response & cost-per-mile benchmark	0	0	200	0	200	200	200	0	0	0				2026-08-26 08:00	2026-09-29 17:00		2026-08-26 08:00	2026-09-29 17:00			2026-08-26 08:00	2026-09-29 17:00	2026-08-26 08:00	2026-09-29 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10039	1000	2008	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	NB-CON	Spring 2027 construction start (HWC)	0	0	0	0	0	0	0	0	0	0	2027-04-01 08:00			2027-04-01 08:00	2027-04-01 17:00		2027-04-01 08:00	2027-04-01 17:00			2027-04-01 08:00	2027-04-01 17:00	2027-04-01 08:00	2027-04-01 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10040	1000	2008	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	NB-SUP	Construction support — 2027 season	0	0	1400	0	1400	1400	1400	0	0	0				2027-04-02 08:00	2027-12-02 17:00		2027-04-02 08:00	2027-12-02 17:00			2027-04-02 08:00	2027-12-02 17:00	2027-04-02 08:00	2027-12-02 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10041	1000	2008	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	NB-FIN	New Baltimore complete	0	0	0	0	0	0	0	0	0	0				2027-12-03 08:00	2027-12-03 17:00		2027-12-03 08:00	2027-12-03 17:00			2027-12-03 08:00	2027-12-03 17:00	2027-12-03 08:00	2027-12-03 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10042	1000	2009	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	CT-SUP	Catalina Ph 3 — construction support tail	0	0	760	0	760	760	760	0	0	0				2026-08-12 08:00	2026-12-22 17:00		2026-08-12 08:00	2026-12-22 17:00			2026-08-12 08:00	2026-12-22 17:00	2026-08-12 08:00	2026-12-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10043	1000	2009	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	CT-FIN	Catalina Ph 3 complete	0	0	0	0	0	0	0	0	0	0				2026-12-23 08:00	2026-12-23 17:00		2026-12-23 08:00	2026-12-23 17:00			2026-12-23 08:00	2026-12-23 17:00	2026-12-23 08:00	2026-12-23 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10044	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-BID	Renaissance 345kV — bid preparation & submittal	0	0	192	0	192	192	192	0	0	0				2026-08-12 08:00	2026-09-14 17:00		2026-08-12 08:00	2026-09-14 17:00			2026-08-12 08:00	2026-09-14 17:00	2026-08-12 08:00	2026-09-14 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10045	1000	2010	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	RN-AWD	Award (assumed)	0	0	0	0	0	0	0	0	0	0	2026-11-02 08:00			2026-11-02 08:00	2026-11-02 17:00		2026-11-02 08:00	2026-11-02 17:00			2026-11-02 08:00	2026-11-02 17:00	2026-11-02 08:00	2026-11-02 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10046	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-DSN	MOD switch replacement design — 60/90/IFC	0	0	520	0	520	520	520	0	0	0				2026-11-03 08:00	2027-02-01 17:00		2026-11-03 08:00	2027-02-01 17:00			2026-11-03 08:00	2027-02-01 17:00	2026-11-03 08:00	2027-02-01 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10047	1000	2010	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	RN-IFC	Renaissance — IFC issued (engineering complete)	0	0	0	0	0	0	0	0	0	0				2027-02-02 08:00	2027-02-02 17:00		2027-02-02 08:00	2027-02-02 17:00			2027-02-02 08:00	2027-02-02 17:00	2027-02-02 08:00	2027-02-02 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10048	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-MS-TRN	EOR transmittal to PLS — 345kV MOD switches (6)	0	0	40	0	40	40	40	0	0	0				2027-02-03 08:00	2027-02-09 17:00		2027-02-03 08:00	2027-02-09 17:00			2027-02-03 08:00	2027-02-09 17:00	2027-02-03 08:00	2027-02-09 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10049	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-MS-PO	PO placed — 345kV MOD switches (6)	0	0	120	0	120	120	120	0	0	0				2027-02-10 08:00	2027-03-02 17:00		2027-02-10 08:00	2027-03-02 17:00			2027-02-10 08:00	2027-03-02 17:00	2027-02-10 08:00	2027-03-02 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10050	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-MS-FAB	Fabrication & lead time — 345kV MOD switches (6) (40 wks)	0	0	1600	0	1600	1600	1600	0	0	0				2027-03-03 08:00	2027-12-07 17:00		2027-03-03 08:00	2027-12-07 17:00			2027-03-03 08:00	2027-12-07 17:00	2027-03-03 08:00	2027-12-07 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10051	1000	2010	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	RN-MS-DLV	Delivery on site — 345kV MOD switches (6)	0	0	0	0	0	0	0	0	0	0	2027-09-01 08:00			2027-12-08 08:00	2027-12-08 17:00		2027-12-08 08:00	2027-12-08 17:00			2027-12-08 08:00	2027-12-08 17:00	2027-12-08 08:00	2027-12-08 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10052	1000	2010	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	RN-OUT	Fall 2027 outage — switch replacement support	0	0	360	0	360	360	360	0	0	0	2027-10-01 08:00			2027-12-09 08:00	2028-02-09 17:00		2027-12-09 08:00	2028-02-09 17:00			2027-12-09 08:00	2028-02-09 17:00	2027-12-09 08:00	2028-02-09 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10053	1000	2010	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	RN-FIN	Renaissance complete	0	0	0	0	0	0	0	0	0	0				2028-02-10 08:00	2028-02-10 17:00		2028-02-10 08:00	2028-02-10 17:00			2028-02-10 08:00	2028-02-10 17:00	2028-02-10 08:00	2028-02-10 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10054	1000	2012	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	HV-DEV	HVD sensors — record prints & BOM closeout	0	0	440	0	440	440	440	0	0	0				2026-08-12 08:00	2026-10-27 17:00		2026-08-12 08:00	2026-10-27 17:00			2026-08-12 08:00	2026-10-27 17:00	2026-08-12 08:00	2026-10-27 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10055	1000	2012	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	HV-FIN	HVD Line Sensors complete	0	0	0	0	0	0	0	0	0	0				2026-10-28 08:00	2026-10-28 17:00		2026-10-28 08:00	2026-10-28 17:00			2026-10-28 08:00	2026-10-28 17:00	2026-10-28 08:00	2026-10-28 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10056	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-KO	Pole program kickoff with HWC (EPC-paired)	0	0	40	0	40	40	40	0	0	0	2026-09-08 08:00			2026-09-08 08:00	2026-09-14 17:00		2026-09-08 08:00	2026-09-14 17:00			2026-09-08 08:00	2026-09-14 17:00	2026-09-08 08:00	2026-09-14 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10057	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-DSN	Design packages — 168 poles (staking, framing, guying)	0	0	560	0	560	560	560	0	0	0				2026-09-15 08:00	2026-12-21 17:00		2026-09-15 08:00	2026-12-21 17:00			2026-09-15 08:00	2026-12-21 17:00	2026-09-15 08:00	2026-12-21 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10058	1000	2013	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	PR-IFC	Pole program — IFC issued (engineering complete)	0	0	0	0	0	0	0	0	0	0				2026-12-22 08:00	2026-12-22 17:00		2026-12-22 08:00	2026-12-22 17:00			2026-12-22 08:00	2026-12-22 17:00	2026-12-22 08:00	2026-12-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10059	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-PL-TRN	EOR transmittal to PLS — distribution/transmission poles	0	0	40	0	40	40	40	0	0	0				2026-12-23 08:00	2026-12-29 17:00		2026-12-23 08:00	2026-12-29 17:00			2026-12-23 08:00	2026-12-29 17:00	2026-12-23 08:00	2026-12-29 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10060	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-PL-PO	PO placed — distribution/transmission poles	0	0	120	0	120	120	120	0	0	0				2026-12-30 08:00	2027-01-19 17:00		2026-12-30 08:00	2027-01-19 17:00			2026-12-30 08:00	2027-01-19 17:00	2026-12-30 08:00	2027-01-19 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10061	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-PL-FAB	Fabrication & lead time — distribution/transmission poles (16 wks)	0	0	640	0	640	640	640	0	0	0				2027-01-20 08:00	2027-05-11 17:00		2027-01-20 08:00	2027-05-11 17:00			2027-01-20 08:00	2027-05-11 17:00	2027-01-20 08:00	2027-05-11 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10062	1000	2013	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	PR-PL-DLV	Delivery on site — distribution/transmission poles	0	0	0	0	0	0	0	0	0	0	2027-03-01 08:00			2027-05-12 08:00	2027-05-12 17:00		2027-05-12 08:00	2027-05-12 17:00			2027-05-12 08:00	2027-05-12 17:00	2027-05-12 08:00	2027-05-12 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10063	1000	2013	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	PR-CON	HWC construction — 2027 season	0	0	0	0	0	0	0	0	0	0	2027-03-01 08:00			2027-05-13 08:00	2027-05-13 17:00		2027-05-13 08:00	2027-05-13 17:00			2027-05-13 08:00	2027-05-13 17:00	2027-05-13 08:00	2027-05-13 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10064	1000	2013	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PR-SUP	Construction support & closeout documentation	0	0	1440	0	1440	1440	1440	0	0	0				2027-05-14 08:00	2028-01-20 17:00		2027-05-14 08:00	2028-01-20 17:00			2027-05-14 08:00	2028-01-20 17:00	2027-05-14 08:00	2028-01-20 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10065	1000	2013	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	PR-FIN	Pole Replacement program complete	0	0	0	0	0	0	0	0	0	0				2028-01-21 08:00	2028-01-21 17:00		2028-01-21 08:00	2028-01-21 17:00			2028-01-21 08:00	2028-01-21 17:00	2028-01-21 08:00	2028-01-21 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10066	1000	2015	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	SP-IFC2	Sub P — Phase 2 IFC comments & final issue	0	0	160	0	160	160	160	0	0	0				2026-08-12 08:00	2026-09-08 17:00		2026-08-12 08:00	2026-09-08 17:00			2026-08-12 08:00	2026-09-08 17:00	2026-08-12 08:00	2026-09-08 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10067	1000	2015	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	SP-SUP	Sub P — construction & energization support	0	0	440	0	440	440	440	0	0	0				2026-08-12 08:00	2026-10-27 17:00		2026-08-12 08:00	2026-10-27 17:00			2026-08-12 08:00	2026-10-27 17:00	2026-08-12 08:00	2026-10-27 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10068	1000	2015	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	SP-FIN	Sub P GSU complete	0	0	0	0	0	0	0	0	0	0				2026-10-28 08:00	2026-10-28 17:00		2026-10-28 08:00	2026-10-28 17:00			2026-10-28 08:00	2026-10-28 17:00	2026-10-28 08:00	2026-10-28 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10069	1000	2016	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	EW-ASB	Enterprise Way — as-builts & punch list	0	0	240	0	240	240	240	0	0	0				2026-08-12 08:00	2026-09-22 17:00		2026-08-12 08:00	2026-09-22 17:00			2026-08-12 08:00	2026-09-22 17:00	2026-08-12 08:00	2026-09-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10070	1000	2016	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	EW-FIN	Enterprise Way complete	0	0	0	0	0	0	0	0	0	0				2026-09-23 08:00	2026-09-23 17:00		2026-09-23 08:00	2026-09-23 17:00			2026-09-23 08:00	2026-09-23 17:00	2026-09-23 08:00	2026-09-23 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10071	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-BID	VanMeter — bid preparation & submittal (with HWC)	0	0	136	0	136	136	136	0	0	0				2026-08-12 08:00	2026-09-03 17:00		2026-08-12 08:00	2026-09-03 17:00			2026-08-12 08:00	2026-09-03 17:00	2026-08-12 08:00	2026-09-03 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10072	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-AWD	Award (assumed)	0	0	0	0	0	0	0	0	0	0	2026-10-15 08:00			2026-10-15 08:00	2026-10-15 17:00		2026-10-15 08:00	2026-10-15 17:00			2026-10-15 08:00	2026-10-15 17:00	2026-10-15 08:00	2026-10-15 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10073	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-30	VanMeter — 30% design (substation + 6mi 161kV line)	0	0	360	0	360	360	360	0	0	0				2026-10-16 08:00	2026-12-17 17:00		2026-10-16 08:00	2026-12-17 17:00			2026-10-16 08:00	2026-12-17 17:00	2026-10-16 08:00	2026-12-17 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10074	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-60	VanMeter — 60% design	0	0	360	0	360	360	360	0	0	0				2026-12-18 08:00	2027-02-18 17:00		2026-12-18 08:00	2027-02-18 17:00			2026-12-18 08:00	2027-02-18 17:00	2026-12-18 08:00	2027-02-18 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10075	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-90	VanMeter — 90% design & MEC review	0	0	320	0	320	320	320	0	0	0				2027-02-19 08:00	2027-04-15 17:00		2027-02-19 08:00	2027-04-15 17:00			2027-02-19 08:00	2027-04-15 17:00	2027-02-19 08:00	2027-04-15 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10076	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-IFC	VanMeter — IFC issued (engineering complete)	0	0	0	0	0	0	0	0	0	0				2027-04-29 08:00	2027-04-29 17:00		2027-04-29 08:00	2027-04-29 17:00			2027-04-29 08:00	2027-04-29 17:00	2027-04-29 08:00	2027-04-29 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10077	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-XF-TRN	EOR transmittal — 161kV transformer (early release at 60%)	0	0	40	0	40	40	40	0	0	0				2027-02-19 08:00	2027-02-25 17:00		2027-02-19 08:00	2027-02-25 17:00			2027-02-19 08:00	2027-02-25 17:00	2027-02-19 08:00	2027-02-25 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10078	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-XF-PO	PO placed — 161kV transformer	0	0	120	0	120	120	120	0	0	0				2027-02-26 08:00	2027-03-18 17:00		2027-02-26 08:00	2027-03-18 17:00			2027-02-26 08:00	2027-03-18 17:00	2027-02-26 08:00	2027-03-18 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10079	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-XF-FAB	Fabrication & lead — 161kV transformer (60 wks)	0	0	2400	0	2400	2400	2400	0	0	0				2027-03-19 08:00	2028-05-11 17:00		2027-03-19 08:00	2028-05-11 17:00			2027-03-19 08:00	2028-05-11 17:00	2027-03-19 08:00	2028-05-11 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10080	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-XF-DLV	Delivery on site — 161kV transformer	0	0	0	0	0	0	0	0	0	0	2028-03-01 08:00			2028-05-12 08:00	2028-05-12 17:00		2028-05-12 08:00	2028-05-12 17:00			2028-05-12 08:00	2028-05-12 17:00	2028-05-12 08:00	2028-05-12 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10081	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-BK-TRN	EOR transmittal — HV breakers (early release at 60%)	0	0	40	0	40	40	40	0	0	0				2027-02-19 08:00	2027-02-25 17:00		2027-02-19 08:00	2027-02-25 17:00			2027-02-19 08:00	2027-02-25 17:00	2027-02-19 08:00	2027-02-25 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10082	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-BK-PO	PO placed — HV breakers	0	0	120	0	120	120	120	0	0	0				2027-02-26 08:00	2027-03-18 17:00		2027-02-26 08:00	2027-03-18 17:00			2027-02-26 08:00	2027-03-18 17:00	2027-02-26 08:00	2027-03-18 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10083	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-BK-FAB	Fabrication & lead — HV breakers (38 wks)	0	0	1520	0	1520	1520	1520	0	0	0				2027-03-19 08:00	2027-12-09 17:00		2027-03-19 08:00	2027-12-09 17:00			2027-03-19 08:00	2027-12-09 17:00	2027-03-19 08:00	2027-12-09 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10084	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-BK-DLV	Delivery on site — HV breakers	0	0	0	0	0	0	0	0	0	0				2027-12-10 08:00	2027-12-10 17:00		2027-12-10 08:00	2027-12-10 17:00			2027-12-10 08:00	2027-12-10 17:00	2027-12-10 08:00	2027-12-10 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10085	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-ST-TRN	EOR transmittal to PLS — substation steel structures	0	0	40	0	40	40	40	0	0	0				2027-04-30 08:00	2027-05-06 17:00		2027-04-30 08:00	2027-05-06 17:00			2027-04-30 08:00	2027-05-06 17:00	2027-04-30 08:00	2027-05-06 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10086	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-ST-PO	PO placed — substation steel structures	0	0	120	0	120	120	120	0	0	0				2027-05-07 08:00	2027-05-27 17:00		2027-05-07 08:00	2027-05-27 17:00			2027-05-07 08:00	2027-05-27 17:00	2027-05-07 08:00	2027-05-27 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10087	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-ST-FAB	Fabrication & lead time — substation steel structures (24 wks)	0	0	960	0	960	960	960	0	0	0				2027-05-28 08:00	2027-11-11 17:00		2027-05-28 08:00	2027-11-11 17:00			2027-05-28 08:00	2027-11-11 17:00	2027-05-28 08:00	2027-11-11 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10088	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-ST-DLV	Delivery on site — substation steel structures	0	0	0	0	0	0	0	0	0	0	2027-10-01 08:00			2027-11-12 08:00	2027-11-12 17:00		2027-11-12 08:00	2027-11-12 17:00			2027-11-12 08:00	2027-11-12 17:00	2027-11-12 08:00	2027-11-12 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10089	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-RL-TRN	EOR transmittal to PLS — relay & control panels	0	0	40	0	40	40	40	0	0	0				2027-04-30 08:00	2027-05-06 17:00		2027-04-30 08:00	2027-05-06 17:00			2027-04-30 08:00	2027-05-06 17:00	2027-04-30 08:00	2027-05-06 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10090	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-RL-PO	PO placed — relay & control panels	0	0	120	0	120	120	120	0	0	0				2027-05-07 08:00	2027-05-27 17:00		2027-05-07 08:00	2027-05-27 17:00			2027-05-07 08:00	2027-05-27 17:00	2027-05-07 08:00	2027-05-27 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10091	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-RL-FAB	Fabrication & lead time — relay & control panels (26 wks)	0	0	1040	0	1040	1040	1040	0	0	0				2027-05-28 08:00	2027-11-25 17:00		2027-05-28 08:00	2027-11-25 17:00			2027-05-28 08:00	2027-11-25 17:00	2027-05-28 08:00	2027-11-25 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10092	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-RL-DLV	Delivery on site — relay & control panels	0	0	0	0	0	0	0	0	0	0	2027-12-01 08:00			2027-12-01 08:00	2027-12-01 17:00		2027-12-01 08:00	2027-12-01 17:00			2027-12-01 08:00	2027-12-01 17:00	2027-12-01 08:00	2027-12-01 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10093	1000	2017	100	0	CP_Drtn	TT_Mile	DT_FixedDrtn	TK_NotStart	VM-CON	HWC construction start (site/civil)	0	0	0	0	0	0	0	0	0	0	2027-06-01 08:00			2027-06-01 08:00	2027-06-01 17:00		2027-06-01 08:00	2027-06-01 17:00			2027-06-01 08:00	2027-06-01 17:00	2027-06-01 08:00	2027-06-01 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10094	1000	2017	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	VM-SUP	Construction support through energization	0	0	2000	0	2000	2000	2000	0	0	0				2027-06-02 08:00	2028-05-16 17:00		2027-06-02 08:00	2028-05-16 17:00			2027-06-02 08:00	2028-05-16 17:00	2027-06-02 08:00	2028-05-16 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10095	1000	2017	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	VM-FIN	VanMeter complete	0	0	0	0	0	0	0	0	0	0				2028-05-17 08:00	2028-05-17 17:00		2028-05-17 08:00	2028-05-17 17:00			2028-05-17 08:00	2028-05-17 17:00	2028-05-17 08:00	2028-05-17 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10096	1000	2018	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	CL-CLO	Manistique — record prints & final closeout	0	0	240	0	240	240	240	0	0	0				2026-08-12 08:00	2026-09-22 17:00		2026-08-12 08:00	2026-09-22 17:00			2026-08-12 08:00	2026-09-22 17:00	2026-08-12 08:00	2026-09-22 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10097	1000	2018	100	0	CP_Drtn	TT_FinMile	DT_FixedDrtn	TK_NotStart	CL-FIN	Manistique complete	0	0	0	0	0	0	0	0	0	0				2026-09-23 08:00	2026-09-23 17:00		2026-09-23 08:00	2026-09-23 17:00			2026-09-23 08:00	2026-09-23 17:00	2026-09-23 08:00	2026-09-23 17:00		PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10098	1000	2019	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PP-LBW	Lansing BWL Joint Use Audit — execution (on award, assumed Q4-26)	0	0	2080	0	2080	2080	2080	0	0	0	2026-11-16 08:00			2026-11-16 08:00	2027-11-12 17:00		2026-11-16 08:00	2027-11-12 17:00			2026-11-16 08:00	2027-11-12 17:00	2026-11-16 08:00	2027-11-12 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10099	1000	2019	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PP-JG	Hoosier Jacksonburg–Gateway — engineering (on award)	0	0	960	0	960	960	960	0	0	0	2026-12-01 08:00			2026-12-01 08:00	2027-05-17 17:00		2026-12-01 08:00	2027-05-17 17:00			2026-12-01 08:00	2027-05-17 17:00	2026-12-01 08:00	2027-05-17 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10100	1000	2019	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PP-RR	Hoosier Rosehill–Rockport — engineering (on award)	0	0	1120	0	1120	1120	1120	0	0	0	2027-01-04 08:00			2027-01-04 08:00	2027-07-16 17:00		2027-01-04 08:00	2027-07-16 17:00			2027-01-04 08:00	2027-07-16 17:00	2027-01-04 08:00	2027-07-16 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10101	1000	2019	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	PP-FMR	Steuben Frontier Make Ready — 10 packages (on award)	0	0	720	0	720	720	720	0	0	0	2026-10-01 08:00			2026-10-01 08:00	2027-02-03 17:00		2026-10-01 08:00	2027-02-03 17:00			2026-10-01 08:00	2027-02-03 17:00	2026-10-01 08:00	2027-02-03 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10102	1000	2020	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	GV-QAQ	Stand up design QA/QC review gates	0	0	120	0	120	120	120	0	0	0	2026-08-17 08:00			2026-08-17 08:00	2026-09-04 17:00		2026-08-17 08:00	2026-09-04 17:00			2026-08-17 08:00	2026-09-04 17:00	2026-08-17 08:00	2026-09-04 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10103	1000	2020	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	GV-EST	Estimating transition into CVR (on Decision 2)	0	0	360	0	360	360	360	0	0	0	2026-09-01 08:00			2026-09-01 08:00	2026-11-02 17:00		2026-09-01 08:00	2026-11-02 17:00			2026-09-01 08:00	2026-11-02 17:00	2026-09-01 08:00	2026-11-02 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10104	1000	2020	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	GV-P6	P6 master schedule live — baseline set, weekly update cadence	0	0	80	0	80	80	80	0	0	0	2026-08-24 08:00			2026-08-24 08:00	2026-09-04 17:00		2026-08-24 08:00	2026-09-04 17:00			2026-08-24 08:00	2026-09-04 17:00	2026-08-24 08:00	2026-09-04 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%R	10105	1000	2020	100	0	CP_Drtn	TT_Task	DT_FixedDrtn	TK_NotStart	GV-MO	Monthly close / KPI / forecast cadence (through 2027)	0	0	2840	0	2840	2840	2840	0	0	0	2026-08-17 08:00			2026-08-17 08:00	2027-12-24 17:00		2026-08-17 08:00	2027-12-24 17:00			2026-08-17 08:00	2027-12-24 17:00	2026-08-17 08:00	2027-12-24 17:00	CS_MEO	PT_Normal							N	2026-08-12 08:00	2026-08-12 08:00	Y	N	N
+%T	TASKPRED
+%F	task_pred_id	task_id	pred_task_id	proj_id	pred_proj_id	pred_type	lag_hr_cnt	float_path	aref	arls
+%R	50000	10001	10000	1000	1000	PR_FS	0			
+%R	50001	10003	10002	1000	1000	PR_FS	0			
+%R	50002	10005	10004	1000	1000	PR_FS	0			
+%R	50003	10007	10006	1000	1000	PR_FS	0			
+%R	50004	10008	10007	1000	1000	PR_FS	80			
+%R	50005	10009	10008	1000	1000	PR_FS	0			
+%R	50006	10010	10009	1000	1000	PR_FS	0			
+%R	50007	10011	10010	1000	1000	PR_FS	0			
+%R	50008	10012	10011	1000	1000	PR_FS	0			
+%R	50009	10013	10012	1000	1000	PR_FS	0			
+%R	50010	10014	10013	1000	1000	PR_FS	0			
+%R	50011	10016	10015	1000	1000	PR_FS	0			
+%R	50012	10017	10016	1000	1000	PR_FS	80			
+%R	50013	10018	10017	1000	1000	PR_FS	0			
+%R	50014	10019	10018	1000	1000	PR_FS	0			
+%R	50015	10020	10019	1000	1000	PR_FS	0			
+%R	50016	10021	10020	1000	1000	PR_FS	0			
+%R	50017	10022	10021	1000	1000	PR_FS	0			
+%R	50018	10023	10022	1000	1000	PR_FS	0			
+%R	50019	10025	10024	1000	1000	PR_SS	40			
+%R	50020	10026	10025	1000	1000	PR_FS	0			
+%R	50021	10027	10026	1000	1000	PR_FS	0			
+%R	50022	10028	10027	1000	1000	PR_FS	0			
+%R	50023	10029	10025	1000	1000	PR_FS	0			
+%R	50024	10030	10029	1000	1000	PR_FS	0			
+%R	50025	10031	10030	1000	1000	PR_FS	0			
+%R	50026	10032	10031	1000	1000	PR_FS	0			
+%R	50027	10033	10025	1000	1000	PR_FS	0			
+%R	50028	10034	10033	1000	1000	PR_FS	0			
+%R	50029	10035	10034	1000	1000	PR_FS	0			
+%R	50030	10036	10035	1000	1000	PR_FS	0			
+%R	50031	10037	10024	1000	1000	PR_SS	0			
+%R	50032	10038	10037	1000	1000	PR_SS	80			
+%R	50033	10039	10032	1000	1000	PR_FS	0			
+%R	50034	10039	10036	1000	1000	PR_FS	0			
+%R	50035	10040	10039	1000	1000	PR_FS	0			
+%R	50036	10041	10040	1000	1000	PR_FS	0			
+%R	50037	10043	10042	1000	1000	PR_FS	0			
+%R	50038	10045	10044	1000	1000	PR_FS	0			
+%R	50039	10046	10045	1000	1000	PR_FS	0			
+%R	50040	10047	10046	1000	1000	PR_FS	0			
+%R	50041	10048	10047	1000	1000	PR_FS	0			
+%R	50042	10049	10048	1000	1000	PR_FS	0			
+%R	50043	10050	10049	1000	1000	PR_FS	0			
+%R	50044	10051	10050	1000	1000	PR_FS	0			
+%R	50045	10052	10051	1000	1000	PR_FS	0			
+%R	50046	10053	10052	1000	1000	PR_FS	0			
+%R	50047	10055	10054	1000	1000	PR_FS	0			
+%R	50048	10057	10056	1000	1000	PR_FS	0			
+%R	50049	10058	10057	1000	1000	PR_FS	0			
+%R	50050	10059	10058	1000	1000	PR_FS	0			
+%R	50051	10060	10059	1000	1000	PR_FS	0			
+%R	50052	10061	10060	1000	1000	PR_FS	0			
+%R	50053	10062	10061	1000	1000	PR_FS	0			
+%R	50054	10063	10062	1000	1000	PR_FS	0			
+%R	50055	10064	10063	1000	1000	PR_FS	0			
+%R	50056	10065	10064	1000	1000	PR_FS	0			
+%R	50057	10067	10066	1000	1000	PR_SS	0			
+%R	50058	10068	10067	1000	1000	PR_FS	0			
+%R	50059	10070	10069	1000	1000	PR_FS	0			
+%R	50060	10072	10071	1000	1000	PR_FS	0			
+%R	50061	10073	10072	1000	1000	PR_FS	0			
+%R	50062	10074	10073	1000	1000	PR_FS	0			
+%R	50063	10075	10074	1000	1000	PR_FS	0			
+%R	50064	10076	10075	1000	1000	PR_FS	80			
+%R	50065	10077	10074	1000	1000	PR_FS	0			
+%R	50066	10078	10077	1000	1000	PR_FS	0			
+%R	50067	10079	10078	1000	1000	PR_FS	0			
+%R	50068	10080	10079	1000	1000	PR_FS	0			
+%R	50069	10081	10074	1000	1000	PR_FS	0			
+%R	50070	10082	10081	1000	1000	PR_FS	0			
+%R	50071	10083	10082	1000	1000	PR_FS	0			
+%R	50072	10084	10083	1000	1000	PR_FS	0			
+%R	50073	10085	10076	1000	1000	PR_FS	0			
+%R	50074	10086	10085	1000	1000	PR_FS	0			
+%R	50075	10087	10086	1000	1000	PR_FS	0			
+%R	50076	10088	10087	1000	1000	PR_FS	0			
+%R	50077	10089	10076	1000	1000	PR_FS	0			
+%R	50078	10090	10089	1000	1000	PR_FS	0			
+%R	50079	10091	10090	1000	1000	PR_FS	0			
+%R	50080	10092	10091	1000	1000	PR_FS	0			
+%R	50081	10093	10076	1000	1000	PR_FS	0			
+%R	50082	10094	10093	1000	1000	PR_FS	0			
+%R	50083	10095	10094	1000	1000	PR_FS	0			
+%R	50084	10095	10080	1000	1000	PR_FS	0			
+%R	50085	10097	10096	1000	1000	PR_FS	0			
+%T	TASKRSRC
+%F	taskrsrc_id	task_id	proj_id	cost_qty_link_flag	rsrc_id	acct_id	remain_qty	target_qty	remain_qty_per_hr	target_qty_per_hr	cost_per_qty	target_cost	remain_cost	act_reg_qty	act_ot_qty	act_reg_cost	act_ot_cost	act_this_per_cost	act_this_per_qty	act_start_date	act_end_date	restart_date	reend_date	rem_late_start_date	rem_late_end_date	target_lag_drtn_hr_cnt	target_start_date	target_end_date	rsrc_type	rate_type
+%R	90000	10000	1000	Y	4		40	40	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-01 17:00	0	2026-08-12 08:00	2026-09-01 17:00	RT_Labor	COST_PER_QTY
+%R	90001	10000	1000	Y	9		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-01 17:00	0	2026-08-12 08:00	2026-09-01 17:00	RT_Labor	COST_PER_QTY
+%R	90002	10002	1000	Y	4		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-01 17:00	0	2026-08-12 08:00	2026-09-01 17:00	RT_Labor	COST_PER_QTY
+%R	90003	10002	1000	Y	9		16	16	0.1333	0.1333	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-01 17:00	0	2026-08-12 08:00	2026-09-01 17:00	RT_Labor	COST_PER_QTY
+%R	90004	10004	1000	Y	6		24	24	0.15	0.15	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-08 17:00	0	2026-08-12 08:00	2026-09-08 17:00	RT_Labor	COST_PER_QTY
+%R	90005	10004	1000	Y	9		16	16	0.1	0.1	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-08 17:00	0	2026-08-12 08:00	2026-09-08 17:00	RT_Labor	COST_PER_QTY
+%R	90006	10006	1000	Y	4		220	220	0.6111	0.6111	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-13 17:00	0	2026-08-12 08:00	2026-10-13 17:00	RT_Labor	COST_PER_QTY
+%R	90007	10006	1000	Y	8		160	160	0.4444	0.4444	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-13 17:00	0	2026-08-12 08:00	2026-10-13 17:00	RT_Labor	COST_PER_QTY
+%R	90008	10006	1000	Y	9		60	60	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-13 17:00	0	2026-08-12 08:00	2026-10-13 17:00	RT_Labor	COST_PER_QTY
+%R	90009	10007	1000	Y	4		160	160	0.5	0.5	0	0	0	0	0	0	0	0	0					2026-10-14 08:00	2026-12-08 17:00	0	2026-10-14 08:00	2026-12-08 17:00	RT_Labor	COST_PER_QTY
+%R	90010	10007	1000	Y	8		120	120	0.375	0.375	0	0	0	0	0	0	0	0	0					2026-10-14 08:00	2026-12-08 17:00	0	2026-10-14 08:00	2026-12-08 17:00	RT_Labor	COST_PER_QTY
+%R	90011	10009	1000	Y	4		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-12-23 08:00	2026-12-29 17:00	0	2026-12-23 08:00	2026-12-29 17:00	RT_Labor	COST_PER_QTY
+%R	90012	10009	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-12-23 08:00	2026-12-29 17:00	0	2026-12-23 08:00	2026-12-29 17:00	RT_Labor	COST_PER_QTY
+%R	90013	10010	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-12-30 08:00	2027-01-19 17:00	0	2026-12-30 08:00	2027-01-19 17:00	RT_Labor	COST_PER_QTY
+%R	90014	10011	1000	Y	16		8	8	0.0067	0.0067	0	0	0	0	0	0	0	0	0					2027-01-20 08:00	2027-08-17 17:00	0	2027-01-20 08:00	2027-08-17 17:00	RT_Labor	COST_PER_QTY
+%R	90015	10013	1000	Y	4		80	80	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2027-08-19 08:00	2027-11-10 17:00	0	2027-08-19 08:00	2027-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90016	10013	1000	Y	11		60	60	0.125	0.125	0	0	0	0	0	0	0	0	0					2027-08-19 08:00	2027-11-10 17:00	0	2027-08-19 08:00	2027-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90017	10015	1000	Y	5		240	240	0.6	0.6	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-20 17:00	0	2026-08-12 08:00	2026-10-20 17:00	RT_Labor	COST_PER_QTY
+%R	90018	10015	1000	Y	8		160	160	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-20 17:00	0	2026-08-12 08:00	2026-10-20 17:00	RT_Labor	COST_PER_QTY
+%R	90019	10015	1000	Y	9		60	60	0.15	0.15	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-20 17:00	0	2026-08-12 08:00	2026-10-20 17:00	RT_Labor	COST_PER_QTY
+%R	90020	10016	1000	Y	5		160	160	0.5	0.5	0	0	0	0	0	0	0	0	0					2026-10-21 08:00	2026-12-15 17:00	0	2026-10-21 08:00	2026-12-15 17:00	RT_Labor	COST_PER_QTY
+%R	90021	10016	1000	Y	8		120	120	0.375	0.375	0	0	0	0	0	0	0	0	0					2026-10-21 08:00	2026-12-15 17:00	0	2026-10-21 08:00	2026-12-15 17:00	RT_Labor	COST_PER_QTY
+%R	90022	10018	1000	Y	5		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-12-30 08:00	2027-01-05 17:00	0	2026-12-30 08:00	2027-01-05 17:00	RT_Labor	COST_PER_QTY
+%R	90023	10018	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-12-30 08:00	2027-01-05 17:00	0	2026-12-30 08:00	2027-01-05 17:00	RT_Labor	COST_PER_QTY
+%R	90024	10019	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-01-06 08:00	2027-01-26 17:00	0	2027-01-06 08:00	2027-01-26 17:00	RT_Labor	COST_PER_QTY
+%R	90025	10020	1000	Y	16		8	8	0.0067	0.0067	0	0	0	0	0	0	0	0	0					2027-01-27 08:00	2027-08-24 17:00	0	2027-01-27 08:00	2027-08-24 17:00	RT_Labor	COST_PER_QTY
+%R	90026	10022	1000	Y	5		80	80	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2027-08-26 08:00	2027-11-17 17:00	0	2027-08-26 08:00	2027-11-17 17:00	RT_Labor	COST_PER_QTY
+%R	90027	10022	1000	Y	11		60	60	0.125	0.125	0	0	0	0	0	0	0	0	0					2027-08-26 08:00	2027-11-17 17:00	0	2027-08-26 08:00	2027-11-17 17:00	RT_Labor	COST_PER_QTY
+%R	90028	10024	1000	Y	11		40	40	0.5	0.5	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-08-25 17:00	0	2026-08-12 08:00	2026-08-25 17:00	RT_Labor	COST_PER_QTY
+%R	90029	10024	1000	Y	1		16	16	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-08-25 17:00	0	2026-08-12 08:00	2026-08-25 17:00	RT_Labor	COST_PER_QTY
+%R	90030	10024	1000	Y	17		16	16	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-08-25 17:00	0	2026-08-12 08:00	2026-08-25 17:00	RT_Labor	COST_PER_QTY
+%R	90031	10025	1000	Y	2		300	300	0.6818	0.6818	0	0	0	0	0	0	0	0	0					2026-08-19 08:00	2026-11-03 17:00	0	2026-08-19 08:00	2026-11-03 17:00	RT_Labor	COST_PER_QTY
+%R	90032	10025	1000	Y	8		200	200	0.4545	0.4545	0	0	0	0	0	0	0	0	0					2026-08-19 08:00	2026-11-03 17:00	0	2026-08-19 08:00	2026-11-03 17:00	RT_Labor	COST_PER_QTY
+%R	90033	10025	1000	Y	9		120	120	0.2727	0.2727	0	0	0	0	0	0	0	0	0					2026-08-19 08:00	2026-11-03 17:00	0	2026-08-19 08:00	2026-11-03 17:00	RT_Labor	COST_PER_QTY
+%R	90034	10026	1000	Y	2		300	300	0.6818	0.6818	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2027-01-19 17:00	0	2026-11-04 08:00	2027-01-19 17:00	RT_Labor	COST_PER_QTY
+%R	90035	10026	1000	Y	8		200	200	0.4545	0.4545	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2027-01-19 17:00	0	2026-11-04 08:00	2027-01-19 17:00	RT_Labor	COST_PER_QTY
+%R	90036	10026	1000	Y	9		120	120	0.2727	0.2727	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2027-01-19 17:00	0	2026-11-04 08:00	2027-01-19 17:00	RT_Labor	COST_PER_QTY
+%R	90037	10027	1000	Y	2		260	260	0.65	0.65	0	0	0	0	0	0	0	0	0					2027-01-20 08:00	2027-03-30 17:00	0	2027-01-20 08:00	2027-03-30 17:00	RT_Labor	COST_PER_QTY
+%R	90038	10027	1000	Y	8		180	180	0.45	0.45	0	0	0	0	0	0	0	0	0					2027-01-20 08:00	2027-03-30 17:00	0	2027-01-20 08:00	2027-03-30 17:00	RT_Labor	COST_PER_QTY
+%R	90039	10027	1000	Y	9		100	100	0.25	0.25	0	0	0	0	0	0	0	0	0					2027-01-20 08:00	2027-03-30 17:00	0	2027-01-20 08:00	2027-03-30 17:00	RT_Labor	COST_PER_QTY
+%R	90040	10029	1000	Y	2		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2026-11-10 17:00	0	2026-11-04 08:00	2026-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90041	10029	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2026-11-10 17:00	0	2026-11-04 08:00	2026-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90042	10030	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-11-11 08:00	2026-12-01 17:00	0	2026-11-11 08:00	2026-12-01 17:00	RT_Labor	COST_PER_QTY
+%R	90043	10031	1000	Y	16		8	8	0.0125	0.0125	0	0	0	0	0	0	0	0	0					2026-12-02 08:00	2027-03-23 17:00	0	2026-12-02 08:00	2027-03-23 17:00	RT_Labor	COST_PER_QTY
+%R	90044	10033	1000	Y	2		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2026-11-10 17:00	0	2026-11-04 08:00	2026-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90045	10033	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-11-04 08:00	2026-11-10 17:00	0	2026-11-04 08:00	2026-11-10 17:00	RT_Labor	COST_PER_QTY
+%R	90046	10034	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-11-11 08:00	2026-12-01 17:00	0	2026-11-11 08:00	2026-12-01 17:00	RT_Labor	COST_PER_QTY
+%R	90047	10035	1000	Y	16		8	8	0.0125	0.0125	0	0	0	0	0	0	0	0	0					2026-12-02 08:00	2027-03-23 17:00	0	2026-12-02 08:00	2027-03-23 17:00	RT_Labor	COST_PER_QTY
+%R	90048	10037	1000	Y	2		60	60	0.25	0.25	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90049	10037	1000	Y	16		60	60	0.25	0.25	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90050	10037	1000	Y	15		40	40	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90051	10038	1000	Y	11		60	60	0.3	0.3	0	0	0	0	0	0	0	0	0					2026-08-26 08:00	2026-09-29 17:00	0	2026-08-26 08:00	2026-09-29 17:00	RT_Labor	COST_PER_QTY
+%R	90052	10038	1000	Y	15		60	60	0.3	0.3	0	0	0	0	0	0	0	0	0					2026-08-26 08:00	2026-09-29 17:00	0	2026-08-26 08:00	2026-09-29 17:00	RT_Labor	COST_PER_QTY
+%R	90053	10038	1000	Y	1		20	20	0.1	0.1	0	0	0	0	0	0	0	0	0					2026-08-26 08:00	2026-09-29 17:00	0	2026-08-26 08:00	2026-09-29 17:00	RT_Labor	COST_PER_QTY
+%R	90054	10040	1000	Y	2		300	300	0.2143	0.2143	0	0	0	0	0	0	0	0	0					2027-04-02 08:00	2027-12-02 17:00	0	2027-04-02 08:00	2027-12-02 17:00	RT_Labor	COST_PER_QTY
+%R	90055	10040	1000	Y	11		350	350	0.25	0.25	0	0	0	0	0	0	0	0	0					2027-04-02 08:00	2027-12-02 17:00	0	2027-04-02 08:00	2027-12-02 17:00	RT_Labor	COST_PER_QTY
+%R	90056	10040	1000	Y	8		120	120	0.0857	0.0857	0	0	0	0	0	0	0	0	0					2027-04-02 08:00	2027-12-02 17:00	0	2027-04-02 08:00	2027-12-02 17:00	RT_Labor	COST_PER_QTY
+%R	90057	10042	1000	Y	2		120	120	0.1579	0.1579	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-12-22 17:00	0	2026-08-12 08:00	2026-12-22 17:00	RT_Labor	COST_PER_QTY
+%R	90058	10044	1000	Y	1		60	60	0.3125	0.3125	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-14 17:00	0	2026-08-12 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90059	10044	1000	Y	15		80	80	0.4167	0.4167	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-14 17:00	0	2026-08-12 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90060	10044	1000	Y	13		40	40	0.2083	0.2083	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-14 17:00	0	2026-08-12 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90061	10046	1000	Y	13		320	320	0.6154	0.6154	0	0	0	0	0	0	0	0	0					2026-11-03 08:00	2027-02-01 17:00	0	2026-11-03 08:00	2027-02-01 17:00	RT_Labor	COST_PER_QTY
+%R	90062	10046	1000	Y	8		160	160	0.3077	0.3077	0	0	0	0	0	0	0	0	0					2026-11-03 08:00	2027-02-01 17:00	0	2026-11-03 08:00	2027-02-01 17:00	RT_Labor	COST_PER_QTY
+%R	90063	10046	1000	Y	1		40	40	0.0769	0.0769	0	0	0	0	0	0	0	0	0					2026-11-03 08:00	2027-02-01 17:00	0	2026-11-03 08:00	2027-02-01 17:00	RT_Labor	COST_PER_QTY
+%R	90064	10048	1000	Y	13		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2027-02-03 08:00	2027-02-09 17:00	0	2027-02-03 08:00	2027-02-09 17:00	RT_Labor	COST_PER_QTY
+%R	90065	10048	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-02-03 08:00	2027-02-09 17:00	0	2027-02-03 08:00	2027-02-09 17:00	RT_Labor	COST_PER_QTY
+%R	90066	10049	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-02-10 08:00	2027-03-02 17:00	0	2027-02-10 08:00	2027-03-02 17:00	RT_Labor	COST_PER_QTY
+%R	90067	10050	1000	Y	16		8	8	0.005	0.005	0	0	0	0	0	0	0	0	0					2027-03-03 08:00	2027-12-07 17:00	0	2027-03-03 08:00	2027-12-07 17:00	RT_Labor	COST_PER_QTY
+%R	90068	10052	1000	Y	13		120	120	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2027-12-09 08:00	2028-02-09 17:00	0	2027-12-09 08:00	2028-02-09 17:00	RT_Labor	COST_PER_QTY
+%R	90069	10052	1000	Y	11		80	80	0.2222	0.2222	0	0	0	0	0	0	0	0	0					2027-12-09 08:00	2028-02-09 17:00	0	2027-12-09 08:00	2028-02-09 17:00	RT_Labor	COST_PER_QTY
+%R	90070	10054	1000	Y	7		160	160	0.3636	0.3636	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-27 17:00	0	2026-08-12 08:00	2026-10-27 17:00	RT_Labor	COST_PER_QTY
+%R	90071	10054	1000	Y	9		60	60	0.1364	0.1364	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-27 17:00	0	2026-08-12 08:00	2026-10-27 17:00	RT_Labor	COST_PER_QTY
+%R	90072	10056	1000	Y	11		24	24	0.6	0.6	0	0	0	0	0	0	0	0	0					2026-09-08 08:00	2026-09-14 17:00	0	2026-09-08 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90073	10056	1000	Y	1		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-09-08 08:00	2026-09-14 17:00	0	2026-09-08 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90074	10056	1000	Y	17		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-09-08 08:00	2026-09-14 17:00	0	2026-09-08 08:00	2026-09-14 17:00	RT_Labor	COST_PER_QTY
+%R	90075	10057	1000	Y	12		400	400	0.7143	0.7143	0	0	0	0	0	0	0	0	0					2026-09-15 08:00	2026-12-21 17:00	0	2026-09-15 08:00	2026-12-21 17:00	RT_Labor	COST_PER_QTY
+%R	90076	10057	1000	Y	7		300	300	0.5357	0.5357	0	0	0	0	0	0	0	0	0					2026-09-15 08:00	2026-12-21 17:00	0	2026-09-15 08:00	2026-12-21 17:00	RT_Labor	COST_PER_QTY
+%R	90077	10057	1000	Y	8		200	200	0.3571	0.3571	0	0	0	0	0	0	0	0	0					2026-09-15 08:00	2026-12-21 17:00	0	2026-09-15 08:00	2026-12-21 17:00	RT_Labor	COST_PER_QTY
+%R	90078	10057	1000	Y	9		100	100	0.1786	0.1786	0	0	0	0	0	0	0	0	0					2026-09-15 08:00	2026-12-21 17:00	0	2026-09-15 08:00	2026-12-21 17:00	RT_Labor	COST_PER_QTY
+%R	90079	10059	1000	Y	12		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2026-12-23 08:00	2026-12-29 17:00	0	2026-12-23 08:00	2026-12-29 17:00	RT_Labor	COST_PER_QTY
+%R	90080	10059	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-12-23 08:00	2026-12-29 17:00	0	2026-12-23 08:00	2026-12-29 17:00	RT_Labor	COST_PER_QTY
+%R	90081	10060	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-12-30 08:00	2027-01-19 17:00	0	2026-12-30 08:00	2027-01-19 17:00	RT_Labor	COST_PER_QTY
+%R	90082	10061	1000	Y	16		8	8	0.0125	0.0125	0	0	0	0	0	0	0	0	0					2027-01-20 08:00	2027-05-11 17:00	0	2027-01-20 08:00	2027-05-11 17:00	RT_Labor	COST_PER_QTY
+%R	90083	10064	1000	Y	12		200	200	0.1389	0.1389	0	0	0	0	0	0	0	0	0					2027-05-14 08:00	2028-01-20 17:00	0	2027-05-14 08:00	2028-01-20 17:00	RT_Labor	COST_PER_QTY
+%R	90084	10064	1000	Y	7		160	160	0.1111	0.1111	0	0	0	0	0	0	0	0	0					2027-05-14 08:00	2028-01-20 17:00	0	2027-05-14 08:00	2028-01-20 17:00	RT_Labor	COST_PER_QTY
+%R	90085	10064	1000	Y	11		200	200	0.1389	0.1389	0	0	0	0	0	0	0	0	0					2027-05-14 08:00	2028-01-20 17:00	0	2027-05-14 08:00	2028-01-20 17:00	RT_Labor	COST_PER_QTY
+%R	90086	10066	1000	Y	13		80	80	0.5	0.5	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-08 17:00	0	2026-08-12 08:00	2026-09-08 17:00	RT_Labor	COST_PER_QTY
+%R	90087	10066	1000	Y	8		40	40	0.25	0.25	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-08 17:00	0	2026-08-12 08:00	2026-09-08 17:00	RT_Labor	COST_PER_QTY
+%R	90088	10067	1000	Y	13		100	100	0.2273	0.2273	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-27 17:00	0	2026-08-12 08:00	2026-10-27 17:00	RT_Labor	COST_PER_QTY
+%R	90089	10067	1000	Y	3		40	40	0.0909	0.0909	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-10-27 17:00	0	2026-08-12 08:00	2026-10-27 17:00	RT_Labor	COST_PER_QTY
+%R	90090	10069	1000	Y	3		60	60	0.25	0.25	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90091	10069	1000	Y	9		30	30	0.125	0.125	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90092	10071	1000	Y	1		60	60	0.4412	0.4412	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-03 17:00	0	2026-08-12 08:00	2026-09-03 17:00	RT_Labor	COST_PER_QTY
+%R	90093	10071	1000	Y	15		100	100	0.7353	0.7353	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-03 17:00	0	2026-08-12 08:00	2026-09-03 17:00	RT_Labor	COST_PER_QTY
+%R	90094	10071	1000	Y	13		60	60	0.4412	0.4412	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-03 17:00	0	2026-08-12 08:00	2026-09-03 17:00	RT_Labor	COST_PER_QTY
+%R	90095	10071	1000	Y	12		40	40	0.2941	0.2941	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-03 17:00	0	2026-08-12 08:00	2026-09-03 17:00	RT_Labor	COST_PER_QTY
+%R	90096	10073	1000	Y	13		240	240	0.6667	0.6667	0	0	0	0	0	0	0	0	0					2026-10-16 08:00	2026-12-17 17:00	0	2026-10-16 08:00	2026-12-17 17:00	RT_Labor	COST_PER_QTY
+%R	90097	10073	1000	Y	12		240	240	0.6667	0.6667	0	0	0	0	0	0	0	0	0					2026-10-16 08:00	2026-12-17 17:00	0	2026-10-16 08:00	2026-12-17 17:00	RT_Labor	COST_PER_QTY
+%R	90098	10073	1000	Y	8		120	120	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2026-10-16 08:00	2026-12-17 17:00	0	2026-10-16 08:00	2026-12-17 17:00	RT_Labor	COST_PER_QTY
+%R	90099	10073	1000	Y	14		80	80	0.2222	0.2222	0	0	0	0	0	0	0	0	0					2026-10-16 08:00	2026-12-17 17:00	0	2026-10-16 08:00	2026-12-17 17:00	RT_Labor	COST_PER_QTY
+%R	90100	10074	1000	Y	13		240	240	0.6667	0.6667	0	0	0	0	0	0	0	0	0					2026-12-18 08:00	2027-02-18 17:00	0	2026-12-18 08:00	2027-02-18 17:00	RT_Labor	COST_PER_QTY
+%R	90101	10074	1000	Y	12		240	240	0.6667	0.6667	0	0	0	0	0	0	0	0	0					2026-12-18 08:00	2027-02-18 17:00	0	2026-12-18 08:00	2027-02-18 17:00	RT_Labor	COST_PER_QTY
+%R	90102	10074	1000	Y	8		160	160	0.4444	0.4444	0	0	0	0	0	0	0	0	0					2026-12-18 08:00	2027-02-18 17:00	0	2026-12-18 08:00	2027-02-18 17:00	RT_Labor	COST_PER_QTY
+%R	90103	10074	1000	Y	14		120	120	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2026-12-18 08:00	2027-02-18 17:00	0	2026-12-18 08:00	2027-02-18 17:00	RT_Labor	COST_PER_QTY
+%R	90104	10075	1000	Y	13		200	200	0.625	0.625	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-04-15 17:00	0	2027-02-19 08:00	2027-04-15 17:00	RT_Labor	COST_PER_QTY
+%R	90105	10075	1000	Y	12		200	200	0.625	0.625	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-04-15 17:00	0	2027-02-19 08:00	2027-04-15 17:00	RT_Labor	COST_PER_QTY
+%R	90106	10075	1000	Y	8		120	120	0.375	0.375	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-04-15 17:00	0	2027-02-19 08:00	2027-04-15 17:00	RT_Labor	COST_PER_QTY
+%R	90107	10077	1000	Y	13		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-02-25 17:00	0	2027-02-19 08:00	2027-02-25 17:00	RT_Labor	COST_PER_QTY
+%R	90108	10077	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-02-25 17:00	0	2027-02-19 08:00	2027-02-25 17:00	RT_Labor	COST_PER_QTY
+%R	90109	10078	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-02-26 08:00	2027-03-18 17:00	0	2027-02-26 08:00	2027-03-18 17:00	RT_Labor	COST_PER_QTY
+%R	90110	10079	1000	Y	16		8	8	0.0033	0.0033	0	0	0	0	0	0	0	0	0					2027-03-19 08:00	2028-05-11 17:00	0	2027-03-19 08:00	2028-05-11 17:00	RT_Labor	COST_PER_QTY
+%R	90111	10081	1000	Y	13		12	12	0.3	0.3	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-02-25 17:00	0	2027-02-19 08:00	2027-02-25 17:00	RT_Labor	COST_PER_QTY
+%R	90112	10081	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-02-19 08:00	2027-02-25 17:00	0	2027-02-19 08:00	2027-02-25 17:00	RT_Labor	COST_PER_QTY
+%R	90113	10082	1000	Y	16		16	16	0.1333	0.1333	0	0	0	0	0	0	0	0	0					2027-02-26 08:00	2027-03-18 17:00	0	2027-02-26 08:00	2027-03-18 17:00	RT_Labor	COST_PER_QTY
+%R	90114	10083	1000	Y	16		8	8	0.0053	0.0053	0	0	0	0	0	0	0	0	0					2027-03-19 08:00	2027-12-09 17:00	0	2027-03-19 08:00	2027-12-09 17:00	RT_Labor	COST_PER_QTY
+%R	90115	10085	1000	Y	13		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2027-04-30 08:00	2027-05-06 17:00	0	2027-04-30 08:00	2027-05-06 17:00	RT_Labor	COST_PER_QTY
+%R	90116	10085	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-04-30 08:00	2027-05-06 17:00	0	2027-04-30 08:00	2027-05-06 17:00	RT_Labor	COST_PER_QTY
+%R	90117	10086	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-05-07 08:00	2027-05-27 17:00	0	2027-05-07 08:00	2027-05-27 17:00	RT_Labor	COST_PER_QTY
+%R	90118	10087	1000	Y	16		8	8	0.0083	0.0083	0	0	0	0	0	0	0	0	0					2027-05-28 08:00	2027-11-11 17:00	0	2027-05-28 08:00	2027-11-11 17:00	RT_Labor	COST_PER_QTY
+%R	90119	10089	1000	Y	13		16	16	0.4	0.4	0	0	0	0	0	0	0	0	0					2027-04-30 08:00	2027-05-06 17:00	0	2027-04-30 08:00	2027-05-06 17:00	RT_Labor	COST_PER_QTY
+%R	90120	10089	1000	Y	16		8	8	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-04-30 08:00	2027-05-06 17:00	0	2027-04-30 08:00	2027-05-06 17:00	RT_Labor	COST_PER_QTY
+%R	90121	10090	1000	Y	16		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2027-05-07 08:00	2027-05-27 17:00	0	2027-05-07 08:00	2027-05-27 17:00	RT_Labor	COST_PER_QTY
+%R	90122	10091	1000	Y	16		8	8	0.0077	0.0077	0	0	0	0	0	0	0	0	0					2027-05-28 08:00	2027-11-25 17:00	0	2027-05-28 08:00	2027-11-25 17:00	RT_Labor	COST_PER_QTY
+%R	90123	10094	1000	Y	13		300	300	0.15	0.15	0	0	0	0	0	0	0	0	0					2027-06-02 08:00	2028-05-16 17:00	0	2027-06-02 08:00	2028-05-16 17:00	RT_Labor	COST_PER_QTY
+%R	90124	10094	1000	Y	12		200	200	0.1	0.1	0	0	0	0	0	0	0	0	0					2027-06-02 08:00	2028-05-16 17:00	0	2027-06-02 08:00	2028-05-16 17:00	RT_Labor	COST_PER_QTY
+%R	90125	10094	1000	Y	11		300	300	0.15	0.15	0	0	0	0	0	0	0	0	0					2027-06-02 08:00	2028-05-16 17:00	0	2027-06-02 08:00	2028-05-16 17:00	RT_Labor	COST_PER_QTY
+%R	90126	10096	1000	Y	6		60	60	0.25	0.25	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90127	10096	1000	Y	9		24	24	0.1	0.1	0	0	0	0	0	0	0	0	0					2026-08-12 08:00	2026-09-22 17:00	0	2026-08-12 08:00	2026-09-22 17:00	RT_Labor	COST_PER_QTY
+%R	90128	10098	1000	Y	12		800	800	0.3846	0.3846	0	0	0	0	0	0	0	0	0					2026-11-16 08:00	2027-11-12 17:00	0	2026-11-16 08:00	2027-11-12 17:00	RT_Labor	COST_PER_QTY
+%R	90129	10098	1000	Y	7		600	600	0.2885	0.2885	0	0	0	0	0	0	0	0	0					2026-11-16 08:00	2027-11-12 17:00	0	2026-11-16 08:00	2027-11-12 17:00	RT_Labor	COST_PER_QTY
+%R	90130	10098	1000	Y	10		400	400	0.1923	0.1923	0	0	0	0	0	0	0	0	0					2026-11-16 08:00	2027-11-12 17:00	0	2026-11-16 08:00	2027-11-12 17:00	RT_Labor	COST_PER_QTY
+%R	90131	10099	1000	Y	12		300	300	0.3125	0.3125	0	0	0	0	0	0	0	0	0					2026-12-01 08:00	2027-05-17 17:00	0	2026-12-01 08:00	2027-05-17 17:00	RT_Labor	COST_PER_QTY
+%R	90132	10099	1000	Y	8		160	160	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2026-12-01 08:00	2027-05-17 17:00	0	2026-12-01 08:00	2027-05-17 17:00	RT_Labor	COST_PER_QTY
+%R	90133	10100	1000	Y	12		360	360	0.3214	0.3214	0	0	0	0	0	0	0	0	0					2027-01-04 08:00	2027-07-16 17:00	0	2027-01-04 08:00	2027-07-16 17:00	RT_Labor	COST_PER_QTY
+%R	90134	10100	1000	Y	8		200	200	0.1786	0.1786	0	0	0	0	0	0	0	0	0					2027-01-04 08:00	2027-07-16 17:00	0	2027-01-04 08:00	2027-07-16 17:00	RT_Labor	COST_PER_QTY
+%R	90135	10101	1000	Y	7		300	300	0.4167	0.4167	0	0	0	0	0	0	0	0	0					2026-10-01 08:00	2027-02-03 17:00	0	2026-10-01 08:00	2027-02-03 17:00	RT_Labor	COST_PER_QTY
+%R	90136	10101	1000	Y	10		200	200	0.2778	0.2778	0	0	0	0	0	0	0	0	0					2026-10-01 08:00	2027-02-03 17:00	0	2026-10-01 08:00	2027-02-03 17:00	RT_Labor	COST_PER_QTY
+%R	90137	10102	1000	Y	1		40	40	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2026-08-17 08:00	2026-09-04 17:00	0	2026-08-17 08:00	2026-09-04 17:00	RT_Labor	COST_PER_QTY
+%R	90138	10102	1000	Y	2		24	24	0.2	0.2	0	0	0	0	0	0	0	0	0					2026-08-17 08:00	2026-09-04 17:00	0	2026-08-17 08:00	2026-09-04 17:00	RT_Labor	COST_PER_QTY
+%R	90139	10103	1000	Y	1		60	60	0.1667	0.1667	0	0	0	0	0	0	0	0	0					2026-09-01 08:00	2026-11-02 17:00	0	2026-09-01 08:00	2026-11-02 17:00	RT_Labor	COST_PER_QTY
+%R	90140	10103	1000	Y	15		120	120	0.3333	0.3333	0	0	0	0	0	0	0	0	0					2026-09-01 08:00	2026-11-02 17:00	0	2026-09-01 08:00	2026-11-02 17:00	RT_Labor	COST_PER_QTY
+%R	90141	10103	1000	Y	11		40	40	0.1111	0.1111	0	0	0	0	0	0	0	0	0					2026-09-01 08:00	2026-11-02 17:00	0	2026-09-01 08:00	2026-11-02 17:00	RT_Labor	COST_PER_QTY
+%R	90142	10104	1000	Y	11		60	60	0.75	0.75	0	0	0	0	0	0	0	0	0					2026-08-24 08:00	2026-09-04 17:00	0	2026-08-24 08:00	2026-09-04 17:00	RT_Labor	COST_PER_QTY
+%R	90143	10105	1000	Y	11		200	200	0.0704	0.0704	0	0	0	0	0	0	0	0	0					2026-08-17 08:00	2027-12-24 17:00	0	2026-08-17 08:00	2027-12-24 17:00	RT_Labor	COST_PER_QTY
+%R	90144	10105	1000	Y	1		100	100	0.0352	0.0352	0	0	0	0	0	0	0	0	0					2026-08-17 08:00	2027-12-24 17:00	0	2026-08-17 08:00	2027-12-24 17:00	RT_Labor	COST_PER_QTY
+%E
