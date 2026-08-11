@@ -1,0 +1,141 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>USC SVP Engineering — Day-30 Report</title>
+<style>
+  @page { size: letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #1b1b1f; color: #f2f2f0;
+    font: 12px/1.38 "Segoe UI", Calibri, system-ui, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .sheet { width: 8.5in; height: 11in; padding: 0.42in 0.6in 0.34in; background: #1b1b1f;
+           page-break-after: always; overflow: hidden; }
+  .sheet:last-child { page-break-after: auto; }
+  .eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; color: #b9b8b2; }
+  .eyebrow .dash { color: #86b332; }
+  h1 { font-size: 25px; margin: 4px 0 3px; color: #fff; letter-spacing: -0.01em; }
+  .purpose { color: #c9c8c2; font-size: 13px; margin: 0 0 13px; }
+  h2 { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #5b9be6; margin: 11px 0 5px; }
+  h2:first-of-type { margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 11px; }
+  th { text-align: left; font-size: 10.5px; color: #b9b8b2; font-weight: 700;
+       background: #26262b; padding: 5px 8px; border-top: 1px solid #3a3a3e; border-bottom: 1px solid #3a3a3e; }
+  td { padding: 4px 8px; border-bottom: 1px solid #313136; vertical-align: top; }
+  td.k { font-weight: 700; color: #fff; }
+  td.mut { color: #c9c8c2; }
+  .done { color: #86b332; font-weight: 700; white-space: nowrap; }
+  .early { color: #5b9be6; font-weight: 700; white-space: nowrap; }
+  .flag { color: #e8a33d; font-weight: 700; }
+  .tiles { display: flex; gap: 8px; margin: 4px 0 10px; }
+  .tile { flex: 1; background: #232328; border: 1px solid #3a3a3e; border-radius: 6px; padding: 8px 10px; }
+  .tile .lb { font-size: 10px; color: #b9b8b2; }
+  .tile .v { font-size: 19px; font-weight: 700; color: #fff; margin-top: 1px; }
+  .tile .v.g { color: #86b332; } .tile .v.b { color: #5b9be6; } .tile .v.r { color: #e66767; }
+  .tile .d { font-size: 9.5px; color: #8a8984; margin-top: 1px; }
+  p { margin: 0 0 7px; color: #dddcd6; }
+  p b { color: #fff; }
+  ul { margin: 0 0 8px 16px; padding: 0; color: #dddcd6; }
+  li { margin-bottom: 2.5px; }
+  .band { border: 1.5px solid #5b9be6; background: #16283f; border-radius: 6px;
+          padding: 9px 13px; font-size: 12px; color: #dddcd6; margin-top: 8px; }
+  .band .lead { color: #5b9be6; font-weight: 700; }
+  .band b { color: #fff; }
+  .foot { font-size: 9px; color: #8a8984; margin-top: 8px; }
+  .pgno { position: absolute; }
+</style></head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="sheet">
+  <div class="eyebrow"><span class="dash">—</span> USC / HYDAKER-WHEATLAKE · SVP ENGINEERING · CONFIDENTIAL</div>
+  <h1>Day-30 Report — Assess, Align, Reconnect</h1>
+  <p class="purpose">James D. Codling, PE · Period July 13 – August 12, 2026 · Prepared for Brad Geer, President &amp; COO</p>
+
+  <h2>THE HEADLINE</h2>
+  <p><b>All five Day-30 commitments are complete, and six items from the 60- and 90-day phases were pulled forward</b> — including one already converted to a win: the Consumers Energy 2026 Pole Replacement program ($276K CVR engineering scope riding a $3.45M EPC award with HWC). The assessment phase is finished: GL-reconciled baseline, driver-based forecast, quantified pipeline, and a costed growth thesis — and the operating rhythm is running.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="lb">Day-30 commitments</div><div class="v g">5 / 5</div><div class="d">complete, with artifacts</div></div>
+    <div class="tile"><div class="lb">Pulled forward from 60/90</div><div class="v b">6 items</div><div class="d">incl. one booked win</div></div>
+    <div class="tile"><div class="lb">First EPC-paired win</div><div class="v g">$3.45M</div><div class="d">Consumers · $276K CVR scope</div></div>
+    <div class="tile"><div class="lb">2026 win rate</div><div class="v">69%</div><div class="d">up from 50% in 2025</div></div>
+    <div class="tile"><div class="lb">Honest FY26 landing</div><div class="v r">$1.42M</div><div class="d">vs $2.03M budget — re-forecast built</div></div>
+  </div>
+
+  <h2>DAY-30 SCORECARD — WHAT WAS COMMITTED vs WHAT WAS DELIVERED</h2>
+  <table>
+    <tr><th style="width:31%">Commitment (due)</th><th style="width:8%">Status</th><th>Delivered — evidence</th></tr>
+    <tr><td class="k">Reconnect the five anchor relationships <span class="mut">(7/23)</span></td><td class="done">DONE</td>
+        <td class="mut">CenterPoint (7 active jobs, ~70% of revenue — program-level agreement push framed), DTE (New Baltimore + Renaissance re-bid), Consumers (pole program won; HVD sensors live), AEP &amp; FirstEnergy (executive-level pursuit plan built — see Decisions). Account ownership mapped per anchor.</td></tr>
+    <tr><td class="k">Review active project portfolio &amp; at-risk jobs <span class="mut">(7/25)</span></td><td class="done">DONE</td>
+        <td class="mut">Full backlog build: $973K remaining on 10 active jobs; at-risk flags (Manistique −206% cost, Angel Mounds −6%); three close-outs by Oct-26 need replacement work. New Baltimore cost-control package launched: easements, BOM-vs-actual material triage, TRK-4911 tracking, DTE open-book response, cost-per-mile benchmarking.</td></tr>
+    <tr><td class="k">Diagnose engineering team — skills &amp; capacity map <span class="mut">(7/27)</span></td><td class="done">DONE</td>
+        <td class="mut">13-person roster mapped: per-person billable utilization vs individual targets (team 60.8% vs 75% median), loaded cost vs bill rate by role (every role clears 1.7–2.2× — the rate card holds), capacity ceiling quantified: the $6M revenue goal is a ~27-FTE build.</td></tr>
+    <tr><td class="k">Baseline CVR division P&amp;L and utilization <span class="mut">(8/3)</span></td><td class="done">DONE</td>
+        <td class="mut">Phase-1 workbook reconciled to the GL through 6/30 (H1: $551K revenue, −$320.5K NI); labor economics rebuilt on finance's loaded-cost basis and tied dollar-for-dollar to the 2026 Budget V5; monthly KPI dashboard live (7/11 and 7/25 packages integrated).</td></tr>
+    <tr><td class="k">Inventory engineering tools &amp; workflows <span class="mut">(8/7)</span></td><td class="done">DONE</td>
+        <td class="mut">COINS reporting path established (GL, timesheet cost, AR extracts feeding the model); KPI package cadence formalized as the actuals rhythm; integrated USC/CVR capital-delivery (EPC PM) process documented; regenerable model/report toolchain in the division repository.</td></tr>
+  </table>
+
+  <h2>WHAT THE ASSESSMENT FOUND — THE FIVE FACTS THAT MATTER</h2>
+  <ul>
+    <li><b>The 2026 budget is out of reach; the honest landing is ~$1.42M revenue and a ~$480K loss.</b> H1 came in 46% under a flat-spread budget. A driver-based re-forecast (Base / Upside / Downside) is built and reconciles to finance's budget dollar-for-dollar at the budget operating point.</li>
+    <li><b>The margin problem is throughput, not pricing.</b> On finance's loaded-cost basis every role clears its bill rate at 1.7–2.2×. The gap is realization (~$122 realized vs $154 card) and utilization (60.8% vs 75%) — worth roughly a doubling of revenue on the current roster if closed.</li>
+    <li><b>Work in hand covers about half the forecast.</b> Backlog $973K + weighted pipeline ≈ 52% coverage of the 18-month Base case — a ~$1.6M origination gap that is a BD problem, not a capability problem.</li>
+    <li><b>Each EPC win pays CVR twice</b> — ~12.5% of every EPC dollar (8% engineering pull-through + 4.6% captured material margin). The Consumers win is the template.</li>
+    <li><b>Bid engineering needs an accounting home.</b> 405 unbilled pursuit hours YTD drag division metrics; three CFO options framed (intercompany bid-support billing recommended).</li>
+  </ul>
+  <div class="foot">Artifacts: CVR_Model_Phase1_Baseline.xlsx · CVR_Model_Phase2_Forecast.xlsx · CVR financial dashboard · CVR_Deck_Jun2026 (24-slide review) · New Baltimore cost-control package · integrated EPC PM process. Page 1 of 2.</div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="sheet">
+  <div class="eyebrow"><span class="dash">—</span> USC / HYDAKER-WHEATLAKE · SVP ENGINEERING · DAY-30 REPORT</div>
+
+  <h2 style="margin-top:6px">AHEAD OF SCHEDULE — 60/90-DAY ITEMS ALREADY DELIVERED OR IN MOTION</h2>
+  <table>
+    <tr><th style="width:34%">Committed item (original due)</th><th style="width:9%">Plan</th><th>Where it stands at Day 30</th></tr>
+    <tr><td class="k">Stand up pipeline tracking &amp; win-rate baseline <span class="mut">(8/22)</span></td><td class="early">60-day</td>
+        <td class="mut"><b>Done.</b> Full bid pipeline with probability weighting; win rate baselined at 69% (2026) vs 50% (2025); coverage model with a live backlog/pipeline toggle.</td></tr>
+    <tr><td class="k">Convert one anchor reconnect into a scoped pursuit <span class="mut">(9/6)</span></td><td class="early">60-day</td>
+        <td class="mut"><b>Exceeded — converted to a win.</b> Consumers 2026 Pole Replacements awarded: $276K CVR scope, $3.45M EPC-paired with HWC. Two more EPC-paired bids now in market (MEC VanMeter 161kV due 9/4; DTE Renaissance 345kV due 9/15).</td></tr>
+    <tr><td class="k">Open priority engineering reqs <span class="mut">(8/27)</span></td><td class="early">60-day</td>
+        <td class="mut"><b>Drafted and ready.</b> Senior PM job description complete (strong candidate identified; will also post publicly); VP-level pursuit-development role fully costed (see Decisions).</td></tr>
+    <tr><td class="k">Present revised forecast <span class="mut">(10/11)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Done early.</b> 18-month driver-based forecast with three scenarios, reconciled to the 2026 Budget V5; FY26 landing and FY27 outlook quantified (+$123K Base-case FY27 NI).</td></tr>
+    <tr><td class="k">Draft 12-month growth &amp; hiring plan <span class="mut">(10/1)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Substantially drafted.</b> 24-slide review deck: consolidated EPC strategy with HWC Estimating, $120B addressable market in current clients, national expansion targets, at-scale business model ($150M/yr EPC → ~$7.6M CVR operating income), hiring sequence.</td></tr>
+    <tr><td class="k">Submit first major proposal under new structure <span class="mut">(10/3)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>In motion.</b> $9.1M of EPC-paired bids in market (Hoosier ×2, Lansing BWL, Frontier) plus VanMeter and Renaissance submissions due in September.</td></tr>
+  </table>
+
+  <h2>DECISIONS REQUESTED</h2>
+  <table>
+    <tr><th style="width:30%">Decision</th><th>Case</th></tr>
+    <tr><td class="k">1 · Fund the VP, EPC Project Development hire <span class="flag">(now)</span></td>
+        <td class="mut">~$400K/yr all-in, dedicated to converting warm AEP + FirstEnergy relationships into EPC awards. One mid-size EPC award (~$3.45M) returns ~$0.43M to CVR — payback inside year one. Candidate one-pager submitted separately.</td></tr>
+    <tr><td class="k">2 · Approve the Senior PM hire</td>
+        <td class="mut">Delivery capacity for the growing backlog and EPC-paired programs; JD ready, candidate identified, public posting prepared.</td></tr>
+    <tr><td class="k">3 · Align bid-engineering accounting with the CFO</td>
+        <td class="mut">Recommend intercompany bid-support billing (HWC pays CVR for pre-award engineering) so pursuit hours become billable and division metrics reward the EPC behavior the strategy demands.</td></tr>
+    <tr><td class="k">4 · Socialize the re-forecast</td>
+        <td class="mut">Track H2 to the driver-based forecast rather than the flat budget; monthly cash draw on USC is the early-warning gauge.</td></tr>
+  </table>
+
+  <h2>DAYS 31–60 — STABILIZE, STAND UP, WIN</h2>
+  <ul>
+    <li><b>Win the September bids:</b> MEC VanMeter (9/4) and DTE Renaissance (9/15) submissions; press the Q4 slate (Lansing BWL is the single biggest swing at $1.35M).</li>
+    <li><b>Close the throughput gap:</b> per-person utilization plans against the 75% target; chase the realization leak (billing lag, write-offs, HWC rate treatment).</li>
+    <li><b>Stand up QA/QC design review gates</b> (per plan, due 9/1) — leveraging the documented integrated EPC delivery process.</li>
+    <li><b>Move the hires:</b> VP pursuit-development and Senior PM offers out, pending Decision 1–2; TE/DE lead reqs opened per plan.</li>
+    <li><b>New Baltimore cost control:</b> land the DTE open-book response and surplus recovery; feed cost-per-mile benchmarks back to estimating. <b>August close</b> enters the actuals-vs-forecast cadence.</li>
+  </ul>
+
+  <div class="band"><span class="lead">Bottom line:</span> <b>the diagnosis is done, the numbers are real, and the growth engine is designed.</b> The 60-day phase is about winning what's in market and putting the pursuit capacity in place — the two decisions above are the gate.</div>
+
+  <div class="foot">Appendices available on request: financial review deck (24 slides) · Phase 1/2 model workbooks · financial dashboard · hiring one-pagers · state licensure/registration runway for expansion targets. Page 2 of 2.</div>
+</div>
+
+</body></html>
