@@ -1,0 +1,119 @@
+<title>CVR Program Dashboard</title>
+<style>
+  :root {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --accent: #2a78d6; --neg: #e34948;
+    --good: #006300; --ring: rgba(11,11,11,0.10); --brand-green: #86b332;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+      --muted: #898781; --grid: #2c2c2a; --accent: #3987e5; --neg: #e66767;
+      --good: #0ca30c; --ring: rgba(255,255,255,0.10); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --muted: #898781; --grid: #2c2c2a; --accent: #3987e5; --neg: #e66767;
+    --good: #0ca30c; --ring: rgba(255,255,255,0.10); color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --accent: #2a78d6; --neg: #e34948;
+    --good: #006300; --ring: rgba(11,11,11,0.10); color-scheme: light;
+  }
+  body { background: var(--page); color: var(--ink);
+    font: 14.5px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0; padding: 28px 20px 56px; }
+  .wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px;
+    font-weight: 600; color: var(--ink-2); }
+  .eyebrow::before { content: ""; display: inline-block; width: 14px; height: 3px;
+    background: var(--brand-green); margin-right: 8px; vertical-align: 3px; }
+  h1 { font-size: 23px; margin: 5px 0 2px; }
+  .sub { color: var(--ink-2); font-size: 13px; margin: 0; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (min-width: 720px) { .kpis { grid-template-columns: repeat(6, 1fr); } }
+  .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 11px 14px; }
+  .tile .label { font-size: 11.5px; color: var(--ink-2); }
+  .tile .value { font-size: 21px; font-weight: 650; margin-top: 1px; }
+  .tile .delta { font-size: 11.5px; color: var(--ink-2); margin-top: 1px; }
+  .card { background: var(--surface); border: 1px solid var(--ring); border-radius: 10px; padding: 16px 18px 12px; }
+  .card h3 { font-size: 15px; margin: 0 0 1px; }
+  .card .cap { font-size: 12.5px; color: var(--ink-2); margin: 0 0 10px; }
+  svg.main { display: block; width: 100%; height: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--grid);
+    font-variant-numeric: tabular-nums; }
+  th { color: var(--ink-2); font-weight: 600; font-size: 12px; }
+  td.neg { color: var(--neg); font-weight: 650; }
+  td.pos { color: var(--good); font-weight: 650; }
+  td.strong { font-weight: 650; }
+  .chip { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 9px;
+    background: var(--accent); color: #fff; }
+  .chip.b { background: var(--brand-green); }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--ink-2); margin: 2px 0 8px; }
+  .key { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 13px; height: 11px; border-radius: 3px; display: inline-block; }
+  .duo { display: grid; gap: 16px; }
+  @media (min-width: 880px) { .duo { grid-template-columns: 1fr 1fr; } }
+  .foot { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+</style>
+<div class="wrap">
+  <div>
+    <div class="eyebrow">CVR Engineering · Program Controls</div>
+    <h1>Program Schedule Dashboard</h1>
+    <p class="sub">Generated from P6 XER exports · CVR-MASTER (delivery) + CVR-PURSUITS (estimating) · data date 8/12/26</p>
+  </div>
+
+  <div class="kpis">
+    <div class="tile"><div class="label">Activities</div><div class="value">148</div><div class="delta">across 2 projects</div></div>
+    <div class="tile"><div class="label">Bids due ≤45 days</div><div class="value">2</div><div class="delta">VanMeter 9/4 · Renaissance 9/15</div></div>
+    <div class="tile"><div class="label">Bid float alerts</div><div class="value" style="color:var(--neg)">1</div><div class="delta">forecast past due date</div></div>
+    <div class="tile"><div class="label">Long-lead alerts</div><div class="value" style="color:var(--neg)">8</div><div class="delta">eng-complete margin negative</div></div>
+    <div class="tile"><div class="label">Delivery hours</div><div class="value">15.6K</div><div class="delta">resource-loaded</div></div>
+    <div class="tile"><div class="label">Pursuit hours</div><div class="value">0.9K</div><div class="delta">estimating pipeline</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Program timeline — by work area</h3>
+    <p class="cap">Bars span first activity start to last finish. Dashed line = data date.</p>
+    <div class="legend"><span class="key"><span class="sw" style="background:var(--accent)"></span>Delivery (CVR-MASTER)</span>
+    <span class="key"><span class="sw" style="background:var(--brand-green)"></span>Pursuits (CVR-PURSUITS)</span></div>
+    <svg viewBox="0 0 940 300" class="main" role="img" aria-label="Program timeline by work area"><line x1="251" x2="251" y1="6" y2="274" stroke="var(--grid)"/><text x="251" y="290" font-size="11" fill="var(--muted)" text-anchor="middle">9/26</text><line x1="373" x2="373" y1="6" y2="274" stroke="var(--grid)"/><text x="373" y="290" font-size="11" fill="var(--muted)" text-anchor="middle">1/27</text><line x1="554" x2="554" y1="6" y2="274" stroke="var(--grid)"/><text x="554" y="290" font-size="11" fill="var(--muted)" text-anchor="middle">7/27</text><line x1="738" x2="738" y1="6" y2="274" stroke="var(--grid)"/><text x="738" y="290" font-size="11" fill="var(--muted)" text-anchor="middle">1/28</text><line x1="920" x2="920" y1="6" y2="274" stroke="var(--grid)"/><text x="920" y="290" font-size="11" fill="var(--muted)" text-anchor="middle">7/28</text><line x1="231" x2="231" y1="6" y2="274" stroke="var(--neg)" stroke-width="1.5" stroke-dasharray="4 3"/><text x="212" y="21" font-size="11.5" fill="var(--ink-2)" text-anchor="end">CenterPoint Energy — Direct Engi…</text><rect x="231" y="11" width="463" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>CenterPoint Energy — Direct Engineering: 8/12/26 – 11/18/27 · 24 activities</title></rect><text x="212" y="47" font-size="11.5" fill="var(--ink-2)" text-anchor="end">DTE Energy</text><rect x="231" y="37" width="547" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>DTE Energy: 8/12/26 – 2/10/28 · 30 activities</title></rect><text x="212" y="73" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Consumers Energy</text><rect x="231" y="63" width="527" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>Consumers Energy: 8/12/26 – 1/21/28 · 12 activities</title></rect><text x="212" y="99" font-size="11.5" fill="var(--ink-2)" text-anchor="end">MEC — EPC Support with HWC</text><rect x="231" y="89" width="644" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>MEC — EPC Support with HWC: 8/12/26 – 5/17/28 · 30 activities</title></rect><text x="212" y="125" font-size="11.5" fill="var(--ink-2)" text-anchor="end">016-0001 Cloverland — Manistique…</text><rect x="231" y="115" width="42" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>016-0001 Cloverland — Manistique Closeout: 8/12/26 – 9/23/26 · 2 activities</title></rect><text x="212" y="151" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Pending Pipeline (contingent on …</text><rect x="281" y="141" width="407" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>Pending Pipeline (contingent on award): 10/1/26 – 11/12/27 · 4 activities</title></rect><text x="212" y="177" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Program Governance &amp; Operating R…</text><rect x="236" y="167" width="494" height="12" rx="3" fill="var(--accent)" opacity="0.85"><title>Program Governance &amp; Operating Rhythm: 8/17/26 – 12/24/27 · 4 activities</title></rect><text x="212" y="203" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Active Estimates (in development)</text><rect x="231" y="193" width="28" height="12" rx="3" fill="var(--brand-green)" opacity="0.85"><title>Active Estimates (in development): 8/12/26 – 9/9/26 · 14 activities</title></rect><text x="212" y="229" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Submitted — Pending Award</text><rect x="266" y="219" width="75" height="12" rx="3" fill="var(--brand-green)" opacity="0.85"><title>Submitted — Pending Award: 9/16/26 – 11/30/26 · 8 activities</title></rect><text x="212" y="255" font-size="11.5" fill="var(--ink-2)" text-anchor="end">Estimating Operations &amp; Transition</text><rect x="236" y="245" width="487" height="12" rx="3" fill="var(--brand-green)" opacity="0.85"><title>Estimating Operations &amp; Transition: 8/17/26 – 12/17/27 · 3 activities</title></rect></svg>
+  </div>
+
+  <div class="duo">
+    <div class="card">
+      <h3>Bid deadlines — float to due date</h3>
+      <p class="cap">Finish-on-or-before constraints vs forecast. Negative = forecast late; status actuals in P6 to correct.</p>
+      <table><tr><th>Pursuit</th><th>Due</th><th>Forecast</th><th>Float</th></tr><tr><td>VanMeter 161kV + 6mi line</td><td>9/4/26</td><td>9/9/26</td><td class='neg'>-3 wd</td></tr><tr><td>Renaissance 345kV MOD switches</td><td>9/15/26</td><td>9/9/26</td><td class='pos'>+4 wd</td></tr></table>
+    </div>
+    <div class="card">
+      <h3>Upcoming milestones (150 days)</h3>
+      <p class="cap">Both projects, next 16 shown.</p>
+      <table><tr><th>Date</th><th></th><th>Milestone</th></tr><tr><td>9/2/26</td><td><span class='chip '>DLV</span></td><td>Gateway 69kV complete</td></tr><tr><td>9/2/26</td><td><span class='chip '>DLV</span></td><td>Rockport 69kV complete</td></tr><tr><td>9/9/26</td><td><span class='chip '>DLV</span></td><td>Angel Mounds complete</td></tr><tr><td>9/9/26</td><td><span class='chip b'>BID</span></td><td>Renaissance 345kV MOD switches — SUBMIT BID</td></tr><tr><td>9/9/26</td><td><span class='chip b'>BID</span></td><td>VanMeter 161kV + 6mi line — SUBMIT BID</td></tr><tr><td>9/23/26</td><td><span class='chip '>DLV</span></td><td>Manistique complete</td></tr><tr><td>9/23/26</td><td><span class='chip '>DLV</span></td><td>Enterprise Way complete</td></tr><tr><td>9/30/26</td><td><span class='chip b'>BID</span></td><td>Steuben Frontier Make Ready ($100K CVR) — award decision (expected)</td></tr><tr><td>10/15/26</td><td><span class='chip '>DLV</span></td><td>Award (assumed)</td></tr><tr><td>10/28/26</td><td><span class='chip '>DLV</span></td><td>HVD Line Sensors complete</td></tr><tr><td>10/28/26</td><td><span class='chip '>DLV</span></td><td>Sub P GSU complete</td></tr><tr><td>11/2/26</td><td><span class='chip '>DLV</span></td><td>Award (assumed)</td></tr><tr><td>11/16/26</td><td><span class='chip b'>BID</span></td><td>Hoosier Jacksonburg–Gateway ($160K CVR / $3.55M EPC) — award decision (expected)</td></tr><tr><td>11/16/26</td><td><span class='chip b'>BID</span></td><td>Hoosier Rosehill–Rockport ($290K CVR / $5.59M EPC) — award decision (expected)</td></tr><tr><td>11/30/26</td><td><span class='chip b'>BID</span></td><td>Lansing BWL Joint Use Audit ($1,350K CVR) — award decision (expected)</td></tr><tr><td>12/22/26</td><td><span class='chip '>DLV</span></td><td>Northwest — IFC issued (engineering complete)</td></tr></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Long-lead procurement — engineering-complete margins</h3>
+    <p class="cap">ENG BY = construction need − fabrication lead − PO cycle − transmittal. Negative margin: pull design left, release early, or move the need date.</p>
+    <table><tr><th>Equipment</th><th>Job</th><th>Need</th><th>Eng by</th><th>IFC forecast</th><th>Margin</th></tr><tr><td>69kV capacitor banks</td><td>017-0006 Northwest 69kV Cap Banks</td><td>5/3/27</td><td>9/7/26</td><td>12/22/26</td><td class='neg'>-76 wd</td></tr><tr><td>345kV MOD switches (6)</td><td>Renaissance 345kV — 6 MOD Switches (bid)</td><td>9/1/27</td><td>10/28/26</td><td>2/2/27</td><td class='neg'>-69 wd</td></tr><tr><td>distribution/transmission poles</td><td>2026 Pole Replacements — EPC w/ HWC (WON)</td><td>3/1/27</td><td>10/12/26</td><td>12/22/26</td><td class='neg'>-51 wd</td></tr><tr><td>161kV transformer</td><td>VanMeter 161kV Substation + 6mi Line (bid)</td><td>3/1/28</td><td>12/9/26</td><td>2/18/27</td><td class='neg'>-51 wd</td></tr><tr><td>69kV capacitor banks</td><td>017-0007 Leonard Rd 69kV Cap Banks</td><td>7/6/27</td><td>11/10/26</td><td>12/29/26</td><td class='neg'>-35 wd</td></tr><tr><td>substation steel structures</td><td>VanMeter 161kV Substation + 6mi Line (bid)</td><td>10/1/27</td><td>3/19/27</td><td>4/29/27</td><td class='neg'>-29 wd</td></tr><tr><td>distribution/transmission poles</td><td>001-0003 New Baltimore Conversion (39-WO pilot)</td><td>3/15/27</td><td>10/26/26</td><td>11/3/26</td><td class='neg'>-6 wd</td></tr><tr><td>conductor / OPGW / hardware</td><td>001-0003 New Baltimore Conversion (39-WO pilot)</td><td>3/15/27</td><td>10/26/26</td><td>11/3/26</td><td class='neg'>-6 wd</td></tr><tr><td>relay &amp; control panels</td><td>VanMeter 161kV Substation + 6mi Line (bid)</td><td>12/1/27</td><td>5/5/27</td><td>4/29/27</td><td class='pos'>+4 wd</td></tr></table>
+  </div>
+
+  <div class="card">
+    <h3>Resource loading — delivery vs pursuit, hours per month</h3>
+    <div class="legend"><span class="key"><span class="sw" style="background:var(--accent)"></span>Delivery</span>
+    <span class="key"><span class="sw" style="background:var(--brand-green)"></span>Pursuit / estimating</span></div>
+    <svg viewBox="0 0 940 240" class="main" role="img" aria-label="Monthly resource loading"><line x1="40" x2="920" y1="155" y2="155" stroke="var(--grid)"/><text x="36" y="159" font-size="10" fill="var(--muted)" text-anchor="end">455</text><line x1="40" x2="920" y1="110" y2="110" stroke="var(--grid)"/><text x="36" y="114" font-size="10" fill="var(--muted)" text-anchor="end">911</text><line x1="40" x2="920" y1="65" y2="65" stroke="var(--grid)"/><text x="36" y="69" font-size="10" fill="var(--muted)" text-anchor="end">1,367</text><line x1="40" x2="920" y1="20" y2="20" stroke="var(--grid)"/><text x="36" y="24" font-size="10" fill="var(--muted)" text-anchor="end">1,823</text><rect x="42" y="72" width="47" height="128" fill="var(--accent)" opacity="0.85"><title>Aug 26 delivery: 1293 h</title></rect><rect x="42" y="41" width="47" height="31" fill="var(--brand-green)" opacity="0.9"><title>Aug 26 pursuit: 314 h</title></rect><text x="68" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Aug 26</text><rect x="94" y="41" width="47" height="159" fill="var(--accent)" opacity="0.85"><title>Sep 26 delivery: 1613 h</title></rect><rect x="94" y="20" width="47" height="21" fill="var(--brand-green)" opacity="0.9"><title>Sep 26 pursuit: 210 h</title></rect><rect x="146" y="59" width="47" height="141" fill="var(--accent)" opacity="0.85"><title>Oct 26 delivery: 1426 h</title></rect><rect x="146" y="51" width="47" height="9" fill="var(--brand-green)" opacity="0.9"><title>Oct 26 pursuit: 86 h</title></rect><text x="171" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Oct 26</text><rect x="197" y="38" width="47" height="162" fill="var(--accent)" opacity="0.85"><title>Nov 26 delivery: 1644 h</title></rect><rect x="197" y="32" width="47" height="6" fill="var(--brand-green)" opacity="0.9"><title>Nov 26 pursuit: 57 h</title></rect><rect x="249" y="48" width="47" height="152" fill="var(--accent)" opacity="0.85"><title>Dec 26 delivery: 1544 h</title></rect><rect x="249" y="46" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Dec 26 pursuit: 18 h</title></rect><rect x="301" y="79" width="47" height="121" fill="var(--accent)" opacity="0.85"><title>Jan 27 delivery: 1227 h</title></rect><rect x="301" y="77" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Jan 27 pursuit: 17 h</title></rect><text x="327" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Jan 27</text><rect x="353" y="111" width="47" height="89" fill="var(--accent)" opacity="0.85"><title>Feb 27 delivery: 906 h</title></rect><rect x="353" y="109" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Feb 27 pursuit: 16 h</title></rect><rect x="404" y="109" width="47" height="91" fill="var(--accent)" opacity="0.85"><title>Mar 27 delivery: 918 h</title></rect><rect x="404" y="108" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Mar 27 pursuit: 18 h</title></rect><rect x="456" y="145" width="47" height="55" fill="var(--accent)" opacity="0.85"><title>Apr 27 delivery: 558 h</title></rect><rect x="456" y="143" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Apr 27 pursuit: 17 h</title></rect><text x="482" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Apr 27</text><rect x="508" y="149" width="47" height="51" fill="var(--accent)" opacity="0.85"><title>May 27 delivery: 520 h</title></rect><rect x="508" y="147" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>May 27 pursuit: 17 h</title></rect><rect x="560" y="153" width="47" height="47" fill="var(--accent)" opacity="0.85"><title>Jun 27 delivery: 478 h</title></rect><rect x="560" y="151" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Jun 27 pursuit: 17 h</title></rect><rect x="611" y="156" width="47" height="44" fill="var(--accent)" opacity="0.85"><title>Jul 27 delivery: 441 h</title></rect><rect x="611" y="155" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Jul 27 pursuit: 17 h</title></rect><text x="637" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Jul 27</text><rect x="663" y="156" width="47" height="44" fill="var(--accent)" opacity="0.85"><title>Aug 27 delivery: 441 h</title></rect><rect x="663" y="155" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Aug 27 pursuit: 18 h</title></rect><rect x="715" y="151" width="47" height="49" fill="var(--accent)" opacity="0.85"><title>Sep 27 delivery: 495 h</title></rect><rect x="715" y="149" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Sep 27 pursuit: 17 h</title></rect><rect x="767" y="154" width="47" height="46" fill="var(--accent)" opacity="0.85"><title>Oct 27 delivery: 471 h</title></rect><rect x="767" y="152" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Oct 27 pursuit: 17 h</title></rect><text x="793" y="216" font-size="10" fill="var(--muted)" text-anchor="middle">Oct 27</text><rect x="818" y="165" width="47" height="35" fill="var(--accent)" opacity="0.85"><title>Nov 27 delivery: 355 h</title></rect><rect x="818" y="163" width="47" height="2" fill="var(--brand-green)" opacity="0.9"><title>Nov 27 pursuit: 17 h</title></rect><rect x="870" y="177" width="47" height="23" fill="var(--accent)" opacity="0.85"><title>Dec 27 delivery: 232 h</title></rect><rect x="870" y="176" width="47" height="1" fill="var(--brand-green)" opacity="0.9"><title>Dec 27 pursuit: 10 h</title></rect></svg>
+  </div>
+
+  <div class="card">
+    <h3>Load by resource</h3>
+    <p class="cap">Total assigned hours across both projects. TLE/SSE/STE rows are the open reqs — the hiring need, quantified.</p>
+    <table><tr><th>Resource</th><th>Delivery h</th><th>Pursuit h</th><th>Total h</th><th>≈ FTE-mo</th></tr><tr><td>TLE</td><td>2,996</td><td>0</td><td class='strong'>2,996</td><td>20.5</td></tr><tr><td>KM</td><td>2,420</td><td>40</td><td class='strong'>2,460</td><td>16.8</td></tr><tr><td>SSE</td><td>1,776</td><td>100</td><td class='strong'>1,876</td><td>12.8</td></tr><tr><td>SPM</td><td>1,474</td><td>110</td><td class='strong'>1,584</td><td>10.8</td></tr><tr><td>CP</td><td>1,520</td><td>0</td><td class='strong'>1,520</td><td>10.4</td></tr><tr><td>HW</td><td>1,396</td><td>0</td><td class='strong'>1,396</td><td>9.6</td></tr><tr><td>CA</td><td>730</td><td>0</td><td class='strong'>730</td><td>5.0</td></tr><tr><td>AH</td><td>600</td><td>0</td><td class='strong'>600</td><td>4.1</td></tr><tr><td>RP</td><td>404</td><td>142</td><td class='strong'>546</td><td>3.7</td></tr><tr><td>BP</td><td>540</td><td>0</td><td class='strong'>540</td><td>3.7</td></tr><tr><td>FW</td><td>496</td><td>0</td><td class='strong'>496</td><td>3.4</td></tr><tr><td>PLS</td><td>452</td><td>24</td><td class='strong'>476</td><td>3.3</td></tr><tr><td>EST</td><td>400</td><td>0</td><td class='strong'>400</td><td>2.7</td></tr><tr><td>FM</td><td>0</td><td>334</td><td class='strong'>334</td><td>2.3</td></tr><tr><td>STE</td><td>200</td><td>0</td><td class='strong'>200</td><td>1.4</td></tr><tr><td>RD</td><td>100</td><td>0</td><td class='strong'>100</td><td>0.7</td></tr><tr><td>TN</td><td>84</td><td>0</td><td class='strong'>84</td><td>0.6</td></tr><tr><td>ES1</td><td>0</td><td>76</td><td class='strong'>76</td><td>0.5</td></tr><tr><td>ES2</td><td>0</td><td>76</td><td class='strong'>76</td><td>0.5</td></tr><tr><td>HPM</td><td>32</td><td>32</td><td class='strong'>64</td><td>0.4</td></tr></table>
+    <p class="foot">Rebuild: drop fresh XER exports over model/*.xer and run scripts/build_p6_dashboard.py. Hours are planning-level until estimating/PM true them up in P6.</p>
+  </div>
+</div>
