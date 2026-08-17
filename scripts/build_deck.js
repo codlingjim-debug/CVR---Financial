@@ -1,6 +1,6 @@
 // CVR Engineering — Financial Review & Forecast deck (June 2026)
 // Generates reports/CVR_Deck_Jun2026.pptx. Data sourced from the Phase 1/2
-// workbooks (GL 6/30/26, KPI report 7/25/26, Phase 2 Base scenario).
+// workbooks (GL 6/30/26, KPI report 8/8/26, Phase 2 Base scenario).
 const pptxgen = require("pptxgenjs");
 const path = require("path");
 const fs = require("fs");
@@ -65,7 +65,7 @@ s.addText("Financial Review & Forecast", { x: M, y: 2.75, w: W - 2 * M, h: 0.9,
   fontSize: 48, bold: true, color: "FFFFFF", fontFace: SANS, margin: 0 });
 s.addText("Baseline through June 2026  ·  Forecast through December 2027",
   { x: M, y: 3.72, w: W - 2 * M, h: 0.4, fontSize: 18, color: DARKINK, fontFace: SANS, margin: 0 });
-s.addText("Sources: GL financial statements 6/30/26 · CVR & EPC KPI report 7/25/26 · 2026 rate sheet · Phase 1 & 2 model workbooks",
+s.addText("Sources: GL financial statements 6/30/26 · CVR & EPC KPI report 8/8/26 · 2026 rate sheet · Phase 1 & 2 model workbooks",
   { x: M, y: 6.7, w: W - 2 * M, h: 0.35, fontSize: 10.5, color: MUTED, fontFace: SANS, margin: 0 });
 
 /* ================================ 2 · AGENDA ================================ */
@@ -101,7 +101,7 @@ const tw = (W - 2 * M - 5 * 0.18) / 6;
  ["vs plan", "54.3%", "$464K behind budget", RED],
  ["vs prior year", "+38.1%", "PY YTD $399K", GOOD],
  ["Gross margin YTD", "22.2%", "budget assumes 61.6%", RED],
- ["Utilization", "60.8%", "vs 75% median target", INK],
+ ["Utilization", "54.0%", "vs 75% median target", INK],
  ["Realization", "79%", "$122 realized vs $154 card", INK],
 ].forEach((t, i) => tile(s, M + i * (tw + 0.18), 1.45, tw, t[0], t[1], t[2], t[3]));
 s.addText([
@@ -110,7 +110,7 @@ s.addText([
 ], { x: M, y: 3.0, w: W - 2 * M, h: 0.6, fontSize: 15, color: INK, fontFace: SANS, margin: 0 });
 s.addText([
   { text: "The margin problem is throughput, not cost.  ", options: { bold: true } },
-  { text: "The team realizes ~$122/hr against a $154/hr rate card at 61% utilization. Closing those two gaps roughly doubles revenue on the current roster.", options: {} },
+  { text: "The team realizes ~$122/hr against a $154/hr rate card at 54% utilization. Closing those two gaps roughly doubles revenue on the current roster.", options: {} },
 ], { x: M, y: 3.7, w: W - 2 * M, h: 0.6, fontSize: 15, color: INK, fontFace: SANS, margin: 0 });
 s.addText([
   { text: "The path forward is quantified.  ", options: { bold: true } },
@@ -177,7 +177,7 @@ rx = M + 8.0; rw = W - M - rx;
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.6, w: rw, h: 0.5, fontSize: 26, bold: true, color: i === 0 ? RED : INK, fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.6, w: rw, h: 1.0, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "H1 2026: 5,116 billable hours (through 7/25) · blended card rate mix-weighted from actual billable hours by classification.");
+foot(s, "2026 YTD: 5,539 billable hours (through 8/8) · blended card rate mix-weighted from actual billable hours by classification.");
 
 /* ===================== 6 · MARGIN BY ROLE (RATE CARD) ===================== */
 s = pres.addSlide();
@@ -203,19 +203,21 @@ const rosterRows = [
   [{ text: "Name", options: { bold: true } }, { text: "Classification", options: { bold: true } },
    { text: "Hours YTD", options: { bold: true } }, { text: "Billable %", options: { bold: true } },
    { text: "Target", options: { bold: true } }],
-  ["Roy Pierce", "VP Engineering (Principal Eng.)", "881", "35.3%", "42.4%"],
-  ["Hayley Worthen", "Senior Engineer", "994", "68.3%", "61.3%"],
-  ["Randy Pynenberg", "Engineer IV", "68", "89.7%", "95.0%"],
+  ["Roy Pierce", "VP Engineering (Principal Eng.)", "1,256", "26.7%", "42.4%"],
+  ["Hayley Worthen", "Senior Engineer", "1,287", "57.3%", "61.3%"],
+  ["Randy Pynenberg", "Engineer IV", "73", "86.3%", "95.0%"],
   ["Tom Little", "Engineer IV", "— *", "—", "—"],
   ["Erin Bryden", "Engineer IV", "— *", "—", "—"],
-  ["Bhkti Patel", "Engineer III", "1,118", "76.0%", "70.7%"],
-  ["Francis Wagner", "Engineer III", "1,070", "65.2%", "70.7%"],
-  ["Taylor Nelson", "Engineer II †", "1,045", "61.0%", "80.1%"],
-  ["Craig Peterson", "Engineer I", "1,111", "81.4%", "75.4%"],
-  ["Kevin Metts", "Designer II †", "890", "38.4%", "75.4%"],
+  ["Bhkti Patel", "Engineer III", "1,254", "70.2%", "70.7%"],
+  ["Francis Wagner", "Engineer III", "1,272", "62.0%", "70.7%"],
+  ["Taylor Nelson", "Engineer II †", "1,096", "58.2%", "80.1%"],
+  ["Craig Peterson", "Engineer I", "1,315", "76.7%", "75.4%"],
+  ["Kevin Metts", "Designer II †", "1,223", "32.5%", "75.4%"],
   ["Patrick Nicholson", "Senior Designer", "— *", "—", "—"],
-  ["Collin Allen", "Graphics Technician", "1,030", "59.4%", "80.1%"],
+  ["Collin Allen", "Graphics Technician", "1,271", "52.6%", "80.1%"],
   ["Auston Hopson", "Graphics Technician", "22", "100.0%", "100.0%"],
+  [{ text: "Senior PM", options: { bold: true, color: GOOD } }, "Senior Project Manager — starts 8/24", "—", "—", "—"],
+  [{ text: "Transmission Designer", options: { bold: true, color: GOOD } }, "Designer, T-line — starts 9/7", "—", "—", "—"],
 ];
 s.addTable(rosterRows, { x: M, y: 1.5, w: 7.9, colW: [1.9, 2.9, 1.1, 1.0, 1.0],
   fontFace: SANS, fontSize: 10, color: INK, valign: "middle",
@@ -224,9 +226,9 @@ s.addTable(rosterRows, { x: M, y: 1.5, w: 7.9, colW: [1.9, 2.9, 1.1, 1.0, 1.0],
   align: "left",
 });
 rx = M + 8.3; rw = W - M - rx;
-[["13", "people on the engineering roster"],
+[["15", "on the roster — Senior PM starts 8/24, Transmission Designer 9/7"],
  ["10", "active billable staff with recorded hours"],
- ["+3", "hires in the Base hiring plan (Oct-26, Jan-27, Jun-27 → 13 FTE)"],
+ ["3 reqs", "still open — T-line, substation, structural engineers (recruiting)"],
  ["~27", "billable FTEs needed at target utilization to support the $6M revenue goal"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.55 + i * 1.3, w: rw, h: 0.55, fontSize: 32, bold: true, color: BLUE, fontFace: SANS, margin: 0 });
@@ -240,14 +242,14 @@ eyebrow(s, "Operating drivers");
 slideTitle(s, "Billable utilization vs target, by person");
 chartImg(s, "ut", M, 2.2, 8.6);
 rx = M + 8.9; rw = W - M - rx;
-[["60.8%", "team billable utilization vs 75% median target"],
- ["3 people", "more than 15 points under their individual target (Kevin, Collin, Taylor)"],
- ["+16 pts", "reaching targets adds ~27% billable capacity with zero hires"],
+[["54.0%", "team billable utilization vs 75% target — down from 60.8% as the bid push absorbed hours"],
+ ["638 hrs", "of bid time YTD (VanMeter, Renaissance, Consumers) — 21% of non-billable"],
+ ["4 people", "15+ points under target (Kevin, Collin, Taylor, Roy) — utilization plans in motion"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: i === 0 ? RED : INK, fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.9, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "Hours through 7/25/26. Randy Pynenberg (68 hrs) and Auston Hopson (22 hrs) have small YTD bases. Bids/BD time is tracked separately (405 hrs).");
+foot(s, "Hours through 8/8/26. Randy Pynenberg (73 hrs) and Auston Hopson (22 hrs) have small YTD bases. Bids/BD time is tracked separately (638 hrs).");
 
 /* ========================== 8 · SALES BY CUSTOMER ========================== */
 s = pres.addSlide();
@@ -272,32 +274,32 @@ const bkRows = [
   [{ text: "Job", options: { bold: true } }, { text: "Customer / project", options: { bold: true } },
    { text: "PO value", options: { bold: true } }, { text: "Billed", options: { bold: true } },
    { text: "Remaining", options: { bold: true } }, { text: "Finish", options: { bold: true } }],
+  [{ text: "005-0005", options: { bold: true, color: GOOD } }, { text: "Consumers — 2026 Pole Replacements (4%)", options: { bold: true } },
+   "$274.7K", "$0.0K", { text: "$274.7K", options: { bold: true } }, "Jan-27"],
   ["001-0003", "DTE — New Baltimore Conversion", "$1,428.8K", "$1,216.3K", "$212.5K", "Dec-27"],
-  [{ text: "NEW", options: { bold: true, color: GOOD } }, { text: "Consumers — 2026 Pole Replacements (WON)", options: { bold: true } },
-   "$276.5K", "$0.0K", { text: "$276.5K", options: { bold: true } }, "Dec-27"],
-  ["017-0007", "CenterPoint — Leonard Rd 69kV", "$200.0K", "$6.7K", "$193.3K", "Oct-27"],
-  ["017-0006", "CenterPoint — Northwest 69kV", "$110.6K", "$4.4K", "$106.2K", "Aug-27"],
-  ["017-0003", "CenterPoint — Gateway 69kV", "$203.0K", "$131.2K", "$71.8K", "Aug-26"],
-  ["005-0004", "Consumers — HVD Line Sensors", "$130.5K", "$71.3K", "$59.2K", "Oct-26"],
+  ["017-0007", "CenterPoint — Leonard Rd 69kV", "$200.0K", "$26.5K", "$173.5K", "Oct-27"],
+  ["017-0006", "CenterPoint — Northwest 69kV", "$110.6K", "$27.2K", "$83.4K", "Aug-27"],
+  ["017-0003", "CenterPoint — Gateway 69kV", "$203.0K", "$155.3K", "$47.7K", "Aug-26"],
   ["001-0001", "DTE — Catalina Ph 3 (support tail)", "$838.5K", "$806.3K", "$32.1K", "2026"],
-  ["017-0004", "CenterPoint — Rockport 69kV", "$96.7K", "$81.7K", "$15.0K", "Aug-26"],
+  ["005-0004", "Consumers — HVD Line Sensors", "$130.5K", "$105.0K", "$25.5K", "Oct-26"],
+  ["017-0004", "CenterPoint — Rockport 69kV", "$96.7K", "$87.2K", "$9.5K", "Aug-26"],
   ["016-0001", "Cloverland — Manistique Pump Stn", "$111.5K", "$106.6K", "$4.9K", "Sep-26"],
   ["017-0005", "CenterPoint — Angel Mounds 69kV", "$97.0K", "$95.1K", "$1.8K", "Oct-26"],
   [{ text: "", options: {} }, { text: "Total backlog remaining", options: { bold: true } },
-   { text: "", options: {} }, { text: "", options: {} }, { text: "$973.3K", options: { bold: true } }, ""],
+   { text: "", options: {} }, { text: "", options: {} }, { text: "$865.6K", options: { bold: true } }, ""],
 ];
 s.addTable(bkRows, { x: M, y: 1.5, w: 8.9, colW: [0.95, 3.4, 1.25, 1.25, 1.25, 0.8],
   fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
   border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.36, align: "left" });
 rx = M + 9.2; rw = W - M - rx;
-[["$973K", "booked work remaining — up $276K on the new Consumers pole win"],
- ["2 jobs", "carry over half of it (New Baltimore, Leonard Rd), both finishing late 2027"],
- ["3 close-outs", "Gateway, Rockport, Manistique wrap by Oct-26 — replacement work needed now"],
+[["$866K", "booked work remaining — pole program now live (005-0005); billing progress trims the rest"],
+ ["+30%", "Consumers workload ramp expected into year-end — pole program burns hard to a Jan-27 finish"],
+ ["4 close-outs", "Gateway, Rockport, Manistique, Angel Mounds wrap by Oct-26 — replacement work needed now"],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: BLUE, fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 12, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "KPI project scorecard, week ending 7/25/26. Remaining = PO value − billed to date; excludes cost-overrun exposure tracked on the scorecard.");
+foot(s, "KPI project scorecard, week ending 8/8/26. Remaining = PO value − billed to date; excludes cost-overrun exposure tracked on the scorecard.");
 
 /* ========================== 10 · PIPELINE ========================== */
 s = pres.addSlide();
@@ -309,14 +311,16 @@ const ppRows = [
    { text: "Win prob.", options: { bold: true } }, { text: "Weighted", options: { bold: true } },
    { text: "Award", options: { bold: true } }],
   [{ text: "2026 Pole Replacements", options: { color: GOOD } }, { text: "Consumers Energy", options: { color: GOOD } },
-   { text: "$276.5K", options: { color: GOOD } }, { text: "$3,451.1K", options: { color: GOOD } },
+   { text: "$274.7K", options: { color: GOOD } }, { text: "$3,451.1K", options: { color: GOOD } },
    { text: "WON", options: { bold: true, color: GOOD } }, { text: "→ backlog", options: { color: GOOD } }, "Q3-26"],
   ["Joint Use Audit", "Lansing Board of Water & Light", "$1,350.0K", "—", "50%", "$675.0K", "Q4-26"],
   ["Rosehill–Rockport 69kV", "Hoosier Energy REC", "$290.0K", "$5,590.9K", "50%", "$145.0K", "Q4-26"],
   ["Jacksonburg–Gateway 69kV", "Hoosier Energy REC", "$160.0K", "$3,548.5K", "50%", "$80.0K", "Q4-26"],
   ["Frontier Make Ready", "Steuben County REMC", "$100.0K", "—", "50%", "$50.0K", "Q3-26"],
-  [{ text: "VanMeter 161kV Substation ‡", options: { bold: true } }, "MEC (MidAmerican)", "TBD",
-   { text: "EPC-paired", options: { color: BLUE } }, { text: "in bid", options: { bold: true, color: BLUE } }, "—", "Sep-26"],
+  [{ text: "VanMeter 161kV Substation ‡", options: { bold: true } }, "MEC (MidAmerican)",
+   { text: "~$1.23M*", options: { color: BLUE } },
+   { text: "~$14.5M*", options: { color: BLUE } }, { text: "40%", options: { bold: true, color: BLUE } },
+   { text: "~$305K*", options: { color: BLUE } }, "Oct-26"],
   [{ text: "Renaissance 345kV (6 MOD switches) ‡", options: { bold: true } }, "DTE Energy", "TBD", "—",
    { text: "in bid", options: { bold: true, color: BLUE } }, "—", "Sep-26"],
   [{ text: "", options: {} }, { text: "Pending total (ex-won)", options: { bold: true } },
@@ -327,14 +331,62 @@ s.addTable(ppRows, { x: M, y: 1.5, w: 9.6, colW: [2.15, 2.15, 1.15, 1.25, 0.95, 
   fontFace: SANS, fontSize: 10.5, color: INK, valign: "middle",
   border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.4, align: "left" });
 rx = M + 9.9; rw = W - M - rx;
-[["WON", "Consumers pole replacements — $276K CVR scope now booked to backlog", GOOD],
+[["WON", "Consumers pole replacements — $275K CVR scope now a live job (005-0005)", GOOD],
  ["4–5%", "engineering share of paired EPC contract value — every EPC win pulls CVR scope with it", BLUE],
  ["$1.6M", "origination gap beyond this list to fully cover the 18-month Base forecast", RED],
 ].forEach((t, i) => {
   s.addText(t[0], { x: rx, y: 1.7 + i * 1.5, w: rw, h: 0.5, fontSize: 28, bold: true, color: t[2], fontFace: SANS, margin: 0 });
   s.addText(t[1], { x: rx, y: 2.2 + i * 1.5, w: rw, h: 0.95, fontSize: 11.5, color: INK2, fontFace: SANS, margin: 0 });
 });
-foot(s, "KPI current-bids page, 7/25/26. ‡ Newly in bid (due Sep-26), both EPC-paired: MEC VanMeter (greenfield 161kV + 6 mi transmission) and DTE Renaissance (off hold). Win probabilities are planning placeholders (2026 win rate 69% or 50%) — Estimating to own final numbers.");
+foot(s, "KPI current-bids page, 8/8/26. ‡ VanMeter due 9/4: * = CVR pre-bid projection under the sub-management model (next slide) — weighted value is expected CVR margin at 40%. Renaissance due 9/15. Other probabilities are planning placeholders — Estimating to own final numbers.");
+
+/* ========================== 10b · VANMETER PROJECTION ========================== */
+s = pres.addSlide();
+eyebrow(s, "Work to win — pre-bid projection");
+slideTitle(s, "VanMeter 161kV — the sub-management model");
+s.addText([
+  { text: "Greenfield 161kV substation + 6 miles of transmission for MEC. ", options: {} },
+  { text: "Westwood performs most of the engineering as CVR's sub", options: { bold: true, color: BLUE } },
+  { text: " — CVR manages the sub, holds the EOR oversight, and runs ", options: {} },
+  { text: "material procurement", options: { bold: true, color: GOOD } },
+  { text: ". Bid due 9/4 · 40% win probability · award assumed Oct-26 · energization mid-2028.", options: {} },
+], { x: M, y: 1.3, w: W - 2 * M, h: 0.6, fontSize: 12.5, color: INK, fontFace: SANS, margin: 0 });
+const vmEcon = [
+  [{ text: "CVR revenue stream", options: { bold: true } }, { text: "Basis", options: { bold: true } },
+   { text: "CVR billings", options: { bold: true } }, { text: "CVR margin", options: { bold: true } }],
+  ["Material procurement (principal)", "35% of EPC = $5.08M · 13% gross, ~11% net of carry", "$5.74M", { text: "$558K", options: { bold: true, color: GOOD } }],
+  ["Westwood engineering subcontract", "≈6% of EPC ($0.87M) passed through at +10%", "$0.96M", { text: "$87K", options: { color: GOOD } }],
+  ["CVR self-perform (mgmt + EOR + procurement)", "1,800 hrs at card rates — LOE below", "$0.27M", { text: "$115K", options: { color: GOOD } }],
+  [{ text: "Total CVR", options: { bold: true } }, { text: "≈5.2% of EPC value", options: { bold: true } },
+   { text: "$6.97M", options: { bold: true } }, { text: "$760K", options: { bold: true, color: GOOD } }],
+];
+s.addTable(vmEcon, { x: M, y: 2.1, w: 7.3, colW: [2.55, 2.75, 1.0, 1.0],
+  fontFace: SANS, fontSize: 10, color: INK, valign: "middle",
+  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.42, align: "left" });
+const vmLoe = [
+  [{ text: "CVR level of effort (LOE)", options: { bold: true } }, { text: "Hours", options: { bold: true } }],
+  ["Project management (Senior PM + new PM)", "800"],
+  ["EOR & design review (Roy / substation eng)", "500"],
+  ["Procurement & expediting (with PLS)", "300"],
+  ["Project controls & QA", "200"],
+  [{ text: "Total ≈ 0.9 FTE-yr over ~20 months", options: { bold: true } }, { text: "1,800", options: { bold: true } }],
+];
+s.addTable(vmLoe, { x: M + 7.6, y: 2.1, w: 4.5, colW: [3.6, 0.9],
+  fontFace: SANS, fontSize: 10, color: INK, valign: "middle",
+  border: { type: "solid", color: GRID, pt: 0.5 }, fill: { color: "FFFFFF" }, rowH: 0.36, align: "left" });
+const vmTW = (W - 2 * M - 3 * 0.16) / 4;
+[["EPC bid value (assumed)", "$14.5M", "sub $8.5M + 6 mi line", INK],
+ ["CVR margin if won", "$760K", "materials + sub mgmt + LOE", GOOD],
+ ["Expected value @ 40%", "$305K", "probability-weighted margin", BLUE],
+ ["Team leverage", "0.9 FTE-yr", "vs ~6 FTE-yr if self-performed", INK],
+].forEach((t, i) => tile(s, M + i * (vmTW + 0.16), 4.75, vmTW, t[0], t[1], t[2], t[3]));
+s.addShape("roundRect", { x: M, y: 6.05, w: W - 2 * M, h: 0.52, fill: { color: "EAF1FA" }, rectRadius: 0.05,
+  line: { color: GRID, width: 0.75 } });
+s.addText([
+  { text: "Why this shape:  ", options: { bold: true, color: BLUE } },
+  { text: "the sub-management model lets CVR take EPC-scale margin without EPC-scale headcount — the roster stays on CenterPoint/DTE/Consumers while VanMeter runs through Westwood and PLS.", options: { color: INK2 } },
+], { x: M + 0.2, y: 6.12, w: W - 2 * M - 0.4, h: 0.38, fontSize: 11.5, fontFace: SANS, margin: 0 });
+foot(s, "Pre-bid planning projection — replace with the estimate at submittal (9/4). Rates per the at-scale model (35% materials share, 13% gross / ~11% net material margin); Westwood scope and markup to be confirmed in the sub agreement.");
 
 /* ==================== 11 · INTEGRATION WITH HWC ESTIMATING ==================== */
 s = pres.addSlide();
@@ -418,7 +470,7 @@ function brandMark(slide, x, y, name, sub, color, file) {
 const MKT = [
   ["Consumers Energy", "Michigan — electric & gas", "0057B8", "consumers.png",
    ">$17B", "5-year capital plan; $8.5B of distribution reliability & resilience through 2029",
-   "Foothold: HVD line-sensor program live; 2026 pole replacements WON ($276K CVR scope, $3.45M EPC-paired)"],
+   "Foothold: HVD line-sensor program live; 2026 pole replacements WON ($275K CVR scope, $3.45M EPC-paired)"],
   ["DTE Energy", "Michigan — electric & gas", "16376C", "dte.png",
    "$36.5B", "5-year plan 2026–30 — up 20% on data-center load and grid reliability spend",
    "Foothold: New Baltimore & Catalina conversions ($2.3M PO); Renaissance 345kV bid active (due Sep-26)"],
@@ -677,7 +729,7 @@ s = pres.addSlide();
 eyebrow(s, "Forward view — accounting alignment");
 slideTitle(s, "EPC bid engineering: an item to clean up, not a crisis");
 s.addText("The facts", { x: M, y: 1.5, w: 5.0, h: 0.35, fontSize: 16, bold: true, color: INK, fontFace: SANS, margin: 0 });
-[["405 hrs", "of bid engineering YTD — ≈$62.6K at card rates ($38.5K at cost), unbilled"],
+[["638 hrs", "of bid engineering YTD — ≈$98.6K at card rates ($60.7K at cost), unbilled"],
  ["~60% design", "required before a fixed-price EPC bid can even be submitted — $200–300K of pre-award exposure on the $9.1M bid slate still in market"],
  ["Absorbed today", "these hours land in CVR's overhead with no offsetting credit — immaterial now, but it compounds as EPC pursuit volume grows"],
  ["The misalignment", "bid hours are non-billable, so every EPC pursuit CVR supports drags the metrics CVR is judged on — utilization, realization, OILI"],
@@ -710,7 +762,7 @@ s.addText([
   { text: "The ask is alignment, not subsidy.  ", options: { bold: true, color: INK } },
   { text: "The dollars are small today — but as EPC volume scales, the accounting should reward the pursuit behavior the strategy demands.", options: { color: INK2 } },
 ], { x: M + 0.2, y: 6.51, w: W - 2 * M - 0.4, h: 0.38, fontSize: 12, fontFace: SANS, margin: 0 });
-foot(s, "Bid hours per the KPI report (through 7/25/26). Raise with the CFO as an EPC accounting-alignment item.");
+foot(s, "Bid hours per the KPI report (through 8/8/26). Raise with the CFO as an EPC accounting-alignment item.");
 
 /* ==================== 20 · PRIORITIES ==================== */
 s = pres.addSlide();
