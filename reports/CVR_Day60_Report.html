@@ -1,0 +1,151 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>USC SVP Engineering — Day-60 Report</title>
+<style>
+  @page { size: letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #1b1b1f; color: #f2f2f0;
+    font: 11.5px/1.34 "Segoe UI", Calibri, system-ui, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .sheet { width: 8.5in; height: 11in; padding: 0.36in 0.6in 0.26in; background: #1b1b1f;
+           page-break-after: always; overflow: hidden; }
+  .sheet:last-child { page-break-after: auto; }
+  .eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; color: #b9b8b2; }
+  .eyebrow .dash { color: #86b332; }
+  h1 { font-size: 24px; margin: 4px 0 3px; color: #fff; letter-spacing: -0.01em; }
+  .purpose { color: #c9c8c2; font-size: 12.5px; margin: 0 0 9px; }
+  h2 { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #5b9be6; margin: 8px 0 4px; }
+  h2:first-of-type { margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 10.5px; }
+  th { text-align: left; font-size: 10px; color: #b9b8b2; font-weight: 700;
+       background: #26262b; padding: 4px 8px; border-top: 1px solid #3a3a3e; border-bottom: 1px solid #3a3a3e; }
+  td { padding: 4px 8px; border-bottom: 1px solid #313136; vertical-align: top; }
+  td.k { font-weight: 700; color: #fff; }
+  td.mut { color: #c9c8c2; }
+  .done { color: #86b332; font-weight: 700; white-space: nowrap; }
+  .early { color: #5b9be6; font-weight: 700; white-space: nowrap; }
+  .flag { color: #e8a33d; font-weight: 700; }
+  .tiles { display: flex; gap: 8px; margin: 3px 0 8px; }
+  .tile { flex: 1; background: #232328; border: 1px solid #3a3a3e; border-radius: 6px; padding: 7px 10px; }
+  .tile .lb { font-size: 9.5px; color: #b9b8b2; }
+  .tile .v { font-size: 18px; font-weight: 700; color: #fff; margin-top: 1px; }
+  .tile .v.g { color: #86b332; } .tile .v.b { color: #5b9be6; } .tile .v.r { color: #e66767; }
+  .tile .d { font-size: 9px; color: #8a8984; margin-top: 1px; }
+  p { margin: 0 0 6px; color: #dddcd6; }
+  p b { color: #fff; }
+  ul { margin: 0 0 7px 16px; padding: 0; color: #dddcd6; }
+  li { margin-bottom: 2px; }
+  .band { border: 1.5px solid #5b9be6; background: #16283f; border-radius: 6px;
+          padding: 7px 12px; font-size: 11px; color: #dddcd6; margin-top: 6px; }
+  .band .lead { color: #5b9be6; font-weight: 700; }
+  .band b { color: #fff; }
+  .foot { font-size: 9px; color: #8a8984; margin-top: 7px; }
+</style></head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="sheet">
+  <div class="eyebrow"><span class="dash">—</span> USC / HYDAKER-WHEATLAKE · SVP ENGINEERING · CONFIDENTIAL</div>
+  <h1>Day-60 Report — Stabilize, Stand Up, Win</h1>
+  <p class="purpose">James D. Codling, PE · Days 31–60: August 13 – September 11, 2026 · Prepared for Brad Geer &amp; Drew</p>
+
+  <h2>THE HEADLINE</h2>
+  <p><b>All four Day-60 commitments are complete, two 90-day hires are already on the floor, and the division now runs on a real operating system</b> — a resource-loaded P6 master schedule for every piece of CVR work, a standardized pursuit pipeline ready to receive Estimating on day one, auto-generated program and financial dashboards, and a documented integrated capital-delivery process. The first major proposal under the new structure went out on time: MEC VanMeter 161kV, under the sub-management EPC model. The two Day-30 decisions — the VP pursuit hire and moving Estimating into CVR — remain the gate on growth.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="lb">Day-60 commitments</div><div class="v g">4 / 4</div><div class="d">complete, with artifacts</div></div>
+    <div class="tile"><div class="lb">Hires started</div><div class="v g">2</div><div class="d">Senior PM 8/24 · Trans. Designer 9/7</div></div>
+    <div class="tile"><div class="lb">First proposal, new structure</div><div class="v b">~$14.5M</div><div class="d">VanMeter EPC · $305K EV @ 40%</div></div>
+    <div class="tile"><div class="lb">Backlog</div><div class="v">$866K</div><div class="d">+30% Consumers ramp into year-end</div></div>
+    <div class="tile"><div class="lb">Utilization (thru 8/8)</div><div class="v r">54.0%</div><div class="d">vs 75% target — 638 hrs in bids</div></div>
+  </div>
+
+  <h2>DAY-60 SCORECARD — WHAT WAS COMMITTED vs WHAT WAS DELIVERED</h2>
+  <table>
+    <tr><th style="width:30%">Commitment (due)</th><th style="width:8%">Status</th><th>Delivered — evidence</th></tr>
+    <tr><td class="k">Stand up pipeline tracking &amp; win-rate baseline <span class="mut">(8/22)</span></td><td class="done">DONE</td>
+        <td class="mut">Delivered at Day 30, now operationalized: every pursuit runs a standard estimate cycle (go/no-go → engineering → takeoff → pricing → gate → submit) in the CVR-PURSUITS P6 schedule, resource-loaded, with bid-date float on the program dashboard. Win rate holds at 69% (2026) vs 50% (2025).</td></tr>
+    <tr><td class="k">Convert one anchor reconnect into a scoped pursuit <span class="mut">(9/6)</span></td><td class="done">DONE</td>
+        <td class="mut"><b>Exceeded.</b> Consumers pole program is booked work ($274.7K PO, backlog into Jan-27) ramping +30% into year-end. VanMeter 161kV submitted: ~$14.5M EPC, CVR managing Westwood engineering subs plus procurement — ~$760K CVR margin (~5.2% of EPC), carried at 40%.</td></tr>
+    <tr><td class="k">Establish design QA/QC review gates <span class="mut">(9/1)</span></td><td class="done">DONE</td>
+        <td class="mut">Gates authored into CVR-PROC-001 Rev 0: design-check steps by classification, engineer-verified procurement, and engineering-complete-by dates enforced per element in the P6 master schedule — the schedule is the enforcement mechanism. Full adoption across pursuits rides Decision 2.</td></tr>
+    <tr><td class="k">Open priority engineering reqs — TE/DE leads <span class="mut">(8/27)</span></td><td class="done">DONE</td>
+        <td class="mut">T-line, substation, and structural reqs open and recruiting; Senior PM started 8/24, Transmission Designer 9/7; job-description library written in house format for all ten classifications with a defined experience / PE-EIT ladder; VP EPC Project Development one-pager ready on Decision 1.</td></tr>
+  </table>
+
+  <h2>THE OPERATING SYSTEM STOOD UP IN DAYS 31–60 — TOOLS &amp; PROCESSES</h2>
+  <table>
+    <tr><th style="width:27%">Tool / process</th><th>What it does for the business</th></tr>
+    <tr><td class="k">P6 master schedule (CVR-MASTER)</td>
+        <td class="mut">Every piece of CVR work — EPC supporting HWC plus direct CenterPoint — in one resource-loaded schedule: engineering-complete-by dates per element, material procurement, and a long-lead register by equipment class. Exposed that most jobs need early material release — New Baltimore's rolling batch-1 release is the template.</td></tr>
+    <tr><td class="k">P6 pursuit pipeline (CVR-PURSUITS)</td>
+        <td class="mut">Standard estimate-cycle template per pursuit with bid-date constraints and estimating resources loaded — plus an Intake Sheet so Estimating's entire backlog loads in one pass the day it moves into CVR. The receiving infrastructure for Decision 2 is already built.</td></tr>
+    <tr><td class="k">Program dashboard (auto-generated)</td>
+        <td class="mut">One page from the live schedules: program timeline, bid float, long-lead procurement margins, and month-by-month delivery-vs-pursuit resource stacking. Regenerates on every schedule update; BI-ready.</td></tr>
+    <tr><td class="k">Financial model + dashboard + deck</td>
+        <td class="mut">Driver-based three-scenario forecast reconciled to Budget V5, monthly KPI dashboard (8/8 package live), and the 25-slide review deck — market, national footprint, at-scale EPC model ($150M/yr → ~$7.6M CVR OI), win-accumulation economics, and the ask.</td></tr>
+    <tr><td class="k">Estimating platform selection</td>
+        <td class="mut">Weighted scorecard across candidates: B2W is the demo-verified front-runner; one vendor eliminated on a gate fail. Closure items defined (pricing/TCO, egress, SOC 2, references) plus a parallel bid test on a closed CenterPoint job. Sage stays through transition; read-only Sage extraction doubles as the migration path.</td></tr>
+    <tr><td class="k">Systems &amp; licensure groundwork</td>
+        <td class="mut">Stay on P6 desktop (~$2–3K/yr vs an $8–13K OPC floor; revisit at 5+ users). COINS read-only scoped-extract request framed for IT. Licensure runway mapped: MI firm registration, FL registry (no COA), GA covered by Jim's GA PE.</td></tr>
+  </table>
+
+  <div class="foot">Artifacts: P6 schedules + registers · intake sheet · program &amp; financial dashboards · Phase-2 model workbook · review deck · JD library · estimating scorecard · CVR-PROC-001 Rev 0. Page 1 of 2.</div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="sheet">
+  <div class="eyebrow"><span class="dash">—</span> USC / HYDAKER-WHEATLAKE · SVP ENGINEERING · DAY-60 REPORT</div>
+
+  <h2 style="margin-top:6px">AHEAD OF SCHEDULE — 90-DAY ITEMS ALREADY DELIVERED OR IN MOTION</h2>
+  <table>
+    <tr><th style="width:33%">Committed item (original due)</th><th style="width:9%">Plan</th><th>Where it stands at Day 60</th></tr>
+    <tr><td class="k">Close two engineering hires <span class="mut">(10/6)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Done — both closed and started.</b> Senior PM on board 8/24 (delivery + program management for the EPC-paired backlog); Transmission Designer on board 9/7 (capacity against the Consumers ramp).</td></tr>
+    <tr><td class="k">Submit first major proposal under new structure <span class="mut">(10/3)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Done.</b> VanMeter 161kV out under the sub-management EPC model — CVR managing engineering subs and procurement, margin captured on both. DTE Renaissance 345kV follows; Lansing BWL remains the biggest Q4 swing ($1.35M).</td></tr>
+    <tr><td class="k">Draft 12-month growth &amp; hiring plan <span class="mut">(10/1)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Substantially complete.</b> The review deck carries the growth thesis end-to-end — addressable market, target-utility expansion (AEP, FirstEnergy, PG&amp;E, Southern), at-scale model, hiring sequence — and the JD library makes the hiring plan executable.</td></tr>
+    <tr><td class="k">Present 90-day results &amp; revised forecast <span class="mut">(10/11)</span></td><td class="early">90-day</td>
+        <td class="mut"><b>Machinery live, waiting on actuals.</b> Forecast-vs-actual cadence is built; July and August closes are still pending from finance — the only blocker to running it.</td></tr>
+  </table>
+
+  <h2>DECISIONS — TWO CARRIED, TWO NEW</h2>
+  <table>
+    <tr><th style="width:30%">Decision</th><th>Case</th></tr>
+    <tr><td class="k">1 · Fund the VP, EPC Project Development hire <span class="flag">(carried from Day 30)</span></td>
+        <td class="mut">~$400K/yr all-in against warm AEP + FirstEnergy relationships. Every month unfunded is pipeline the at-scale model can't originate; one mid-size EPC award returns the year-one cost. Candidate identified; one-pager in hand.</td></tr>
+    <tr><td class="k">2 · Approve CVR-PROC-001 — move Estimating into CVR <span class="flag">(carried from Day 30)</span></td>
+        <td class="mut">Now de-risked: the pursuit schedule, intake sheet, and dashboard are built and waiting — Estimating's backlog loads in one pass on day one. The long-lead register makes the case quantitatively: engineering-complete dates only hold with unified early material release, which requires one pursuit-and-delivery process.</td></tr>
+    <tr><td class="k">3 · Authorize the estimating-platform close-out <span class="flag">(new)</span></td>
+        <td class="mut">Approve running the selection to conclusion: pricing/TCO, references, security review, and the parallel bid test on a closed CenterPoint job. Decision-ready package returns in the 90-day window; no platform commitment until the test scores.</td></tr>
+    <tr><td class="k">4 · Back the finance-data asks <span class="flag">(new)</span></td>
+        <td class="mut">Two small unlocks: (a) COINS read-only scoped extracts (GL, job cost, AR served from existing BI views — least-privilege, no payroll detail) so the model runs on actuals without manual pulls; (b) the CFO decision on bid-engineering accounting — intercompany bid-support billing recommended.</td></tr>
+  </table>
+
+  <h2>WATCH ITEMS — SAID PLAINLY</h2>
+  <ul>
+    <li><b>Utilization is 54.0% vs the 75% target</b> (through 8/8), with 638 unbilled hours in bids — the accounting fix (Decision 4b) and September submittals converting to backlog are the levers.</li>
+    <li><b>July and August closes are outstanding</b> — until finance lands them, H2 tracks on operational KPIs only and the re-forecast can't be validated against actuals.</li>
+    <li><b>Long-lead exposure:</b> without early material release, engineering-complete margins go negative on nearly every scheduled job — a process decision (Decision 2), not a scheduling problem.</li>
+    <li><b>Close-outs need replacement work:</b> multiple jobs complete by Oct-26; VanMeter, Renaissance, and Lansing BWL are the fill.</li>
+  </ul>
+
+  <h2>DAYS 61–90 — SCALE, HIRE, ACQUIRE</h2>
+  <ul>
+    <li><b>Win what's in market:</b> land the VanMeter award decision, submit Renaissance, press Lansing BWL and the Q4 slate.</li>
+    <li><b>Convert capacity to revenue:</b> ramp both new hires to billable; fill the open T-line / substation / structural reqs from the JD library; per-person utilization plans against 75%.</li>
+    <li><b>Execute the platform test:</b> run the parallel bid test and return the estimating-platform recommendation with real numbers.</li>
+    <li><b>Close the loop on actuals:</b> August + September closes into the forecast-vs-actual cadence; COINS extracts on Decision 4.</li>
+    <li><b>Day-90 presentation:</b> results, revised forecast, and the formal 12-month growth &amp; hiring plan.</li>
+  </ul>
+
+  <div class="band"><span class="lead">Bottom line:</span> <b>the stabilization phase did its job — the team is bigger, the first new-structure proposal is in market, and the division now runs on schedules and dashboards instead of memory.</b> The 90-day phase converts that machinery into wins and hires. Decisions 1 and 2 are still the gate, and both are cheaper to say yes to than they were thirty days ago.</div>
+
+  <div class="foot">Appendices on request: P6 schedules + registers · program dashboard · model workbooks · review deck · estimating scorecard · JD library · CVR-PROC-001. Page 2 of 2.</div>
+</div>
+
+</body></html>
